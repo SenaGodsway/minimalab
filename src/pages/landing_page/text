@@ -1,0 +1,48 @@
+import React, { useState, useEffect } from 'react';
+
+interface ImageCarouselProps {
+  images: string[];
+  interval?: number;
+}
+
+export default function ImageCarousel({ images, interval = 5000 }: ImageCarouselProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [nextIndex, setNextIndex] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+        setNextIndex((prevIndex) => (prevIndex + 1) % images.length);
+        setIsTransitioning(false);
+      }, 500); // This should match the transition duration in the CSS
+    }, interval);
+
+    return () => clearInterval(timer);
+  }, [images.length, interval]);
+
+  return (
+    <div className="relative w-full h-64 overflow-hidden">
+      {images.map((image, index) => (
+        <div
+          key={index}
+          className={`absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out ${
+            index === currentIndex
+              ? 'opacity-100'
+              : index === nextIndex && isTransitioning
+              ? 'opacity-100'
+              : 'opacity-0'
+          }`}
+        >
+          <img
+            src={image}
+            alt={`Carousel image ${index + 1}`}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
