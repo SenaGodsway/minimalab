@@ -57,73 +57,12 @@ const HeroSection = () => {
             November Agency.</h1>
         <p className="my-6 text-[16px] text-neutral-500">We are a full service lead by a bunch of tech heads and we we build beautiful digital product, brands and experiences </p>
 
-        <div className='mt-16 w-full'>
+        <span className='mt-16 w-full'>
             <LinkButton to='/about'>Get To know Us</LinkButton>
-        </div>
-
-
-
-      {/* <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="mb-8"
-      >
-        <div className="font-bold text-6xl">
-          <motion.span 
-            variants={wordVariants}
-            className="block"
-          >
-            The
-          </motion.span>
-          <motion.span 
-            variants={wordVariants}
-            className="block"
-          >
-            November
-          </motion.span>
-          <motion.span 
-            variants={wordVariants}
-            className="block"
-          >
-            Agency.
-          </motion.span>
-        </div>
-      </motion.div>
-
-      <motion.p
-        variants={descriptionVariants}
-        initial="hidden"
-        animate="visible"
-        className="text-black text-lg"
-      >
-        We are a full service lead by a bunch of tech heads and we build beautiful digital product, brands and experiences
-      </motion.p>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ 
-          opacity: 1, 
-          y: 0,
-          transition: {
-            delay: 1.5,
-            duration: 0.5
-          }
-        }}
-        className="mt-8"
-      >
-        <span className="inline-block pb-1 border-b-2 border-black text-lg">
-          Get To know Us
         </span>
-      </motion.div> */}
-
- 
         </div>
     <div className="pl-[-4px] w-full md:w-[55%] h-[40vh] md:h-[80vh] overflow-hidden aspect-square object-cover">
-        {/* <ImageComponent src={hero} alt={hero} isGray={true}/> */}
       <Carousel/>
-    {/* <ImageCarouselDemo/> */}
-
     </div>
 </div>
   )
