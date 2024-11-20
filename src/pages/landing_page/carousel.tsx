@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
 import ImageComponent from '../../components/ImageCompnent';
 
 interface Slide {
@@ -35,20 +34,12 @@ export default function Carousel() {
     if (!isTransitioning) {
       setIsTransitioning(true);
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-      setTimeout(() => setIsTransitioning(false), 500);
-    }
-  }, [isTransitioning]);
-
-  const previousSlide = useCallback(() => {
-    if (!isTransitioning) {
-      setIsTransitioning(true);
-      setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-      setTimeout(() => setIsTransitioning(false), 500);
+      setTimeout(() => setIsTransitioning(false), 600);
     }
   }, [isTransitioning]);
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 5000);
+    const interval = setInterval(nextSlide, 4000);
     return () => clearInterval(interval);
   }, [nextSlide]);
 
@@ -69,47 +60,10 @@ export default function Carousel() {
                 isGray={true}
                 className="w-full h-full object-cover"
               />
-              {/* <div className="right-0 bottom-0 left-0 absolute bg-gradient-to-t from-black/60 to-transparent p-6 text-white">
-                <h3 className="mb-2 font-bold text-xl">{slide.title}</h3>
-                <p className="opacity-90 text-sm">{slide.description}</p>
-              </div> */}
             </div>
           </div>
         ))}
       </div>
-      
-      {/* <button
-        onClick={previousSlide}
-        className="top-1/2 left-4 z-20 absolute flex justify-center items-center bg-white/30 hover:bg-white/40 disabled:opacity-50 backdrop-blur-sm rounded-full w-10 h-10 transition-colors -translate-y-1/2 disabled:cursor-not-allowed"
-        disabled={isTransitioning}
-        aria-label="Previous slide"
-      >
-        <ChevronLeft className="w-6 h-6 text-white" />
-      </button> */}
-      
-      {/* <button
-        onClick={nextSlide}
-        className="top-1/2 right-4 z-20 absolute flex justify-center items-center bg-white/30 hover:bg-white/40 disabled:opacity-50 backdrop-blur-sm rounded-full w-10 h-10 transition-colors -translate-y-1/2 disabled:cursor-not-allowed"
-        disabled={isTransitioning}
-        aria-label="Next slide"
-      >
-        <ChevronRight className="w-6 h-6 text-white" />
-      </button> */}
-      
-      {/* <div className="bottom-4 left-1/2 z-20 absolute flex gap-2 -translate-x-1/2">
-        {slides.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => !isTransitioning && setCurrentSlide(index)}
-            className={`h-2 w-2 rounded-full transition-colors ${
-              currentSlide === index ? 'bg-white' : 'bg-white/50'
-            }`}
-            aria-label={`Go to slide ${index + 1}`}
-          >
-            <span className="sr-only">Go to slide {index + 1}</span>
-          </button>
-        ))}
-      </div> */}
     </div>
   );
 }

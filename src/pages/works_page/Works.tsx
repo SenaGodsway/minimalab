@@ -1,4 +1,4 @@
-import Header from "../../components/new_header"
+import Header from "../../components/header"
 import Footer from "../../components/footer"
 import Gallery from "../landing_page/gallery"
 import GetQuotes from "../../components/reuseable/get_quotes"

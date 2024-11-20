@@ -1,5 +1,5 @@
 import Footer from "../../components/footer"
-import Header from "../../components/new_header"
+import Header from "../../components/header"
 
 import { Layout, Code, Search, PenTool, BarChart, HelpCircle } from 'lucide-react'
 import GetQuotes from "../../components/reuseable/get_quotes"
