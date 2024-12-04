@@ -57,16 +57,16 @@ interface Projects {
 
   ];
   
-const Gallery: React.FC = () => {
+const Works: React.FC = () => {
 
     const [selectedFeature, setSelectedFeature] = useState<Projects | null>(null)
-
+  // const [isGray, setIsGray]= useState(true)
   return (
     // <div className="flex justify-center items-center">
-      <div className="mx-auto w-10/12">
+      <div className="mx-auto w-full md:w-10/12">
 
         <div className='gap-16 grid grid-cols-1 md:grid-cols-2'>
-        {projects.map((project, index) => (
+        {projects.map((project) => (
         //   <section key={project.id} className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8`}>
       
           <section key={project.id} className='container'>
@@ -78,8 +78,10 @@ const Gallery: React.FC = () => {
                 <ImageComponent 
                 src={project.imageSrc}
                 alt={project.title}
-                isGray={true}
+                isGray={false}
                 className='h-[400px]'
+                // className={`rounded-2xl w-full h-[400px] hover:${setIsGray(!isGray)}`}
+
                 />
               </motion.div>
             </div>
@@ -102,17 +104,11 @@ const Gallery: React.FC = () => {
               >
                 <X className="w-4 h-4" />
               </button>
-              {/* <img
-                src={selectedFeature.imageSrc}
-                alt={selectedFeature.title}
-                width={1200}
-                height={800}
-                className="rounded-2xl w-full h-64 object-cover"
-              /> */}
+           
                 <ImageComponent 
                  src={selectedFeature.imageSrc}
                  alt={selectedFeature.title}
-                isGray={true}
+                isGray={false}
                  className="rounded-2xl w-full h-64 object-cover"
                 />
               <h2 className="font-bold text-4xl">{selectedFeature.title}</h2>
@@ -128,4 +124,4 @@ const Gallery: React.FC = () => {
   );
 };
 
-export default Gallery;
+export default Works;

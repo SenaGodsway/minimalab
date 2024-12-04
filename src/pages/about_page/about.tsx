@@ -1,5 +1,5 @@
 import Footer from "../../components/footer"
-import Header from "../../components/new_header"
+import Header from "../../components/header"
 import GetQuotes from "../../components/reuseable/get_quotes"
 import FAQSection from "../landing_page/faq"
 import TeamSection from "../landing_page/team_section"
@@ -11,9 +11,6 @@ const About = () => {
       <Header/>
        <div className="my-24"> 
        <header className="space-y-4 text-center">
-          {/* <div className="inline-block border-gray-900 px-3 py-1 border text-sm">
-            LIFE-CHANGING UPDATE
-          </div> */}
           <h1 className="font-bold text-5xl">About Us</h1>
           <p className="mx-auto max-w-2xl text-xl">
             Stunning footage. Longer clips. Jaw-dropping moves.

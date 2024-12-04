@@ -1,4 +1,3 @@
-import { Sparkles } from 'lucide-react'
 import galOne from '../../assets/images/01.jpg'
 import galTwo from '../../assets/images/02.jpg'
 import galThree from '../../assets/images/03.jpg'

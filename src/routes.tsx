@@ -1,7 +1,7 @@
 import {Route,Routes } from 'react-router-dom'
 import LandingPage from './pages/landing_page/landing_page'
 import About from './pages/about_page/about'
-import Works from './pages/works_page/Works'
+import Works from './pages/works_page/works_page'
 import Services from './pages/services_page/services'
 import NewContact from './pages/new_contact_page/ContactForm'
 

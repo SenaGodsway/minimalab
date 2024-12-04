@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 import { Sparkles, Clapperboard, Footprints, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -66,13 +64,6 @@ export default function Introducing() {
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                {/* <img
-                  src={feature.imageSrc}
-                  alt={feature.title}
-                  width={600}
-                  height={400}
-                  className="rounded-2xl"
-                /> */}
                 <ImageComponent 
                 src={feature.imageSrc}
                 alt={feature.title}
@@ -108,13 +99,6 @@ export default function Introducing() {
               >
                 <X className="w-4 h-4" />
               </button>
-              {/* <img
-                src={selectedFeature.imageSrc}
-                alt={selectedFeature.title}
-                width={1200}
-                height={800}
-                className="rounded-2xl w-full h-64 object-cover"
-              /> */}
                 <ImageComponent 
                  src={selectedFeature.imageSrc}
                  alt={selectedFeature.title}
