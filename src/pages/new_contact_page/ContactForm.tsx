@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { ArrowLeft, Layout, Code, Search, PenTool, BarChart, HelpCircle } from 'lucide-react'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
-
+import Circle from '../../components/reuseable/gradient_cirle'
 interface FormData {
   firstName: string
   lastName: string
@@ -56,10 +56,7 @@ export default function NewContact() {
     <>
       <Header/>
       <div className="flex flex-col items-center bg-white p-6 min-h-screen">
-        {/* <div className="bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 mb-8 rounded-full w-12 h-12" /> */}
-        <div className="bg-gradient-to-r from-black via-gray-500 to-white mb-8 rounded-full w-12 h-12" />
-
-
+      <Circle/>
         {step === 1 && (
           <div className="space-y-3 p-4 rounded-lg w-full max-w-sm">
             <h1 className="mb-2 font-bold text-2xl">How big is your team?</h1>
@@ -67,15 +64,7 @@ export default function NewContact() {
             <div className="font-medium text-gray-900 text-lg">
               {value}-1000 people
             </div>
-            {/* <input
-              type="range"
-              min={1}
-              max={1000}
-              value={value}
-              onChange={handleChange}
-              className="[&::-moz-range-thumb]:h-5 [&::-moz-range-thumb]:w-5 [&::-moz-range-thumb]:border-2 [&::-moz-range-thumb]:border-white [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-white bg-slate-200 [&::-moz-range-thumb]:bg-black [&::-webkit-slider-thumb]:bg-black [&::-moz-range-thumb]:shadow [&::-webkit-slider-thumb]:shadow rounded-lg [&::-moz-range-thumb]:rounded-full [&::-webkit-slider-thumb]:rounded-full w-full [&::-webkit-slider-thumb]:w-5 h-2 [&::-webkit-slider-thumb]:h-5 cursor-pointer appearance-none [&::-webkit-slider-thumb]:appearance-none"
-              aria-label="Select number of people"
-            /> */}
+      
 
           <input
         type="range"

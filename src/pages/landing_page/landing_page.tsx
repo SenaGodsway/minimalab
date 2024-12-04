@@ -6,7 +6,7 @@ import LogoCarousel from "../logo_carousel"
 
 // import detail from '../../assets/images/thisisengineering--GoKFTYnRoQ-unsplash.jpg'
 import TeamSection from "./team_section"
-import Gallery from "./new_gallery"
+import Works from "./works_section"
 import Footer from "../../components/footer"
 import Introducing from "../introucing/introducing"
 import HeroSection from "./hero_section"
@@ -14,6 +14,7 @@ import GetQuotes from "../../components/reuseable/get_quotes"
 import ImageComponent from "../../components/ImageCompnent"
 import AllServices from "../services_page/all_services"
 import Header from "../../components/header"
+import Testimonials from "./testimonials"
 const LandingPage = () => {
   return (
     <div className="relative">
@@ -75,59 +76,11 @@ const LandingPage = () => {
       <div className='py-8 text-center'>
           <h1 className='font-semibold text-[30px] text-neutral-900 md:text-[48px]'>Selected Works</h1>
         </div>
-        <Gallery/>
+        <Works/>
     </div>
-
-
-    {/* <div className="bg-gray-50 py-12 md:py-14">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="text-center">
-          <h2 className="font-semibold text-[30px] text-neutral-900 md:text-[48px]">Testimonials</h2>
-        </div>
-
-        <div className="sm:gap-x-6 lg:gap-x-8 space-y-8 sm:space-y-0 sm:grid sm:grid-cols-3 mt-10 sm:mt-16">
-
-            <div className="bg-white shadow px-6 py-10 rounded-lg text-center overflow-hidden">
-            <Quote className="block mx-auto mb-6 text-8xl rotate-180" />
-
-              <p className="text-[16px] text-neutral-600">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam et pulvinar augue.
-              </p>
-              <div className="mt-6 text-center">
-                <p className="font-medium text-neutral-500">Name - Title</p>
-              </div>
-            </div>
-
-            <div className="bg-white shadow px-6 py-10 rounded-lg text-center overflow-hidden">
-            <Quote className="block mx-auto mb-6 text-8xl rotate-180" />
-
-              <p className="text-[16px] text-neutral-600">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam et pulvinar augue.
-              </p>
-              <div className="mt-6 text-center">
-                <p className="font-medium text-neutral-500">Name - Title</p>
-
-              </div>
-            </div>
-
-            <div className="bg-white shadow px-6 py-10 rounded-lg text-center overflow-hidden">
-            <Quote className="block mx-auto mb-6 text-8xl rotate-180" />
-
-              <p className="text-[16px] text-neutral-600">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam et pulvinar augue.
-              </p>
-              <div className="mt-6 text-center">
-                <p className="font-medium text-neutral-500">Name - Title</p>
-
-              </div>
-            </div>
-
-        </div>
-      </div>
-    </div> */}
-
-
- 
+    <div className="container">
+      <Testimonials/>
+    </div>
     <Footer/>
     <GetQuotes/>
     </div>
