@@ -29,7 +29,7 @@ export default function Header() {
         <div className="flex justify-between items-center">
           <Link to='/' className="flex items-top gap-2">
             <img src={logo} alt="Logo"  className='rotate-[30deg]'/>
-            <span className="font-semibold text-2xl text-neutral-900">Flow Liquid</span>
+            <span className="font-semibold text-2xl text-neutral-800">MinimaLab</span>
           </Link>
           <nav className="md:flex space-x-6 hidden ml-12">
             {navItems.map((item) => (

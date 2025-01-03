@@ -36,7 +36,7 @@ const Testimonials = () => {
                 {message.message}
               </p>
               <div className="mt-5">
-                <p className="font-medium text-black">{message.author}</p>
+                <p className="font-semibold text-neutral-800">{message.author}</p>
 
               </div>
             </div>

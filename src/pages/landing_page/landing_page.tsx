@@ -81,7 +81,9 @@ const LandingPage = () => {
     <div className="container">
       <Testimonials/>
     </div>
+    <div className="mt-24">
     <Footer/>
+    </div>
     <GetQuotes/>
     </div>
   )
