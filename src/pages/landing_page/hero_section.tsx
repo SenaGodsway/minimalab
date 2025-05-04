@@ -53,9 +53,10 @@ const HeroSection = () => {
      <div className="flex md:flex-row flex-col gap-[24px] pt-6 pl-0 md:pl-6"> 
     <div className="px-6 md:px-12 pt-16 sm:w-full md:w-[45%] text-black">
         <h1 className="mb-12 font-semibold text-[30px] text-black md:text-7xl leading-10">
-            MinimaLab Agency.</h1>
-        <p className="my-6 text-[16px] text-neutral-500">We are a full service lead by a bunch of tech heads and we we build beautiful digital product, brands and experiences </p>
-
+            MinimaLab <br/>
+            Agency
+            </h1>
+        <p className="my-6 text-[16px] text-neutral-500">We bring your ideas to life with tailored solutions designed to elevate your online presence. From stunning website designs and robust development to in-depth UX research, content creation, and SEO optimization, we’ve got you covered.</p>
         <span className='mt-16 w-full'>
             <LinkButton to='/about'>Get To know Us</LinkButton>
         </span>
