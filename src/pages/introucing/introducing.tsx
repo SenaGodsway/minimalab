@@ -49,11 +49,9 @@ export default function Introducing() {
       <div className="space-y-12 mx-auto max-w-4xl">
         <div className='mt-12 p-1'></div>
         <header className="space-y-8 text-center">
-          {/* <h1 className="font-bold text-5xl">Introducing Pika 1.5</h1> */}
-          <h1 className="font-bold text-5xl">Flow Liquid</h1>
+          <h1 className="font-bold text-5xl">Our Capabilities</h1>
           <p className="mx-auto max-w-2xl text-xl">
-            Stunning footage. Longer clips. Jaw-dropping moves.
-            We've got a new model. And you've got the power to do all kinds of wild new things.
+          Take a look at a selection of our projects, where creativity meets innovation. Each piece showcases our commitment to delivering exceptional results and pushing the limits of what's possible.
           </p>
         </header>
       <div className='mt-12 p-1'></div>
@@ -65,10 +63,9 @@ export default function Introducing() {
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <ImageComponent 
-                src={feature.imageSrc}
-                alt={feature.title}
-                isGray={true}
-                />
+                  src={feature.imageSrc}
+                  alt={feature.title}
+                  isGray={true} className={''}                />
               </motion.div>
             </div>
             <div className="flex-1 space-y-4">
