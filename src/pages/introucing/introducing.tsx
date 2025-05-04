@@ -49,7 +49,7 @@ export default function Introducing() {
       <div className="space-y-12 mx-auto max-w-4xl">
         <div className='mt-12 p-1'></div>
         <header className="space-y-8 text-center">
-          <h1 className="font-bold text-5xl">Selected Works</h1>
+          <h1 className="font-bold text-5xl">Our Capabilities</h1>
           <p className="mx-auto max-w-2xl text-xl">
           Take a look at a selection of our projects, where creativity meets innovation. Each piece showcases our commitment to delivering exceptional results and pushing the limits of what's possible.
           </p>

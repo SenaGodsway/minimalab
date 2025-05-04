@@ -61,7 +61,7 @@ const HeroSection = () => {
             <LinkButton to='/about'>Get To know Us</LinkButton>
         </span>
         </div>
-    <div className="mt-6 pl-[-4px] rounded-xl w-full md:w-[50%] h-[40vh] md:h-[70vh] overflow-hidden aspect-square object-cover">
+    <div className="mx-auto mt-6 rounded-xl w-11/12 md:w-[50%] h-[50vh] md:h-[70vh] overflow-hidden">
       <Carousel/>
     </div>
 </div>

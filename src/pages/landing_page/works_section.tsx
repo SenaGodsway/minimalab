@@ -79,7 +79,7 @@ const Works: React.FC = () => {
                 src={project.imageSrc}
                 alt={project.title}
                 isGray={false}
-                className='h-[400px]'
+                className='h-[270px] md:h-[400px]'
                 // className={`rounded-2xl w-full h-[400px] hover:${setIsGray(!isGray)}`}
 
                 />
