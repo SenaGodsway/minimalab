@@ -57,12 +57,11 @@ const HeroSection = () => {
             Agency
             </h1>
         <p className="my-6 text-[16px] text-neutral-500">We bring your ideas to life with tailored solutions designed to elevate your online presence. From stunning website designs and robust development to in-depth UX research, content creation, and SEO optimization, we’ve got you covered.</p>
-
         <span className='mt-16 w-full'>
             <LinkButton to='/about'>Get To know Us</LinkButton>
         </span>
         </div>
-    <div className="pl-[-4px] w-full md:w-[55%] h-[40vh] md:h-[80vh] overflow-hidden aspect-square object-cover">
+    <div className="mt-6 pl-[-4px] rounded-xl w-full md:w-[50%] h-[40vh] md:h-[70vh] overflow-hidden aspect-square object-cover">
       <Carousel/>
     </div>
 </div>
