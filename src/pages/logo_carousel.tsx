@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import logo1 from '../assets/images/brands/logo-1.png'
-import logo2 from '../assets/images/brands/logo-2.png'
-import logo3 from '../assets/images/brands/logo-3.png'
-import logo4 from '../assets/images/brands/logo-4.png'
-import logo5 from '../assets/images/brands/logo-5.png'
-import logo6 from '../assets/images/brands/logo-6.png'
+import logo1 from '../assets/images/brands/langchain.png'
+import logo2 from '../assets/images/brands/python.png'
+import logo3 from '../assets/images/brands/62a74dfe223343fbc2207d02.png'
+import logo4 from '../assets/images/brands/firebase.png'
+import logo5 from '../assets/images/brands/postgresql-logo.png'
+import logo6 from '../assets/images/brands/flutter-brandlogo.net.png'
 
 interface Logo {
   name: string
@@ -60,7 +60,7 @@ export default function LogoCarousel() {
                 <img
                   src={logo.src}
                   alt={`${logo.name} logo`}
-                  className="w-auto h-10 object-contain"
+                  className="w-auto h-14 object-contain"
                 />
               </div>
             ))}

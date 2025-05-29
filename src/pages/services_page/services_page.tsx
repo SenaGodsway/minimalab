@@ -5,10 +5,6 @@ import { Layout, Code, Search, PenTool, BarChart, HelpCircle } from 'lucide-reac
 import GetQuotes from "../../components/reuseable/get_quotes"
 import AllServices from "./all_services"
 
-// import ImageComponent from "../../components/ImageCompnent"
-
-// const image = "https://plus.unsplash.com/premium_photo-1663933533712-eef7095f782b?q=80&w=1530&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-
 const Services = () => {
   const services = [
     { id: 'website-design', title: 'Website design', description: 'I need a website design.', icon: Layout },

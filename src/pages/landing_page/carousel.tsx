@@ -48,7 +48,7 @@ export default function Carousel() {
   }, [nextSlide]);
 
   return (
-    <div className="relative mx-auto w-full">
+    <div className="relative mx-auto w-full h-full">
       <div className="rounded-lg overflow-hidden aspect-[4/3]">
         {slides.map((slide, index) => (
           <div
@@ -61,7 +61,7 @@ export default function Carousel() {
               <ImageComponent
                 src={slide.image}
                 alt={slide.title}
-                isGray={true}
+                isGray={false}
                 className="w-full h-full object-cover"
               />
             </div>
