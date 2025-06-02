@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ChevronUpIcon } from 'lucide-react'
+import { ChevronDownIcon } from 'lucide-react'
 
 interface FAQItem {
   question: string
@@ -46,8 +46,8 @@ const FAQSection: React.FC = () => {
   }
 
   return (
-    <div className="w-full md:w-8/12 mx-auto">
-      <h1 className="mb-8 font-semibold text-[30px] text-center md:text-[48px]">FAQ</h1>
+    <div className="w-full md:w-11/12 mx-auto">
+      <h1 className="mb-8 font-semibold text-[30px] text-center md:text-[40px]">Frequently Asked Questions</h1>
       <div className="space-y-4">
         {faqs.map((faq, index) => (
           <div key={index} className="border rounded-lg cursor-pointer">
@@ -56,7 +56,7 @@ const FAQSection: React.FC = () => {
               onClick={() => toggleFAQ(index)}
             >
               <span className='font-semibold text-[20px] text-neutral-900'>{faq.question}</span>
-              <ChevronUpIcon
+              <ChevronDownIcon
                 className={`w-5 h-5 text-primary transform transition-transform duration-200 ${
                   openIndex === index ? 'rotate-180' : ''
                 }`}

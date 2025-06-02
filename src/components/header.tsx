@@ -24,14 +24,14 @@ export default function Header() {
   ]
 
   return (
-    <header className="bg-white py-6 md:p-0 border-b-[1px]">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="flex justify-between items-center">
-          <Link to='/' className="flex items-top gap-2">
+    <header className="border-b-[1px] bg-white py-6 md:p-0">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
+          <Link to='/' className="items-top flex gap-2">
             <img src={logo} alt="Logo"  className='rotate-[30deg]'/>
-            <span className="font-semibold text-2xl text-neutral-800">MinimaLab</span>
+            <span className="text-2xl font-semibold text-neutral-800">MinimaLab</span>
           </Link>
-          <nav className="md:flex space-x-6 hidden ml-12">
+          <nav className="ml-12 hidden space-x-6 md:flex">
             {navItems.map((item) => (
               <Link
                 key={item.value}
@@ -53,7 +53,7 @@ export default function Header() {
       </div>
       {isMenuOpen && (
         <div className="md:hidden">
-          <div className="space-y-1 px-2 sm:px-3 pt-2 pb-3">
+          <div className="space-y-1 px-2 pb-3 pt-2 sm:px-3">
             {navItems.map((item) => (
               <Link
                 key={item.value}

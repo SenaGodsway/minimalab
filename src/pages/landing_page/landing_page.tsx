@@ -5,12 +5,9 @@ import Footer from "../../components/footer"
 import Introducing from "../introucing/introducing"
 import HeroSection from "./hero_section"
 import GetQuotes from "../../components/reuseable/get_quotes"
-import ImageComponent from "../../components/ImageCompnent"
 import AllServices from "../services_page/all_services"
 import Header from "../../components/header"
 import Testimonials from "./testimonials"
-
-import pipeline_img from '../../assets/images/pipe.png'
 import Pipeline from "./pipeline"
 
 const LandingPage = () => {
@@ -22,7 +19,7 @@ const LandingPage = () => {
       <HeroSection/>
     </div>
 
-    <div className="bg-white mt-24 py-16">
+    <div className="mt-24 bg-white py-16">
         <LogoCarousel/>
     </div>
 
@@ -30,21 +27,19 @@ const LandingPage = () => {
       
       <div className="mt-24">
         <div className="py-6 text-center">
-          <h1 className="font-semibold text-[30px] text-center md:text-[48px]">Our Services</h1>
+          <h1 className="text-center text-[30px] font-semibold md:text-[48px]">Our Services</h1>
         </div>
       <AllServices/>
       </div>
 
-      <div className="mt-24 p-1"></div>
-      <div className="mx-auto mt-24 w-11/12 md:w-10/12" >
-            {/* <h1 className="my-12 font-semibold text-[30px] text-center md:text-[48px]">Details</h1> */}
-        {/* <div> */}
-    <div className="flex md:flex-row flex-col gap-[24px] pl-3 md:pl-12 items-center h-screen">
-      <div className="flex flex-col justify-center gap-10 pr-0 md:pr-8 w-full md:w-1/2">
-      <h1 className="font-semibold text-[30px] text-left md:text-[40px]">Project Pipeline</h1>
+      
+      <div className="mx-auto mt-48 w-11/12 md:w-10/12" >
+    <div className="flex h-screen flex-col items-end gap-[24px] pl-3 md:flex-row md:pl-12">
+      <div className="flex w-full flex-col justify-center gap-10 pr-0 md:w-1/2 md:pr-8">
+      <h1 className="text-left text-[30px] font-semibold md:text-[40px]">Project Pipeline</h1>
        
        <div className="container">
-       <p className="text-[16px] text-neutral-600 leading-[28px]">
+       <p className="text-[16px] leading-[28px] text-neutral-600">
           Transform ideas into reality with seamless, scalable solutions. Our tools streamline development, reduce friction, and accelerate delivery—so you can focus on what matters most: building the future. 
         </p>
        </div>
@@ -52,24 +47,24 @@ const LandingPage = () => {
         <Pipeline/>
        </div>
       </div>
-      <div className="relative border-2 rounded-2xl w-full h-fit md:w-1/2 overflow-hidden">
+      <div className="relative max-h-screen w-full overflow-hidden rounded-2xl border-2 md:w-1/2">
         <video
-        className="h-full"
+        className="!h-full w-full"
         autoPlay
         loop
-         src="https://cdn.dribbble.com/userupload/18414846/file/original-819b877a4c2923c0ace851053359c1b3.mp4"/>
+         src="https://cdn.dribbble.com/userupload/43529816/file/large-b6dfcce9ba730e46ddcc64b64b3fae8b.mp4"/>
     
       </div>
     </div>
          </div>
 
-    <div className="p-6 md:p-16">
+    <div className="mt-24 p-6 md:p-16">
       <div className='py-8 text-center'>
-          <h1 className='font-semibold text-[30px] text-neutral-900 md:text-[48px]'>Selected Works</h1>
+          <h1 className='text-[30px] font-semibold text-neutral-900 md:text-[48px]'>Selected Works</h1>
         </div>
         <Works/>
     </div>
-    <div className="container mx-auto">
+    <div className="container mx-auto mt-12">
       <Testimonials/>
     </div>
     <div className="mt-24">

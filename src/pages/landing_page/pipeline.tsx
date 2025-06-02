@@ -15,19 +15,20 @@ const Pipeline: React.FC = () => {
   ]
 
   return (
-    <div className="grid grid-cols-2 gap-6">
-      {processes.map((process, index) => {
+    <div className="flex flex-col gap-3">
+      {processes.map((process) => {
         const IconComponent = process.icon;
         return (
           <div 
             key={process.id}
-            onMouseEnter={() => setHoveredProcess(process.id)}
+            onMouseEnter = {() => setHoveredProcess(process.id)}
             onMouseLeave={() => setHoveredProcess(null)}
-            className="relative border px-3 py-6 flex flex-col gap-3 rounded"
+            className="relative flex flex-row gap-3 overflow-hidden rounded border px-3 py-4"
           >
             <motion.span
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.2 }}
+              
             >
               <IconComponent size={24} />
             </motion.span>
@@ -36,10 +37,10 @@ const Pipeline: React.FC = () => {
             {/* Show description on hover */}
             {hoveredProcess === process.id && (
               <motion.p
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="absolute top-full left-0 bg-gray-800 text-white p-2 rounded shadow-lg z-10"
+                initial={{ opacity: 0, y: 0 }}
+                animate={{ opacity: 1, y: 0 }} // <-- Fixed opacity value
+                exit={{ opacity: 0, y: 0 }}
+                className="absolute left-0 top-0 z-10 h-full w-full rounded bg-gray-800 p-2 text-white shadow-lg"
               >
                 {process.description}
               </motion.p>
