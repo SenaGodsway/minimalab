@@ -13,7 +13,7 @@ const Footer = () => {
       </div>
 
       <div className='p-6 text-[18px] text-center'> 
-        <p>all rights reseved @2024</p>
+        <p>All rights reseved MinimaLab @2025</p>
       </div>
     </div>
   )

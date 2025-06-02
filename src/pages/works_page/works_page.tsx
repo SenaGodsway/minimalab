@@ -1,8 +1,7 @@
 import Header from "../../components/header"
 import Footer from "../../components/footer"
-import Gallery from "../landing_page/gallery"
 import GetQuotes from "../../components/reuseable/get_quotes"
-
+import WorkSection from "../landing_page/works_section"
 
 export default function Works() {
   
@@ -11,7 +10,7 @@ export default function Works() {
     <Header/>
         <div className="my-12"> 
        <header className="space-y-4 text-center">
-          <h1 className="font-bold text-5xl">Our Works</h1>
+          <h1 className="text-5xl font-bold">Our Works</h1>
           <p className="mx-auto max-w-2xl text-xl">
             Stunning footage. Longer clips. Jaw-dropping moves.
             We've got a new model. And you've got the power to do all kinds of wild new things.
@@ -20,7 +19,8 @@ export default function Works() {
         </header>
        </div>
        <div className="mx-auto my-12 w-[90%]">
-        <Gallery/>
+      
+        <WorkSection/>
        </div>
     <Footer/>
     <GetQuotes/>

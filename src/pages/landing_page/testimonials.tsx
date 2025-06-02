@@ -4,19 +4,14 @@ const Testimonials = () => {
     const messages =[
         {
             id:1,
-            author:"John Doe",
-            message:"The guys are so awesome, professionals and thay go about thier duty with integrity",
+            author:"Norbert Aberor ",
+            message:"Partnering with this team was a game-changer. They didn’t just build our AI-powered mobile app—they helped shape the entire product vision. From the sleek UI to the intelligent features, everything was executed with precision. Highly recommended!”",
         },
         {
             id:2,
-            author:"Maddie Doe",
-            message:"The guys are so awesome, professionals and thay go about thier duty with integrity",
+            author:"Sena Godsway",
+            message:"Their process is seamless, transparent, and deeply collaborative. We came in with an idea, and they delivered a full-stack AI web solution that exceeded expectations. The team’s expertise in cloud and AI integration is unmatched.",
         },
-        // {
-        //     id:3,
-        //     author:"Isaiah Doe",
-        //     message:"The guys are so awesome, professionals and thay go about thier duty with integrity",
-        // }
     ]
   return (
        <div className="mx-auto py-12 md:py-14 w-full md:w-9/12">
