@@ -90,6 +90,7 @@ const Works: React.FC = () => {
                 transition={{ type: "spring", stiffness: 300 }}
                 className="relative h-[400px] overflow-hidden rounded"
               >
+
                 <video
                   ref={el => videoRefs.current[index] = el}
                   src={project.videoSrc}
@@ -97,6 +98,7 @@ const Works: React.FC = () => {
                   loop
                   className="h-full w-full object-cover"
                   preload="auto"
+
                 />
                 <div className="absolute bottom-2 left-2">
                   <h3 className="rounded-full bg-black px-6 py-2 text-xl font-bold text-white">{project.title}</h3>
@@ -152,6 +154,7 @@ const Works: React.FC = () => {
 }
 
 export default Works
+
 // import {  X } from 'lucide-react'
 // import ImageComponent from '../../components/ImageCompnent'
 // import { motion, AnimatePresence } from 'framer-motion'
