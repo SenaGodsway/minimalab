@@ -49,7 +49,7 @@ export default function Carousel() {
 
   return (
     <div className="relative mx-auto w-full">
-      <div className="rounded-lg overflow-hidden aspect-[4/3]">
+      <div className="rounded-lg aspect-[4/3] overflow-hidden">
         {slides.map((slide, index) => (
           <div
             key={index}
