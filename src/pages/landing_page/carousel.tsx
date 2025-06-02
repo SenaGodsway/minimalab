@@ -48,8 +48,8 @@ export default function Carousel() {
   }, [nextSlide]);
 
   return (
-    <div className="relative mx-auto w-full">
-      <div className="rounded-lg aspect-[4/3] overflow-hidden">
+    <div className="relative mx-auto h-full w-full">
+      <div className="aspect-[4/3] overflow-hidden rounded-lg">
         {slides.map((slide, index) => (
           <div
             key={index}
@@ -57,12 +57,12 @@ export default function Carousel() {
               currentSlide === index ? "opacity-100 z-10" : "opacity-0 z-0"
             }`}
           >
-            <div className="relative w-full h-full overflow-hidden">
+            <div className="relative h-full w-full overflow-hidden">
               <ImageComponent
                 src={slide.image}
                 alt={slide.title}
-                isGray={true}
-                className="w-full h-full object-cover"
+                isGray={false}
+                className="h-full w-full object-cover"
               />
             </div>
           </div>
