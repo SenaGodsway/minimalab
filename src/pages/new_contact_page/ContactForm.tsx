@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowLeft, Layout, Code, Search, PenTool, BarChart, HelpCircle } from 'lucide-react'
+import { Layout, Code, Search, PenTool, BarChart, HelpCircle } from 'lucide-react'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
 import Circle from '../../components/reuseable/gradient_cirle'
@@ -42,11 +42,7 @@ export default function NewContact() {
     setFormData({ ...formData, service: serviceId })
   }
 
-  const [value, setValue] = useState(1)
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(Number(event.target.value))
-  }
+ 
 
   const getSelectedService = () => {
     return services.find(service => service.id === formData.service)
@@ -55,17 +51,17 @@ export default function NewContact() {
   return (
     <>
       <Header/>
-      <div className="flex flex-col items-center bg-white p-6 min-h-screen">
+      <div className="flex min-h-screen flex-col items-center bg-white p-6">
       <Circle/>
 
 
 
         {step === 1 && (
           <div className="w-full max-w-md">
-            <h1 className="mb-2 font-bold text-2xl">What do you need help with?</h1>
+            <h1 className="mb-2 text-2xl font-bold">What do you need help with?</h1>
             <p className="mb-8 text-gray-600">We're a full service agency with experts ready to help.</p>
 
-            <div className="gap-4 grid grid-cols-2">
+            <div className="grid grid-cols-2 gap-4">
               {services.map(service => (
                 <button
                   key={service.id}
@@ -74,9 +70,9 @@ export default function NewContact() {
                     formData.service === service.id ? 'border-black' : 'hover:border-gray-400'
                   }`}
                 >
-                  <service.icon className="mb-2 w-6 h-6" />
+                  <service.icon className="mb-2 h-6 w-6" />
                   <div className="font-medium">{service.title}</div>
-                  <div className="text-gray-600 text-sm">{service.description}</div>
+                  <div className="text-sm text-gray-600">{service.description}</div>
                 </button>
               ))}
             </div>
@@ -85,66 +81,66 @@ export default function NewContact() {
 
         {step === 2 && (
         <div className="w-full max-w-md">
-          <h1 className="mb-2 font-bold text-2xl">How do we get in touch?</h1>
+          <h1 className="mb-2 text-2xl font-bold">How do we get in touch?</h1>
           <p className="mb-8 text-gray-600">Leave us your details and we'll reach out within 24 hours!</p>
           
           <div className="space-y-6">
-            <div className="gap-4 grid grid-cols-2">
+            <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block mb-2 text-sm">First name</label>
+                <label className="mb-2 block text-sm">First name</label>
                 <input
                   type="text"
                   name="firstName"
                   value={formData.firstName}
                   onChange={handleInputChange}
-                  className="p-3 border rounded-lg w-full"
+                  className="w-full rounded-lg border p-3"
                   placeholder="First name"
                 />
               </div>
               <div>
-                <label className="block mb-2 text-sm">Last name</label>
+                <label className="mb-2 block text-sm">Last name</label>
                 <input
                   type="text"
                   name="lastName"
                   value={formData.lastName}
                   onChange={handleInputChange}
-                  className="p-3 border rounded-lg w-full"
+                  className="w-full rounded-lg border p-3"
                   placeholder="Last name"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block mb-2 text-sm">Email</label>
+              <label className="mb-2 block text-sm">Email</label>
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="p-3 border rounded-lg w-full"
+                className="w-full rounded-lg border p-3"
                 placeholder="you@company.com"
               />
             </div>
 
             <div>
-              <label className="block mb-2 text-sm">Phone number</label>
+              <label className="mb-2 block text-sm">Phone number</label>
               <input
                 type="tel"
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className="p-3 border rounded-lg w-full"
+                className="w-full rounded-lg border p-3"
                 placeholder="+1 (555) 000-0000"
               />
             </div>
 
             <div>
-              <label className="block mb-2 text-sm">Message</label>
+              <label className="mb-2 block text-sm">Message</label>
               <textarea
                 name="message"
                 value={formData.message}
                 onChange={handleInputChange}
-                className="p-3 border rounded-lg w-full"
+                className="w-full rounded-lg border p-3"
                 rows={4}
                 placeholder="Leave us a message..."
               />
@@ -154,81 +150,30 @@ export default function NewContact() {
       )}    
 
 
+
         {step === 3 && (
-          <div className="space-y-3 p-4 rounded-lg w-full max-w-sm">
-            <h1 className="mb-2 font-bold text-2xl">How big is your team?</h1>
-            <p className="mb-8 text-gray-600">Leave us your details and we'll reach out within 24 hours!</p>
-            <div className="font-medium text-gray-900 text-lg">
-              {value}-1000 people
-            </div>
-      
-
-          <input
-        type="range"
-        min={1}
-        max={1000}
-        value={value}
-        onChange={handleChange}
-        className="bg-gray-200 rounded-full w-full h-2 cursor-pointer appearance-none"
-        style={{
-          background: `linear-gradient(to right, 
-            #000 0%, 
-            #000 ${(value - 1) / 10}%, 
-            #e5e7eb ${(value - 1) / 10}%, 
-            #e5e7eb 100%)`,
-        }}
-      />
-      <style>{`
-        input[type='range']::-webkit-slider-thumb {
-          -webkit-appearance: none;
-          appearance: none;
-          width: 16px;
-          height: 16px;
-          background: #000;
-          border-radius: 50%;
-          cursor: pointer;
-        }
-        input[type='range']::-moz-range-thumb {
-          width: 16px;
-          height: 16px;
-          background: #000;
-          border-radius: 50%;
-          cursor: pointer;
-          border: none;
-        }
-      `}</style>
-
-            <div className="flex justify-between text-gray-900 text-md">
-              <span>1</span>
-              <span>1000</span>
-            </div>
-          </div>
-        )}
-
-
-        {step === 4 && (
-        <div className="bg-white p-6 rounded-lg w-full max-w-md">
-        <h2 className="mb-4 font-bold text-2xl text-center">Congratulations</h2>
+        <div className="w-full max-w-md rounded-lg bg-white p-6">
+        <h2 className="mb-4 text-center text-2xl font-bold">Congratulations</h2>
         <p className="mb-4 text-center text-gray-600">We're excited to help you with your <span className="font-medium">{getSelectedService()?.title}</span> project!</p>
        
       </div>
         )}
 
-        <div className="flex justify-between gap-60 bg-white mt-6 p-6">
+        <div className="mt-6 flex justify-between gap-60 bg-white p-6">
         {
           step > 1 ?  <button
             onClick={() => setStep(prev => prev < 4 ? prev - 1 : prev)}
-            className="bg-gray-200 px-6 py-2 rounded-full text-black"
+            className="rounded-full bg-gray-200 px-6 py-2 text-black"
           >
             Go back
           </button>: ''
         }
         
           <button
-            onClick={() => setStep(prev => prev < 4 ? prev + 1 : prev)}
-            className="bg-black hover:bg-gray-800 px-6 py-2 rounded-full text-white"
+            onClick={() => setStep(prev => prev < 3 ? prev + 1 : prev)}
+            className="rounded-full bg-black px-6 py-2 text-white hover:bg-gray-800"
           >
-            {step === 4 ? 'Finish' : 'Next step'}
+            {step === 3 ? 'Finish' : 'Next step'}
           </button>
         </div>
       </div>
