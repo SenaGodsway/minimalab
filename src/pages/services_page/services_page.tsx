@@ -9,10 +9,10 @@ const Services = () => {
         <Header/>
         <div className="my-12">
         <header className="space-y-4 text-center">
-          <h1 className="font-bold text-5xl">Our Services</h1>
+          <h1 className="text-5xl font-bold">Our Services</h1>
           <p className="mx-auto max-w-2xl text-xl">
             Stunning footage. Longer clips. Jaw-dropping moves.
-            We've got a new model. And you've got the power to do all kinds of wild new things.
+            We have got a new model. And you got the power to do all kinds of wild new things.
           </p>
         </header>
         </div>
