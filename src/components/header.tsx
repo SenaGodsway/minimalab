@@ -25,11 +25,11 @@ export default function Header() {
 
   return (
     <header className="border-b-[1px] bg-white py-1 md:p-0">
-      <div className="mx-auto max-w-7xl px-4 py-2 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <Link to='/' className="items-top flex gap-2">
             <img src={logo} alt="Logo" className='rotate-[30deg]'/>
-            <span className="text-2xl font-semibold text-[#28AE9E]">MinimaLab</span>
+            <span className="text-2xl font-semibold ">MinimaLab</span>
           </Link>
           <nav className="ml-12 hidden space-x-6 md:flex">
             {navItems.map((item) => (

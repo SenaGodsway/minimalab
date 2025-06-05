@@ -9,8 +9,6 @@ const SelectService = () => {
       <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
         {Object.values(Services).map((service: Service) => {
           const IconComponent = service.icon;
-        
-          
           return (
             <div 
               key={service.id} 
