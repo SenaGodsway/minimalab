@@ -28,7 +28,7 @@ const Pipeline: React.FC = () => {
             <motion.span
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.2 }}
-              
+              className='text-[#28AE9E]'
             >
               <IconComponent size={24} />
             </motion.span>
@@ -38,9 +38,9 @@ const Pipeline: React.FC = () => {
             {hoveredProcess === process.id && (
               <motion.p
                 initial={{ opacity: 0, y: 0 }}
-                animate={{ opacity: 1, y: 0 }} // <-- Fixed opacity value
+                animate={{ opacity: 1, y: 0 }} 
                 exit={{ opacity: 0, y: 0 }}
-                className="absolute left-0 top-0 z-10 h-full w-full rounded bg-gray-800 p-2 text-white shadow-lg"
+                className="absolute left-0 top-0 z-10 h-full w-full rounded bg-gray-800 p-4 text-white shadow-lg"
               >
                 {process.description}
               </motion.p>

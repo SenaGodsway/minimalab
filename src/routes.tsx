@@ -3,7 +3,8 @@ import LandingPage from './pages/landing_page/landing_page'
 import About from './pages/about_page/about_us'
 import Works from './pages/works_page/works_page'
 import Services from './pages/services_page/services_page'
-import NewContact from './pages/new_contact_page/ContactForm'
+import NewContact from './pages/contact_page/ContactPage'
+
 
 
 const AppRoutes = () => {
