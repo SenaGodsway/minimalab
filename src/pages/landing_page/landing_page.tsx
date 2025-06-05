@@ -53,6 +53,7 @@ const LandingPage = () => {
         autoPlay
         loop
          src="https://cdn.dribbble.com/userupload/18414846/file/original-819b877a4c2923c0ace851053359c1b3.mp4"/>
+
     
       </div>
     </div>

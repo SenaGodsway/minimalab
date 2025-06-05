@@ -63,7 +63,8 @@ export default function Header() {
       </div>
       {isMenuOpen && (
         <div className="absolute h-[100vh] w-full bg-white md:hidden">
-          <div className="space-y-1 px-2 pb-3 pt-12 pt-2 sm:px-3">
+          <div className="space-y-1 px-2 pb-3 pt-12 sm:px-3">
+
             {navItems.map((item) => (
               <Link
                 key={item.value}
