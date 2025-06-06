@@ -1,4 +1,3 @@
-import React from 'react';
 import { services, type Service } from './services'; 
 
 const AllServices: React.FC = () => {
@@ -9,8 +8,8 @@ const AllServices: React.FC = () => {
       {Object.values(services).map((service: Service) => {
         const IconComponent = service.icon;
         return (
-          <div key={service.id} className="border-g flex flex-grow flex-col gap-4 rounded-lg border-2 px-4 py-8 text-left transition-all hover:border-[#28AE9E] hover:shadow-lg">
-            <IconComponent size={30} className='text-[#28AE9E]' />
+          <div key={service.id} className="border-g flex flex-grow flex-col gap-4 rounded-lg border-2 px-4 py-8 text-left transition-all hover:border-black hover:shadow-lg">
+            <IconComponent size={30} className='text-black' />
             <p className='font-bold'>{service.title}</p>
             <p className='text-black/80'>{service.description}</p>
             </div>
