@@ -52,7 +52,8 @@ const LandingPage = () => {
         className="!h-full w-full"
         autoPlay
         loop
-         src="https://cdn.dribbble.com/userupload/43529816/file/large-b6dfcce9ba730e46ddcc64b64b3fae8b.mp4"/>
+         src="https://cdn.dribbble.com/userupload/18414846/file/original-819b877a4c2923c0ace851053359c1b3.mp4"/>
+
     
       </div>
     </div>

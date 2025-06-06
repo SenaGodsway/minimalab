@@ -43,10 +43,8 @@ export default function Introducing() {
   const [selectedFeature, setSelectedFeature] = useState<Feature | null>(null)
 
   return (
-    // #d5ffe57c, #7dfba337
-    // <div className="relative min-h-screen bg-[#ffefd5] p-8 text-gray-900">
     <div className="relative min-h-screen p-8 text-gray-900">
-      <div className="mx-auto max-w-4xl space-y-12">
+      <div className="mx-auto max-w-4xl space-y-12 md:max-w-4xl lg:w-9/12">
         <div className='mt-12 p-1'></div>
         <header className="space-y-8 text-center">
           <h1 className="text-5xl font-bold">Our Capabilities</h1>
