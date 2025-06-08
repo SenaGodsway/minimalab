@@ -58,8 +58,8 @@ export default function NewContact() {
             <SelectService 
               onServiceSelect={handleServiceSelect}
               selectedService={selectedService}
-            />}
-
+            />
+  
           </div>
         )}
 
@@ -68,8 +68,9 @@ export default function NewContact() {
             onFormChange={handleFormChange}
             initialValues={formData}
           />
+        
         )}    
-
+      
         <div className="mt-6 flex justify-between gap-14 md:gap-60  bg-white p-6">
 
           {step > 1 && (

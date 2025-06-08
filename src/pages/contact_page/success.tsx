@@ -1,5 +1,6 @@
 import Footer from "../../components/footer"
 import Header from "../../components/header"
+import Circle from "../../components/reuseable/gradient_cirle"
 
 
 const Success = () => {
@@ -7,6 +8,9 @@ const Success = () => {
     <>
     <Header/>
      <div className="w-full max-w-md mx-auto mt-36 rounded-lg bg-white p-6">
+     <div className="flex justify-center mb-6">
+      <Circle/>
+     </div>
             <h2 className="mb-4 text-center text-2xl font-bold">Congratulations</h2>
             <p className="mb-4 text-center text-gray-600">
               We&apos;re excited to help you with your project!
