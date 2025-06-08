@@ -14,9 +14,8 @@ const LandingPage = () => {
   return (
     <div className="relative">
     <Header/>
-
     <div className="w-full">
-      <HeroSection/>
+    <HeroSection/>
     </div>
 
     <div className="mt-24 bg-white py-16">
