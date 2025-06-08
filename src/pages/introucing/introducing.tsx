@@ -99,7 +99,7 @@ export default function Introducing() {
                 <ImageComponent 
                  src={selectedFeature.imageSrc}
                  alt={selectedFeature.title}
-                isGray={true}
+                isGray={false}
                  className="h-64 w-full rounded-2xl object-cover"
                 />
               <h2 className="text-4xl font-bold">{selectedFeature.title}</h2>
