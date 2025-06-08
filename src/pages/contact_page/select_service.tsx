@@ -22,6 +22,7 @@ const SelectService = ({ onServiceSelect, selectedService }: SelectServiceProps)
               className={`flex flex-grow flex-col gap-4 rounded-lg border-2 px-4 py-8 text-left transition-all cursor-pointer
                 ${isSelected 
                   ? 'border-gray-800 shadow-lg ' 
+
                   : 'border-gray-200 hover:border-black hover:shadow-lg'}`}
             >
               <IconComponent 

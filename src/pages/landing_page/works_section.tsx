@@ -96,7 +96,6 @@ const Works: React.FC = () => {
               >
                 <X className="h-6 w-6" />
               </button>
-
               <ImageComponent 
                 src={selectedFeature.imageSrc}
                 alt={selectedFeature.title}
