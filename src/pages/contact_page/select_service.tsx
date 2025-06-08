@@ -21,12 +21,13 @@ const SelectService = ({ onServiceSelect, selectedService }: SelectServiceProps)
               onClick={() => onServiceSelect(service.id)}
               className={`flex flex-grow flex-col gap-4 rounded-lg border-2 px-4 py-8 text-left transition-all cursor-pointer
                 ${isSelected 
-                  ? 'border-[#28AE9E] shadow-lg bg-[#f0f9f8]' 
+                  ? 'border-gray-800 shadow-lg ' 
+
                   : 'border-gray-200 hover:border-black hover:shadow-lg'}`}
             >
               <IconComponent 
                 size={30} 
-                className={isSelected ? 'text-[#28AE9E]' : ''} 
+                className={isSelected ? 'text-gray-700' : ''} 
               />
               <p className='font-bold'>{service.title}</p>
               <p className='text-gray-600'>{service.description}</p>

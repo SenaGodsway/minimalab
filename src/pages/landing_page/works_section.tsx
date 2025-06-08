@@ -73,7 +73,7 @@ const Works: React.FC = () => {
                   src={project.imageSrc}
                   alt={project.title}
                   isGray={false}
-                  className='h-[400px] rounded'
+                  className=' h-[250px] w-full md:h-[400px] rounded'
                 />
               </motion.div>
             </div>
@@ -87,24 +87,23 @@ const Works: React.FC = () => {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-0 z-50 overflow-y-auto bg-[#ffffff]"
+            className="fixed inset-0 z-50 pt-6 pb-20 overflow-y-auto bg-[#ffffff]"
           >
             <div className="mx-auto max-w-4xl space-y-8 p-4">
               <button
                 onClick={() => setSelectedFeature(null)}
                 className="absolute right-4 top-4 rounded-full p-2 text-black transition-colors hover:bg-black hover:text-white"
               >
-                <X className="h-4 w-4" />
+                <X className="h-6 w-6" />
               </button>
-           
               <ImageComponent 
                 src={selectedFeature.imageSrc}
                 alt={selectedFeature.title}
                 isGray={false}
-                className="h-64 w-full rounded-2xl object-cover"
+                className="h-64 mt-4 w-full rounded-2xl object-cover"
               />
               <h2 className="text-4xl font-bold">{selectedFeature.title}</h2>
-              <p className="text-xl">{selectedFeature.content}</p>
+              <p className="text-xl text-black/90">{selectedFeature.content}</p>
             </div>
           </motion.div>
         )}

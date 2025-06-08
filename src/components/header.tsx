@@ -24,7 +24,7 @@ export default function Header() {
 
   return (
     <header className="border-b-[1px] bg-white py-1 md:p-0">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 md:py-0 py-2 sm:py-2 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           <Link to='/' className="items-top flex gap-2">
             <img src={logo} alt="Logo" className='rotate-[30deg]'/>
@@ -61,14 +61,14 @@ export default function Header() {
         </div>
       </div>
       {isMenuOpen && (
-        <div className="absolute h-[100vh] w-full bg-white md:hidden">
+        <div className="absolute h-[100vh] w-full bg-white z-50 md:hidden">
           <div className="space-y-1 px-2 pb-3 pt-12 sm:px-3">
             {navItems.map((item) => (
               <Link
                 key={item.value}
                 to={`/${item.value.toLowerCase()}`}
                 onClick={() => setIsMenuOpen(false)}
-                className={`block hover:bg-gray-50 px-3 py-2 rounded-md font-medium text-base ${
+                className={`block hover:bg-gray-50 px-3 py-2 text-xl rounded-md font-medium ${
                   location.pathname === `/${item.value.toLowerCase()}`
                     ? 'bg-gray-100'
                     : 'text-gray-700 hover:text-gray-900'
