@@ -12,7 +12,8 @@ const Footer = () => {
         <Link to="/" className='text-3xl'><FaLinkedin/></Link>
       </div>
 
-      <div className='mb-14 p-6 text-center text-[18px]'> 
+      <div className='mb-14 flex flex-col gap-4 p-6 text-center text-[18px]'> 
+        <p>info@minimalab.com</p>
         <p>All rights reseved. MinimaLab @2024</p>
       </div>
     </div>

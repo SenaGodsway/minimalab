@@ -1,14 +1,14 @@
-import Footer from "../../components/footer"
-import Header from "../../components/header"
-import Circle from "../../components/reuseable/gradient_cirle"
+import Footer from "../../components/footer";
+import Header from "../../components/header";
+import Circle from "../../components/reuseable/gradient_cirle";
 
 
 const Success = () => {
   return (
     <>
     <Header/>
-     <div className="w-full max-w-md mx-auto mt-36 rounded-lg bg-white p-6">
-     <div className="flex justify-center mb-6">
+     <div className="mx-auto mt-36 w-full max-w-md rounded-lg bg-white p-6">
+     <div className="mb-6 flex justify-center">
       <Circle/>
      </div>
             <h2 className="mb-4 text-center text-2xl font-bold">Congratulations</h2>
