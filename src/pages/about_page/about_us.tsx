@@ -4,8 +4,11 @@ import TeamSection from "../landing_page/team_section";
 import FAQSection from "../landing_page/faq";
 import aboutImg from "../../assets/images/freepik__candid-image-photography-natural-textures-highly-r__22368.jpeg";
 import GetQuotes from "../../components/reuseable/get_quotes";
+import Footer from "../../components/footer";
+
 
 const AboutUs: React.FC = () => {
+  
   return (
     <>
       <Header />
@@ -42,6 +45,7 @@ const AboutUs: React.FC = () => {
       <div className="mx-auto mt-48 w-11/12">
         <FAQSection />
       </div>
+      <Footer/>
       <GetQuotes/>
     </>
   );

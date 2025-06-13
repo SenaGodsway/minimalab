@@ -1,213 +1,236 @@
 import { useState } from 'react'
-import { Layout, Code, Search, PenTool, BarChart, HelpCircle } from 'lucide-react'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
 import Circle from '../../components/reuseable/gradient_cirle'
 import SelectService from './select_service'
 import Form from './form'
-import Success from './success'
+import { UserService } from '../../expose_db'
 
+interface FormData {
+  email: string;
+  firstname: string;
+  lastname: string;
+  message: string;
+  service: string;
+  telephone: number;
+}
 
 export default function NewContact() {
   const [step, setStep] = useState(1)
-  // const handleServiceSelect = (serviceId: string) => {
-  //   setFormData({ ...formData, service: serviceId })
-  // }
+  const [selectedService, setSelectedService] = useState<string | undefined>(undefined)
+  const [formData, setFormData] = useState<Partial<FormData>>({})
+  const [showSuccess, setShowSuccess] = useState(false)
 
-  // const getSelectedService = () => {
-  //   return services.find(service => service.id === formData.service)
-  // }
+  const handleServiceSelect = (serviceId: string) => {
+    setSelectedService(serviceId)
+    setFormData(prev => ({ ...prev, service: serviceId }))
+  }
+
+  const handleFormChange = (data: Partial<FormData>) => {
+    setFormData(prev => ({ ...prev, ...data }))
+  }
+
+  const handleFormSubmit = async () => {
+    if (!selectedService || !formData.email) {
+      console.error('Required fields missing')
+      return
+    }
+
+    try {
+      console.log('Submitting form:', { ...formData, service: selectedService })
+      await UserService.addQuote({ ...formData, service: selectedService })
+      setShowSuccess(true) // Show success modal instead of navigating
+      console.log('Form submitted successfully')
+    } catch (error) {
+      console.error('Submission failed:', error)
+    }
+  }
+
+  const closeSuccessModal = () => {
+    setShowSuccess(false)
+  }
 
   return (
     <>
       <Header/>
-      <div className="flex min-h-screen flex-col items-center bg-white p-6">
+      <div className="relative flex min-h-screen flex-col items-center bg-white p-6">
         <Circle/>
 
         {step === 1 && (
-          <SelectService />
+          <div>
+            <SelectService 
+              onServiceSelect={handleServiceSelect}
+              selectedService={selectedService}
+            />
+          </div>
         )}
 
         {step === 2 && (
-          <Form/>
+          <Form 
+            onFormChange={handleFormChange}
+            initialValues={formData}
+          />
         )}    
-
-        {step === 3 && (
-        <Success/>
-        )}
-
-        <div className="mt-6 flex justify-between gap-60 bg-white p-6">
+      
+        <div className="mt-6 flex justify-between gap-14 bg-white p-6 md:gap-60">
           {step > 1 && (
             <button
               onClick={() => setStep(prev => prev - 1)}
-              className="rounded-full bg-gray-200 px-6 py-2 text-black"
+              className="block max-w-full rounded-full bg-gray-200 px-6 py-2 text-black"
             >
               Go back
             </button>
           )}
           
-          <button
-            onClick={() => {
-              if (step < 3) {
-                setStep(prev => prev + 1)
-              } else {
-                // Submit form or navigate away
-                console.log('Form submitted:', formData)
-              }
-            }}
-            className="rounded-full bg-black px-6 py-2 text-white hover:bg-gray-800"
-          >
-            {step === 3 ? (<a href='/'>Go to homepage</a>) : 'Next step'}
-          </button>
+          {step === 2 ? (
+            <button
+              onClick={handleFormSubmit}
+              className="rounded-full bg-black px-6 py-2 text-white hover:bg-gray-800"
+            >
+              Submit
+            </button>
+          ) : (
+            <button
+              onClick={() => selectedService && setStep(prev => prev + 1)}
+              disabled={!selectedService}
+              className="rounded-full bg-black px-6 py-2 text-white hover:bg-gray-800 disabled:opacity-50"
+            >
+              Next
+            </button>
+          )}
         </div>
+
+        {/* Success Modal/Popup */}
+        {showSuccess && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+            <div className="w-full max-w-md rounded-lg bg-white p-6">
+              <div className="text-center">
+                <svg className="mx-auto h-12 w-12 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <h3 className="mt-2 text-lg font-medium text-gray-900">Success!</h3>
+                <div className="mt-2 text-sm text-gray-500">
+                  <p>Your form has been submitted successfully.</p>
+                </div>
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none"
+                    onClick={closeSuccessModal}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <Footer/>
     </>
   )
 }
 
-
 // import { useState } from 'react'
-// import { Layout, Code, Search, PenTool, BarChart, HelpCircle } from 'lucide-react'
+// import { useNavigate } from 'react-router-dom'
 // import Header from '../../components/header'
 // import Footer from '../../components/footer'
 // import Circle from '../../components/reuseable/gradient_cirle'
 // import SelectService from './select_service'
+// import Form from './form'
+// import { UserService } from '../../expose_db'
+
 // interface FormData {
-//   firstName: string
-//   lastName: string
-//   email: string
-//   phone: string
-//   message: string
-//   service: string
+//   email: string;
+//   firstname: string;
+//   lastname: string;
+//   message: string;
+//   service: string;
+//   telephone: number;
 // }
 
 // export default function NewContact() {
+//   const navigate = useNavigate()
 //   const [step, setStep] = useState(1)
-//   const [formData, setFormData] = useState<FormData>({
-//     firstName: '',
-//     lastName: '',
-//     email: '',
-//     phone: '',
-//     message: '',
-//     service: ''
-//   })
+//   const [selectedService, setSelectedService] = useState<string | undefined>(undefined)
+//   const [formData, setFormData] = useState<Partial<FormData>>({})
 
-
-//   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-//     setFormData({ ...formData, [e.target.name]: e.target.value })
+//   const handleServiceSelect = (serviceId: string) => {
+//     setSelectedService(serviceId)
+//     setFormData(prev => ({ ...prev, service: serviceId }))
 //   }
 
+//   const handleFormChange = (data: Partial<FormData>) => {
+//     setFormData(prev => ({ ...prev, ...data }))
+//   }
 
+//   const handleFormSubmit = async () => {
+//     if (!selectedService || !formData.email) {
+//       console.error('Required fields missing')
+//       return
+//     }
+
+//     try {
+//       console.log('Submitting form:', { ...formData, service: selectedService })
+//       await UserService.addQuote({ ...formData, service: selectedService })
+//       navigate('/success')  
+//       console.log('Form submitted successfully')
+//     } catch (error) {
+//       console.error('Submission failed:', error)
+//     }
+//   }
 
 //   return (
 //     <>
 //       <Header/>
 //       <div className="flex min-h-screen flex-col items-center bg-white p-6">
-//       <Circle/>
-
-
+//         <Circle/>
 
 //         {step === 1 && (
-//             <SelectService/>
+//           <div>
+//             <SelectService 
+//               onServiceSelect={handleServiceSelect}
+//               selectedService={selectedService}
+//             />
+  
+//           </div>
 //         )}
 
 //         {step === 2 && (
-//         <div className="w-full max-w-md">
-//           <h1 className="mb-2 text-2xl font-bold">How do we get in touch?</h1>
-//           <p className="mb-8 text-gray-600">Leave us your details and we'll reach out within 24 hours!</p>
-          
-//           <div className="space-y-6">
-//             <div className="grid grid-cols-2 gap-4">
-//               <div>
-//                 <label className="mb-2 block text-sm">First name</label>
-//                 <input
-//                   type="text"
-//                   name="firstName"
-//                   value={formData.firstName}
-//                   onChange={handleInputChange}
-//                   className="w-full rounded-lg border p-3"
-//                   placeholder="First name"
-//                 />
-//               </div>
-//               <div>
-//                 <label className="mb-2 block text-sm">Last name</label>
-//                 <input
-//                   type="text"
-//                   name="lastName"
-//                   value={formData.lastName}
-//                   onChange={handleInputChange}
-//                   className="w-full rounded-lg border p-3"
-//                   placeholder="Last name"
-//                 />
-//               </div>
-//             </div>
-
-//             <div>
-//               <label className="mb-2 block text-sm">Email</label>
-//               <input
-//                 type="email"
-//                 name="email"
-//                 value={formData.email}
-//                 onChange={handleInputChange}
-//                 className="w-full rounded-lg border p-3"
-//                 placeholder="you@company.com"
-//               />
-//             </div>
-
-//             <div>
-//               <label className="mb-2 block text-sm">Phone number</label>
-//               <input
-//                 type="tel"
-//                 name="phone"
-//                 value={formData.phone}
-//                 onChange={handleInputChange}
-//                 className="w-full rounded-lg border p-3"
-//                 placeholder="+1 (555) 000-0000"
-//               />
-//             </div>
-
-//             <div>
-//               <label className="mb-2 block text-sm">Message</label>
-//               <textarea
-//                 name="message"
-//                 value={formData.message}
-//                 onChange={handleInputChange}
-//                 className="w-full rounded-lg border p-3"
-//                 rows={4}
-//                 placeholder="Leave us a message..."
-//               />
-//             </div>
-//           </div>
-//         </div>
-//       )}    
-
-
-
-//         {step === 3 && (
-//         <div className="w-full max-w-md rounded-lg bg-white p-6">
-//         <h2 className="mb-4 text-center text-2xl font-bold">Congratulations</h2>
-//         <p className="mb-4 text-center text-gray-600">We're excited to help you with your <span className="font-medium">{getSelectedService()?.title}</span> project!</p>
-       
-//       </div>
-//         )}
-
-//         <div className="mt-6 flex justify-between gap-60 bg-white p-6">
-//         {
-//           step > 1 ?  <button
-//             onClick={() => setStep(prev => prev < 3 ? prev - 1 : prev)}
-//             className="rounded-full bg-gray-200 px-6 py-2 text-black"
-//           >
-//             Go back
-//           </button>: ''
-//         }
+//           <Form 
+//             onFormChange={handleFormChange}
+//             initialValues={formData}
+//           />
         
-//           <button
-//             onClick={() => setStep(prev => prev < 3 ? prev + 1 : prev)}
-//             className="rounded-full bg-black px-6 py-2 text-white hover:bg-gray-800"
-//           >
-//             {step === 3 ? 'Finish' : 'Next step'}
-//           </button>
+//         )}    
+      
+//         <div className="mt-6 flex justify-between gap-14 bg-white p-6 md:gap-60">
+
+//           {step > 1 && (
+//             <button
+//               onClick={() => setStep(prev => prev - 1)}
+//               className="block max-w-full rounded-full bg-gray-200 px-6 py-2 text-black"
+//             >
+//               Go back
+//             </button>
+//           )}
+          
+//           {step === 2 ? (
+//             <button
+//               onClick={handleFormSubmit}
+//               className="rounded-full bg-black px-6 py-2 text-white hover:bg-gray-800"
+//             >
+//               Submit
+//             </button>
+//           ) : (
+//             <button
+//               onClick={() => selectedService && setStep(prev => prev + 1)}
+//               disabled={!selectedService}
+//               className="rounded-full bg-black px-6 py-2 text-white hover:bg-gray-800 disabled:opacity-50"
+//             >
+//               Next
+//             </button>
+//           )}
 //         </div>
 //       </div>
 //       <Footer/>
