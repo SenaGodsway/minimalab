@@ -26,6 +26,7 @@ export const UserService = {
       lastName: doc.data().lastName,
       message: doc.data().message,
       telephone: doc.data().telephone,
+      service: doc.data().service || '' 
     }))
     console.log("Email TO:", snapshot.docs.map(doc => doc.data().email))
   },
@@ -35,42 +36,3 @@ export const UserService = {
     return docRef.id
   }
 }
-
-
-
-// // src/services/userService.ts
-// import { db } from './firebase';
-// import { addDoc, collection, getDocs } from 'firebase/firestore';
-// import { Quotes } from './types';
-
-// // Correct collection reference - just point to 'customer-quotes'
-// const messageCollection = collection(db, 'customer-quotes');
-
-// export const UserService = {
-//   async getQuoteMessages(): Promise<Quotes[]> {
-//     const snapshot = await getDocs(messageCollection);
-    
-//     const quotes = snapshot.docs.map(doc => {
-//       const data = doc.data();
-//       return {
-//         id: doc.id,
-//         email: data.email,
-//         firstName: data.firstname, 
-//         lastName: data.lastname,  
-//         message: data.message,
-//         telephone: data.telephone,
-
-//       };
-//     });
-    
-//     console.log('Fetched quotes:', quotes);
-//     return quotes;
-//   },
-
-//     async addQuote(quote: Omit<Quotes, 'id'>): Promise<string> {
-//     const docRef = await addDoc(messageCollection, quote);
-//     return docRef.id;
-//   }
-// };
-
-
