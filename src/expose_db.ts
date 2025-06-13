@@ -7,7 +7,7 @@ interface Quote {
   firstName: string;
   lastName: string;
   message: string;
-  telephone: string;
+  phone: string;
 }
 
 const messageCollection = collection(db, 'customer-quotes')
@@ -25,7 +25,7 @@ export const UserService = {
       firstName: doc.data().firstName,
       lastName: doc.data().lastName,
       message: doc.data().message,
-      telephone: doc.data().telephone,
+      phone: doc.data().phone,
       service: doc.data().service || '' 
     }))
     console.log("Email TO:", snapshot.docs.map(doc => doc.data().email))
