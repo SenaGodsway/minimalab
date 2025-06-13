@@ -4,7 +4,7 @@ interface FormData {
   firstName: string;
   lastName: string;
   email: string;
-  phone: string;
+  telephone: string;
   message: string;
   service: string;
 }
@@ -22,7 +22,7 @@ const Form: React.FC<FormProps> = ({ initialData, onFormChange, onFormSubmit }) 
     firstName: '',
     lastName: '',
     email: '',
-    phone: '',
+    telephone: '',
     message: '',
     service: '',
     ...initialData, // Spread any initial data passed via props
@@ -96,7 +96,7 @@ const Form: React.FC<FormProps> = ({ initialData, onFormChange, onFormSubmit }) 
           <input
             type="tel"
             name="phone"
-            value={formData.phone}
+            value={formData.telephone}
             onChange={handleInputChange}
             className="w-full rounded-lg border p-3"
             placeholder="+1 (555) 000-0000"
