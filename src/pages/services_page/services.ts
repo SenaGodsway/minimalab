@@ -8,12 +8,7 @@ interface Service {
   icon: LucideIcon;
 }
 
-// Define the services object type
-type ServicesObject = {
-  [key: string]: Service;
-}
 
-// Or use a more specific type with exact keys
 type ServiceKeys = 'ai-apps' | 'web-apps' | 'uiux-design' | 'cloud-dev' | 'data-management' | 'software-maintainance' | 'mobile-apps-development';
 
 type ServicesMap = {
