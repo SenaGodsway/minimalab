@@ -38,7 +38,7 @@ export default function NewContact() {
     }
 
     try {
-      console.log('Submitting form:', { ...formData, service: selectedService })
+      console.log('Submitting form:', { ...formData, selectedService })
       await UserService.addQuote({ ...formData, service: selectedService })
       setShowSuccess(true)
       console.log('Form submitted successfully')

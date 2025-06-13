@@ -25,7 +25,7 @@ export const UserService = {
       firstName: doc.data().firstName,
       lastName: doc.data().lastName,
       message: doc.data().message,
-      telephone: doc.data().telephone
+      telephone: doc.data().telephone,
     }))
     console.log("Email TO:", snapshot.docs.map(doc => doc.data().email))
   },
