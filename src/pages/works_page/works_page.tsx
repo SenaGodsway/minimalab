@@ -11,7 +11,7 @@ export default function Works() {
         <div className="my-12"> 
        <header className="space-y-4 text-center">
           <h1 className="text-5xl font-bold">Our Works</h1>
-          <p className="mx-auto max-w-2xl text-xl">
+          <p className="mx-auto w-11/12 md:max-w-2xl text-xl">
             Stunning footage. Longer clips. Jaw-dropping moves.
             We've got a new model. And you've got the power to do all kinds of wild new things.
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim odio natus id mollitia tempore fugit praesentium ut corrupti ipsa molestias!
