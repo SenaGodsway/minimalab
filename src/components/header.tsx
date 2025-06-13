@@ -3,7 +3,7 @@ import { MenuIcon, X } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import logo from "../assets/images/Untitled.svg"
 
-export default function Header() {
+export default function AppHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const location = useLocation()
 

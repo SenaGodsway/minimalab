@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
 import Circle from '../../components/reuseable/gradient_cirle'
@@ -17,10 +16,11 @@ interface FormData {
 }
 
 export default function NewContact() {
-  const navigate = useNavigate()
   const [step, setStep] = useState(1)
   const [selectedService, setSelectedService] = useState<string | undefined>(undefined)
   const [formData, setFormData] = useState<Partial<FormData>>({})
+  const [showSuccess, setShowSuccess] = useState(false)
+
 
   const handleServiceSelect = (serviceId: string) => {
     setSelectedService(serviceId)
@@ -40,17 +40,21 @@ export default function NewContact() {
     try {
       console.log('Submitting form:', { ...formData, service: selectedService })
       await UserService.addQuote({ ...formData, service: selectedService })
-      navigate('/success')  
+      setShowSuccess(true) // Show success modal instead of navigating
       console.log('Form submitted successfully')
     } catch (error) {
       console.error('Submission failed:', error)
     }
   }
 
+  const closeSuccessModal = () => {
+    setShowSuccess(false)
+  }
+
   return (
     <>
       <Header/>
-      <div className="flex min-h-screen flex-col items-center bg-white p-6">
+      <div className="relative flex min-h-screen flex-col items-center bg-white p-6">
         <Circle/>
 
         {step === 1 && (
@@ -59,7 +63,6 @@ export default function NewContact() {
               onServiceSelect={handleServiceSelect}
               selectedService={selectedService}
             />
-  
           </div>
         )}
 
@@ -71,12 +74,12 @@ export default function NewContact() {
         
         )}    
       
-        <div className="mt-6 flex justify-between gap-14 md:gap-60  bg-white p-6">
+        <div className="mt-6 flex justify-between gap-14 bg-white p-6 md:gap-60">
 
           {step > 1 && (
             <button
               onClick={() => setStep(prev => prev - 1)}
-              className="rounded-full block max-w-full  bg-gray-200 px-6 py-2 text-black"
+              className="block max-w-full rounded-full bg-gray-200 px-6 py-2 text-black"
             >
               Go back
             </button>
@@ -99,6 +102,32 @@ export default function NewContact() {
             </button>
           )}
         </div>
+
+        {/* Success Modal/Popup */}
+        {showSuccess && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+            <div className="w-full max-w-md rounded-lg bg-white p-6">
+              <div className="text-center">
+                <svg className="mx-auto h-12 w-12 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+                <h3 className="mt-2 text-lg font-medium text-gray-900">Success!</h3>
+                <div className="mt-2 text-sm text-gray-500">
+                  <p>Your form has been submitted successfully.</p>
+                </div>
+                <div className="mt-4">
+                  <button
+                    type="button"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-800 focus:outline-none"
+                    onClick={closeSuccessModal}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
       <Footer/>
     </>
