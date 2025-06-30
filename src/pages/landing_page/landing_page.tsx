@@ -12,13 +12,13 @@ import Pipeline from "./pipeline"
 
 const LandingPage = () => {
   return (
-    <div className="relative">
+    <div className="relative box-border">
     <Header/>
     <div className="w-full">
     <HeroSection/>
     </div>
 
-    <div className="mt-4 bg-white py-16">
+    <div className="mx-auto mt-12 bg-white py-16 md:w-full">
         <LogoCarousel/>
     </div>
 
@@ -33,7 +33,7 @@ const LandingPage = () => {
 
 
       <div className="mx-auto mt-48 w-11/12 md:w-10/12" >
-    <div className="flex md:max-h-screen flex-col items-end gap-[24px] pl-3 md:flex-row md:pl-12">
+    <div className="flex flex-col items-end gap-[24px] pl-3 md:max-h-screen md:flex-row md:pl-12">
       <div className="flex w-full flex-col justify-center gap-10 pr-0 md:w-1/2 md:pr-8">
       <h1 className="text-left text-[30px] font-semibold md:text-[40px]">Project Pipeline</h1>
 
@@ -47,7 +47,7 @@ const LandingPage = () => {
        </div>
       </div>
 
-      <div className="relative sm:h-[40vh] md:h-full w-full overflow-hidden rounded-2xl md:w-1/2">
+      <div className="relative w-full overflow-hidden rounded-2xl sm:h-[40vh] md:h-full md:w-1/2">
         <video
         className="!h-full w-full"
         autoPlay

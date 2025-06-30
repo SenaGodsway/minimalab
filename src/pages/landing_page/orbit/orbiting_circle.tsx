@@ -1,12 +1,22 @@
-"use client";
-
 import { useEffect, useState, useRef } from "react";
 // Import actual images from the project assets
 import image1 from "../../../assets/images/1.jpg";
-import image4 from "../../../assets/images/4.jpg";
-import profileImage2 from "../../../assets/images/freepik__candid-image-photography-natural-textures-highly-r__22369.jpeg";
-import profileImage3 from "../../../assets/images/freepik__candid-image-photography-natural-textures-highly-r__22370.jpeg";
-import profileImage4 from "../../../assets/images/freepik__candid-image-photography-natural-textures-highly-r__22371.jpeg";
+import image2 from "../../../assets/images/4.jpg";
+import image4 from "../../../assets/images/brands/PostgresSQL.png";
+import profileImage2 from "../../../assets/images/brands/python.png";
+import profileImage3 from "../../../assets/images/3.jpg";
+import profileImage4 from "../../../assets/images/brands/firebase.png";
+import profileImage5 from "../../../assets/images/brands/AWS.png";
+import profileImage6 from "../../../assets/images/brands/Android.png";
+import profileImage7 from "../../../assets/images/brands/Kubernetes.png";
+import profileImage8 from "../../../assets/images/2.jpg";
+import profileImage9 from "../../../assets/images/brands/Azios.png";
+import profileImage10 from "../../../assets/images/brands/Docker.png";
+import profileImage11 from "../../../assets/images/brands/Raspberry Pi.png";
+import profileImage12 from "../../../assets/images/brands/Rust.png";
+import profileImage13 from "../../../assets/images/brands/Next.js.png";
+import profileImage14 from "../../../assets/images/brands/Svelte.png";
+import profileImage15 from "../../../assets/images/brands/MongoDB.png";
 import { Brain } from "lucide-react";
 
 // Define proper types for orbit items
@@ -27,8 +37,8 @@ export default function OrbitingCircle() {
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({
-    width: 400,
-    height: 400,
+    width: 380,
+    height: 380,
   });
 
   useEffect(() => {
@@ -86,51 +96,65 @@ export default function OrbitingCircle() {
   const innermostOrbitItems: OrbitItem[] = [
 
     {
-      type: "icon",
-      content: "💎",
-    },
-    {
-        type: "profile",
-        src: profileImage2,
-        alt: "Profile 4",
-    },
-      {
       type: "profile",
-      src: profileImage2,
-      alt: "Profile 4",
+      src: image1,
+      alt : "image1",
     },
+     {
+      type: "profile",
+      src: image4,
+      alt : "image1",
+    },
+   
 
   ];
 
   // Inner orbit items
   const innerOrbitItems: OrbitItem[] = [
-    {
-      type: "profile",
-      src: image1,
-      alt: "Profile 1",
-    },
-    // {
-    //   type: "icon",
-    //   content: "💬",
-    // },
-    {
+     {
         type: "profile",
         src: profileImage2,
         alt: "Profile 4",
+    },
+    {
+        type: "profile",
+        src: profileImage3,
+        alt: "Profile 4",
       },
+      {
+        type: "profile",
+        src: profileImage4,
+        alt: "Profile 4",
+      },
+      {
+        type: "profile",
+        src: profileImage5,
+        alt: "Profile 4",
+      },
+     
 
   ];
 
   // Outer orbit items
   const outerOrbitItems: OrbitItem[] = [
-
-    {
-      type: "icon",
-      content: "🚀",
-    },
+     {
+        type: "profile",
+        src: profileImage6,
+        alt: "Profile 4",
+      },
     {
       type: "profile",
-      src: profileImage2,
+      src: profileImage7,
+      alt: "Profile 4",
+    },
+     {
+      type: "profile",
+      src: profileImage8,
+      alt: "Profile 4",
+    },
+     {
+      type: "profile",
+      src: profileImage9,
       alt: "Profile 4",
     },
 
@@ -141,30 +165,45 @@ export default function OrbitingCircle() {
   const outermostOrbitItems: OrbitItem[] = [
     {
       type: "profile",
-      src: profileImage3,
+      src: profileImage10,
       alt: "Profile 6",
     },
     {
       type: "profile",
-      src: profileImage4,
+      src: profileImage11,
       alt: "Profile 7",
     },
     {
-      type: "icon",
-      content: "🔥",
+      type: "profile",
+      src: profileImage12,
+      alt: "Profile 8",
     },
     {
       type: "profile",
-      src: image4,
+      src: profileImage13,
       alt: "Profile 8",
     },
-
+     {
+      type: "profile",
+      src: profileImage14,
+      alt: "Profile 8",
+    },
+     {
+      type: "profile",
+      src: profileImage15,
+      alt: "Profile 8",
+    },
+    {
+      type: "profile",
+      src: image2,
+      alt: "Profile 8",
+    },
   ];
 
   if (!mounted) {
     return (
-      <div className="w-full h-full bg-gradient-to-br flex items-center justify-center">
-        <div className="text-black text-2xl font-bold">20k+</div>
+      <div className="flex h-full w-full items-center justify-center bg-gradient-to-br">
+        <div className="text-2xl font-bold text-black">20k+</div>
       </div>
     );
   }
@@ -172,7 +211,7 @@ export default function OrbitingCircle() {
   return (
     <div
       ref={containerRef}
-      className="w-full h-full bg-gradient-to-br  flex items-center justify-center relative"
+      className="relative box-border flex h-full w-full items-center justify-center bg-gradient-to-br"
       style={{
         minHeight: "200px",
         aspectRatio: "1",
@@ -286,7 +325,7 @@ export default function OrbitingCircle() {
       <div className="absolute inset-0 flex items-center justify-center">
         {/* Innermost orbit ring */}
         <div
-          className="absolute border border-gray-400/40 rounded-full"
+          className="absolute rounded-full border border-gray-400/40"
           style={{
             width: radii.innermost * 2,
             height: radii.innermost * 2,
@@ -294,7 +333,7 @@ export default function OrbitingCircle() {
         ></div>
         {/* Inner orbit ring */}
         <div
-          className="absolute border border-gray-400/30 rounded-full"
+          className="absolute rounded-full border border-gray-400/30"
           style={{
             width: radii.inner * 2,
             height: radii.inner * 2,
@@ -302,7 +341,7 @@ export default function OrbitingCircle() {
         ></div>
         {/* Outer orbit ring */}
         <div
-          className="absolute border border-gray-400/25 rounded-full"
+          className="absolute rounded-full border border-gray-400/25"
           style={{
             width: radii.outer * 2,
             height: radii.outer * 2,
@@ -310,7 +349,7 @@ export default function OrbitingCircle() {
         ></div>
         {/* Outermost orbit ring */}
         <div
-          className="absolute border border-gray-400/20 rounded-full"
+          className="absolute rounded-full border border-gray-400/20"
           style={{
             width: radii.outermost * 2,
             height: radii.outermost * 2,
@@ -321,11 +360,11 @@ export default function OrbitingCircle() {
       {/* Central content */}
       <div className="relative z-10 text-center text-black">
         <div
-          className="font-bold mb-1 "
+          className="mb-1 font-bold"
           style={{ fontSize: `${Math.max(containerSize.width * 0.12, 24)}px` }}
         >
-          {/* <BrainCircuit className="w-10 h-10" /> */}
-          <Brain className="w-10 h-10" />
+          {/* <BrainCircuit className="h-10 w-10" /> */}
+          <Brain className="h-10 w-10" />
         </div>
         <div
           className="font-medium opacity-90"
@@ -349,7 +388,7 @@ export default function OrbitingCircle() {
             >
               {item.type === "profile" ? (
                 <div
-                  className="rounded-full overflow-hidden border-2 border-white/20 shadow-lg"
+                  className="overflow-hidden rounded-full border-2 border-white/20 shadow-lg"
                   style={{
                     width: itemSizes.small,
                     height: itemSizes.small,
@@ -358,12 +397,12 @@ export default function OrbitingCircle() {
                   <img
                     src={item.src}
                     alt={item.alt}
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
                   />
                 </div>
               ) : (
                 <div
-                  className="bg-black/40 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/10 shadow-lg"
+                  className="flex items-center justify-center rounded-xl border border-white/10 bg-black/40 shadow-lg backdrop-blur-sm"
                   style={{
                     width: itemSizes.small,
                     height: itemSizes.small,
@@ -392,7 +431,7 @@ export default function OrbitingCircle() {
             >
               {item.type === "profile" ? (
                 <div
-                  className="rounded-full overflow-hidden border-2 border-white/20 shadow-lg"
+                  className="overflow-hidden rounded-full border-2 border-white/20 shadow-lg"
                   style={{
                     width: itemSizes.large,
                     height: itemSizes.large,
@@ -401,12 +440,12 @@ export default function OrbitingCircle() {
                   <img
                     src={item.src}
                     alt={item.alt}
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
                   />
                 </div>
               ) : (
                 <div
-                  className="bg-black/40 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/10 shadow-lg"
+                  className="flex items-center justify-center rounded-2xl border border-white/10 bg-black/40 shadow-lg backdrop-blur-sm"
                   style={{
                     width: itemSizes.large,
                     height: itemSizes.large,
@@ -435,7 +474,7 @@ export default function OrbitingCircle() {
             >
               {item.type === "profile" ? (
                 <div
-                  className="rounded-full overflow-hidden border-2 border-white/20 shadow-lg"
+                  className="overflow-hidden rounded-full border-2 border-white/20 shadow-lg"
                   style={{
                     width: itemSizes.large,
                     height: itemSizes.large,
@@ -444,12 +483,12 @@ export default function OrbitingCircle() {
                   <img
                     src={item.src}
                     alt={item.alt}
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
                   />
                 </div>
               ) : (
                 <div
-                  className="bg-black/40 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/10 shadow-lg"
+                  className="flex items-center justify-center rounded-2xl border border-white/10 bg-black/40 shadow-lg backdrop-blur-sm"
                   style={{
                     width: itemSizes.large,
                     height: itemSizes.large,
@@ -478,7 +517,7 @@ export default function OrbitingCircle() {
             >
               {item.type === "profile" ? (
                 <div
-                  className="rounded-full overflow-hidden border-2 border-white/20 shadow-lg"
+                  className="overflow-hidden rounded-full border-2 border-white/20 shadow-lg"
                   style={{
                     width: itemSizes.large,
                     height: itemSizes.large,
@@ -487,12 +526,12 @@ export default function OrbitingCircle() {
                   <img
                     src={item.src}
                     alt={item.alt}
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
                   />
                 </div>
               ) : (
                 <div
-                  className="bg-black/40 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/10 shadow-lg"
+                  className="flex items-center justify-center rounded-2xl border border-white/10 bg-black/40 shadow-lg backdrop-blur-sm"
                   style={{
                     width: itemSizes.large,
                     height: itemSizes.large,
