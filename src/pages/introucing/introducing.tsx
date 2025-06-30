@@ -55,16 +55,17 @@ export default function Introducing() {
       <div className='mt-12 p-1'></div>
         {features.map((feature, index) => (
           <section key={feature.id} className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8`}>
-            <div className="my-12 mb-12 flex-1 cursor-pointer" onClick={() => setSelectedFeature(feature)}>
+            <div className="my-12 mb-12 aspect-[16/9] flex-1 cursor-pointer" onClick={() => setSelectedFeature(feature)}>
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
+                className="mx-auto h-full w-11/12"
               >
-                <ImageComponent 
+                <ImageComponent
                 src={feature.imageSrc}
                 alt={feature.title}
                 isGray={false}
-                className='rounded-2xl'
+                className='object-fit h-full w-full rounded-xl'
                 />
               </motion.div>
             </div>
@@ -79,7 +80,7 @@ export default function Introducing() {
         ))}
       </div>
 
-        
+
       <AnimatePresence>
         {selectedFeature && (
           <motion.div
@@ -96,7 +97,7 @@ export default function Introducing() {
               >
                 <X className="h-4 w-4" />
               </button>
-                <ImageComponent 
+                <ImageComponent
                  src={selectedFeature.imageSrc}
                  alt={selectedFeature.title}
                 isGray={false}
