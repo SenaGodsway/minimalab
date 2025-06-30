@@ -60,6 +60,7 @@ export default function Introducing() {
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
                 className="mx-auto h-full w-11/12"
+
               >
                 <ImageComponent
                 src={feature.imageSrc}

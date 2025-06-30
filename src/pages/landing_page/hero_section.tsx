@@ -4,6 +4,7 @@ import OrbitingCircle from "./orbit/orbiting_circle";
 const HeroSection = () => {
   return (
     <div className="flex flex-col items-center gap-[0px] pl-0 pt-12 md:flex-row md:pl-6 md:pt-6">
+
       <div className="px-6 pt-16 text-black sm:w-full md:w-[45%] md:px-12">
         <h1 className="mb-12 text-[30px] font-semibold leading-10 text-black md:text-4xl">
           We Build Intelligent Digital Experiences — Engineering the Future with
