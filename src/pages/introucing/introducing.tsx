@@ -3,6 +3,7 @@ import { Sparkles, Clapperboard, Footprints, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import ImageComponent from '../../components/ImageCompnent'
 
+
 interface Feature {
   id: number
   title: string
@@ -18,7 +19,7 @@ const features: Feature[] = [
     title: "Solution Driven Development (SDD)",
     description: "We don’t just build software—we solve your toughest business challenges with Solution-Driven Development (SDD), our proven approach that delivers faster, smarter, and more impactful results than traditional development methods.",
     icon: <Sparkles className="h-6 w-6" />,
-    imageSrc: "https://images.unsplash.com/photo-1620287341056-49a2f1ab2fdc?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    imageSrc:"https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?_gl=1*4d1jm6*_ga*MjExMzExOTg4MC4xNzQ0NjM5ODgz*_ga_8JE65Q40S6*czE3NTE1ODU2NjckbzQkZzEkdDE3NTE1ODY4NTAkajIxJGwwJGgw",
     content: "Unreal Pikaffects take your creativity to the next level. With our advanced AI-powered effects, you can transform any scene into a mind-bending spectacle. Whether you want to make objects explode into a shower of particles, melt like ice cream on a hot day, or inflate like a balloon, the possibilities are endless. These effects aren't just visually stunning – they're also incredibly easy to use, allowing you to bring your wildest ideas to life with just a few clicks."
   },
   {
@@ -26,7 +27,7 @@ const features: Feature[] = [
     title: "Scalable & Future-Proof Softwares",
     description: "We build AI systems designed to evolve with your business - not just solve today's problems, but adapt to tomorrow's challenges. Our solutions feature: Modular design, Cloud-native foundation, continues learning and vendor-agnostic frameworks ",
     icon: <Clapperboard className="h-6 w-6" />,
-    imageSrc: "https://images.unsplash.com/photo-1602064172250-43f8909056c7?q=80&w=1557&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    imageSrc: "https://images.pexels.com/photos/6476270/pexels-photo-6476270.jpeg?_gl=1*5gpwjm*_ga*MjExMzExOTg4MC4xNzQ0NjM5ODgz*_ga_8JE65Q40S6*czE3NTE1ODU2NjckbzQkZzEkdDE3NTE1ODY2NDQkajI5JGwwJGgw",
     content: "• Modular design for seamless upgrades as needs change. •Cloud-native foundations that scale on demand. Continuous learning capabilities to stay relevant. Vendor-agnostic frameworks preventing lock-in.No costly rip-and-replace projects - just AI infrastructure that grows alongside your ambitions while maintaining peak performance.Key Differentiators:Proactive compatibility planning for emerging techBuilt-in adaptation layers for unknown future requirements Cost-optimized scaling that matches your growth curve Because your AI shouldn't become technical debt - it should be your competitive edge for years to come."
   },
   {
@@ -43,12 +44,12 @@ export default function Introducing() {
   const [selectedFeature, setSelectedFeature] = useState<Feature | null>(null)
 
   return (
-    <div className="relative min-h-screen p-8 text-gray-900">
+    <div className="relative min-h-screen p-8 text-gray-900 md:w-full">
       <div className="mx-auto max-w-4xl space-y-12 md:max-w-4xl lg:w-9/12">
         <div className='mt-12 p-1'></div>
         <header className="space-y-8 text-center">
           <h1 className="text-5xl font-bold">Our Capabilities</h1>
-          <p className="mx-auto max-w-2xl text-xl">
+          <p className="mx-auto text-xl">
           Take a look at a selection of our projects, where creativity meets innovation. Each piece showcases our commitment to delivering exceptional results and pushing the limits of what's possible.
           </p>
         </header>
@@ -59,6 +60,7 @@ export default function Introducing() {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
+                className="mx-auto h-full"
                 className="mx-auto h-full w-11/12"
 
               >
@@ -66,7 +68,7 @@ export default function Introducing() {
                 src={feature.imageSrc}
                 alt={feature.title}
                 isGray={false}
-                className='object-fit h-full w-full rounded-xl'
+                className='mx-auto h-full w-full rounded-xl'
                 />
               </motion.div>
             </div>

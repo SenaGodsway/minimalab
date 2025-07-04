@@ -37,8 +37,8 @@ export default function OrbitingCircle() {
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [containerSize, setContainerSize] = useState({
-    width: 380,
-    height: 380,
+    width: 300,
+    height: 300,
   });
 
   useEffect(() => {

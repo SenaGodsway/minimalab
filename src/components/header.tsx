@@ -51,7 +51,7 @@ export default function AppHeader() {
         }
         transition-all duration-300 ease-in-out py-1 md:p-0
       `}>
-        <div className="mx-auto max-w-7xl pr-4 py-3 sm:pr-6 sm:py-2 md:py-3 lg:pr-8">
+        <div className="mx-auto box-border w-full md:px-12 px-6 py-3 sm:py-2 md:py-3 lg:pr-8">
           <div className="flex items-center justify-between">
             <Link to='/' className="items-top flex gap-2">
               <img src={logo} alt="Logo" className='rotate-[30deg]'/>

@@ -14,11 +14,11 @@ const LandingPage = () => {
   return (
     <div className="relative box-border">
     <Header/>
-    <div className="w-full">
+    <div className="w-full ">
     <HeroSection/>
     </div>
 
-    <div className="mx-auto mt-12 bg-white py-16 md:w-full">
+    <div className="mx-auto mt-16 md:mt-32 bg-white  md:w-full">
         <LogoCarousel/>
     </div>
 
