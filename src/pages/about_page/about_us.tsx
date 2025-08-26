@@ -8,7 +8,7 @@ import Footer from "../../components/footer";
 
 
 const AboutUs: React.FC = () => {
-  
+
   return (
     <>
       <Header />
@@ -19,7 +19,7 @@ const AboutUs: React.FC = () => {
             <div className="md:w-1/2">
               <h2 className="mb-4 text-2xl font-semibold">Our Story</h2>
               <p className="mb-4 text-lg">
-                Founded in 2015, we started as a small team with big dreams. Today, we are proud to serve
+                Founded in 2022, we started as a small team with big dreams. Today, we are proud to serve
                 thousands of customers worldwide with our innovative solutions.
               </p>
               <p className="text-lg">
@@ -37,11 +37,11 @@ const AboutUs: React.FC = () => {
           </div>
         </section>
       </div>
-      
+
       <div className="mx-auto mt-24 w-11/12">
         <TeamSection />
       </div>
-      
+
       <div className="mx-auto mt-48 w-11/12">
         <FAQSection />
       </div>
