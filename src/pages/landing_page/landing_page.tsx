@@ -18,7 +18,9 @@ const LandingPage = () => {
     <HeroSection/>
     </div>
 
-    <div className="mx-auto mt-16 md:mt-32 bg-white  md:w-full">
+<div className="w-full h-0 md:h-32"></div>
+
+    <div className="mx-auto mt-32 bg-white w-full md:max-w-4xl md:w-full md:mt-32">
         <LogoCarousel/>
     </div>
 
