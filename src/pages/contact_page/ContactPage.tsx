@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
 import Circle from '../../components/reuseable/gradient_cirle'
@@ -20,6 +20,7 @@ export default function NewContact() {
   const [selectedService, setSelectedService] = useState<string | undefined>(undefined)
   const [formData, setFormData] = useState<Partial<FormData>>({})
   const [showSuccess, setShowSuccess] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
 
   const handleServiceSelect = (serviceId: string) => {
@@ -27,9 +28,10 @@ export default function NewContact() {
     setFormData(prev => ({ ...prev, service: serviceId }))
   }
 
-  const handleFormChange = (data: Partial<FormData>) => {
+  const handleFormChange = useCallback((data: FormData, _isValid: boolean) => {
+    void _isValid
     setFormData(prev => ({ ...prev, ...data }))
-  }
+  }, [])
 
   const handleFormSubmit = async () => {
     if (!selectedService || !formData.email) {
@@ -38,6 +40,7 @@ export default function NewContact() {
     }
 
     try {
+      setIsSubmitting(true)
       console.log('Submitting form:', { ...formData, selectedService })
       // Fixed: Create properly formatted data for addQuote
       const quoteData = {
@@ -53,6 +56,8 @@ export default function NewContact() {
       console.log('Form submitted successfully')
     } catch (error) {
       console.error('Submission failed:', error)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -85,7 +90,7 @@ export default function NewContact() {
 
         {step === 1 && (
           <div>
-            <SelectService 
+            <SelectService
               onServiceSelect={handleServiceSelect}
               selectedService={selectedService}
             />
@@ -93,12 +98,12 @@ export default function NewContact() {
         )}
 
         {step === 2 && (
-          <Form 
+          <Form
             onFormChange={handleFormChange}
           />
-        
-        )}    
-      
+
+        )}
+
         <div className="mt-6 flex justify-between gap-14 bg-white p-6 md:gap-60">
 
           {step > 1 && (
@@ -109,13 +114,14 @@ export default function NewContact() {
               Go back
             </button>
           )}
-          
+
           {step === 2 ? (
             <button
               onClick={handleFormSubmit}
-              className="rounded-full bg-black px-6 py-2 text-white hover:bg-gray-800"
+              disabled={isSubmitting}
+              className="rounded-full bg-black px-6 py-2 text-white hover:bg-gray-800 disabled:opacity-50"
             >
-              Submit
+              {isSubmitting ? 'Submitting…' : 'Submit'}
             </button>
           ) : (
             <button

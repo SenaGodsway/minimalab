@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { MenuIcon, X } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
-import logo from "../assets/images/Untitled.svg"
+import Logo from "../assets/images/Untitled.png"
 
 export default function AppHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -53,9 +53,9 @@ export default function AppHeader() {
       `}>
         <div className="mx-auto box-border w-full md:px-12 px-6 py-3 sm:py-2 md:py-3 lg:pr-8">
           <div className="flex items-center justify-between">
-            <Link to='/' className="items-top flex gap-2">
-              <img src={logo} alt="Logo" className='rotate-[30deg]'/>
-              <span className="text-2xl font-semibold">MinimaLab</span>
+            <Link to='/' className="items-center flex gap-2">
+              <img src={Logo} alt="Logo" className=' w-12 h-12' />
+              <span className="text-2xl font-semibold">Sailnex</span>
             </Link>
             <nav className="ml-12 hidden space-x-6 md:flex">
               {navItems.map((item) => (
