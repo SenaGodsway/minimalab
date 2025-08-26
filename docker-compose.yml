@@ -1,0 +1,22 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    networks:
+      - dokploy-network
+    command: npm run start
+    env_file:
+      - .env
+    restart: unless-stopped
+    # Add labels to services that users will hit with Traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.sailnex.rule=Host(`sailnex.com`)"
+      - "traefik.http.routers.sailnex.entrypoints=websecure"
+      - "traefik.http.routers.sailnex.tls.certResolver=letsencrypt"
+      - "traefik.http.services.sailnex.loadbalancer.server.port=3000"
+
+networks:
+  dokploy-network:
+    external: true
