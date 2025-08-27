@@ -16,7 +16,7 @@ COPY . .
 RUN npm run build
 
 # Expose app port (web service uses this)
-EXPOSE 3000
+EXPOSE 4001
 
 # Default command (docker-compose overrides for web/worker services)
 CMD ["npm", "run", "start"]
