@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { MenuIcon, X } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
-import Logo from "../assets/images/Untitled.png"
+import Logo from "../assets/images/Untitled.PNG"
 
 export default function AppHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
