@@ -7,6 +7,7 @@ import NewContact from './pages/contact_page/ContactPage'
 import Careers from './pages/careers_page/careers'
 import Blogs from './pages/blogs/blogs'
 
+import BlogPage from './pages/blogs/BlogPage'
 
 
 
@@ -21,6 +22,7 @@ const AppRoutes = () => {
     <Route path='/works' element={<Works/>}/>
     <Route path='/get_quote' element={<NewContact/>}/>
     <Route path='/blogs' element ={<Blogs/>}/>
+    <Route path='/blogs/:slug' element={<BlogPage />} />
 
     </Routes>
   )

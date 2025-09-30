@@ -1,4 +1,3 @@
-import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
 import Footer from "../../components/footer";
 import AppHeader from "../../components/header";
 import GetQuotes from "../../components/reuseable/get_quotes";
@@ -16,13 +15,6 @@ const Blogs =()=>{
           </p>
         </div>
 
-        <div className="w-11/12 mx-auto md:w-7/12 flex justify-between items-center">
-            <h1>Latest Blogs</h1>
-            <div className="flex items-center gap-3">
-            <span className=" p-3 rounded-full border border-slate-100"><ArrowBigLeft/></span>
-            <span className=" p-3 rounded-full border border-slate-100"><ArrowBigRight/></span>
-            </div>
-        </div>
         <BlogList/>
 
 
