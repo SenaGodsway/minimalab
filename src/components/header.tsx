@@ -36,6 +36,10 @@ export default function AppHeader() {
       name:'Careers',
       value:'careers'
     },
+    {
+      name:'Blogs',
+      value:'blogs'
+    }
   ]
 
   return (

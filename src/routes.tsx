@@ -5,6 +5,7 @@ import Works from './pages/works_page/works_page'
 import Services from './pages/services_page/services_page'
 import NewContact from './pages/contact_page/ContactPage'
 import Careers from './pages/careers_page/careers'
+import Blogs from './pages/blogs/blogs'
 
 
 
@@ -19,6 +20,7 @@ const AppRoutes = () => {
 
     <Route path='/works' element={<Works/>}/>
     <Route path='/get_quote' element={<NewContact/>}/>
+    <Route path='/blogs' element ={<Blogs/>}/>
 
     </Routes>
   )
