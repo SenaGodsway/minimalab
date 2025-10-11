@@ -1,5 +1,6 @@
+import { collection, getDocs, doc, getDoc, addDoc } from "firebase/firestore";
 import { db } from "./firebase";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { Blog } from "./pages/blogs/types";
 
 interface Quote {
   id?: string;
@@ -12,15 +13,10 @@ interface Quote {
 }
 
 const messageCollection = collection(db, "customer-quotes");
-console.log("messageCollection:", messageCollection);
 
 export const UserService = {
   async getQuoteMessages(): Promise<Quote[]> {
     const snapshot = await getDocs(messageCollection);
-    console.log(
-      "Fetched quotes:",
-      snapshot.docs.map((doc) => doc.data())
-    );
     return snapshot.docs.map((doc) => ({
       id: doc.id,
       email: doc.data().email,
@@ -30,10 +26,6 @@ export const UserService = {
       phone: doc.data().phone,
       service: doc.data().service || "",
     }));
-    console.log(
-      "Email TO:",
-      snapshot.docs.map((doc) => doc.data().email)
-    );
   },
 
   async addQuote(quote: Omit<Quote, "id">): Promise<string> {
@@ -41,3 +33,39 @@ export const UserService = {
     return docRef.id;
   },
 };
+
+const blogsCollection = collection(db, "blogs");
+console.log("Blogs Collection:", blogsCollection);
+export const BlogService = {
+  async getBlogs(): Promise<Blog[]> {
+    const snapshot = await getDocs(blogsCollection);
+    return snapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        content: data.content,
+        createdAt: data.createdAt,
+        image_url: data.image_url,
+        tags: data.tags || [],
+      };
+    });
+  },
+  async getBlogById(id: string): Promise<Blog | undefined> {
+    // Use getDoc for direct document fetch by ID
+    const docRef = doc(db, "blogs", id);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      return undefined;
+    }
+    const data = docSnap.data();
+    console.log("The Data",data);
+    return {
+      id: docSnap.id,
+      content: data.content,
+      createdAt: data.createdAt,
+      image_url: data.image_url,
+      tags: data.tags || [],
+    };
+  },
+};
+

@@ -2,19 +2,19 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import AppHeader from '../../components/header';
 import Footer from '../../components/footer';
-import { getBlogBySlug } from './BlogList';
+import { BlogService } from '../../expose_db';
 import { Blog } from './types';
+import ReactMarkdown from 'react-markdown';
 
 const BlogPage = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { id } = useParams<{ id: string }>();
   const [blog, setBlog] = useState<Blog | undefined>(undefined);
 
   useEffect(() => {
-    if (slug) {
-      const foundBlog = getBlogBySlug(slug);
-      setBlog(foundBlog);
+    if (id) {
+      BlogService.getBlogById(id).then(setBlog);
     }
-  }, [slug]);
+  }, [id]);
 
   if (!blog) {
     return (
@@ -38,11 +38,13 @@ const BlogPage = () => {
       <main className="mx-auto max-w-4xl px-4 py-12 pt-32 sm:px-6 lg:px-8">
         <article>
           <header className="mb-12 text-center">
-            <p className="mb-2 text-gray-500">{blog.date} &bull; {blog.author}</p>
-            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl">{blog.title}</h1>
+            <p className="mb-2 text-gray-500">{blog.createdAt}</p>
+            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl">Blog Post</h1>
           </header>
-          <img src={blog.imageUrl} alt={blog.title} className="mb-12 h-auto w-full rounded-lg object-cover shadow-lg" style={{maxHeight: '500px'}}/>
-          <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: blog.content }} />
+          <img src={blog.image_url} alt="Blog" className="mb-12 h-auto w-full rounded-lg object-cover shadow-lg" style={{maxHeight: '500px'}}/>
+          <div className="prose prose-lg max-w-none">
+            <ReactMarkdown>{blog.content}</ReactMarkdown>
+          </div>
         </article>
       </main>
       <Footer />
