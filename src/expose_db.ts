@@ -39,33 +39,23 @@ console.log("Blogs Collection:", blogsCollection);
 export const BlogService = {
   async getBlogs(): Promise<Blog[]> {
     const snapshot = await getDocs(blogsCollection);
-    return snapshot.docs.map((doc) => {
-      const data = doc.data();
-      return {
-        id: doc.id,
-        content: data.content,
-        createdAt: data.createdAt,
-        image_url: data.image_url,
-        tags: data.tags || [],
-      };
-    });
+    return snapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as Blog[];
   },
+
+  // Fix: Accept id parameter and use it in doc()
   async getBlogById(id: string): Promise<Blog | undefined> {
-    // Use getDoc for direct document fetch by ID
     const docRef = doc(db, "blogs", id);
     const docSnap = await getDoc(docRef);
-    if (!docSnap.exists()) {
-      return undefined;
-    }
-    const data = docSnap.data();
-    console.log("The Data",data);
+    if (!docSnap.exists()) return undefined;
+
     return {
       id: docSnap.id,
-      content: data.content,
-      createdAt: data.createdAt,
-      image_url: data.image_url,
-      tags: data.tags || [],
-    };
+      ...docSnap.data(),
+    } as Blog;
   },
 };
+
 

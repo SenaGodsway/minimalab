@@ -39,9 +39,17 @@ const BlogPage = () => {
         <article>
           <header className="mb-12 text-center">
             <p className="mb-2 text-gray-500">{blog.createdAt}</p>
-            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl">Blog Post</h1>
+            <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl">
+              {blog.title || "Blog Post"}
+            </h1>
           </header>
-          <img src={blog.image_url} alt="Blog" className="mb-12 h-auto w-full rounded-lg object-cover shadow-lg" style={{maxHeight: '500px'}}/>
+          {blog.image_url ? (
+            <img src={blog.image_url} alt="Blog" className="mb-12 h-auto w-full rounded-lg object-cover shadow-lg" style={{maxHeight: '500px'}}/>
+          ) : (
+            <div className="mb-12 h-64 w-full rounded-lg bg-slate-200 flex items-center justify-center text-gray-400">
+              No Image
+            </div>
+          )}
           <div className="prose prose-lg max-w-none">
             <ReactMarkdown>{blog.content}</ReactMarkdown>
           </div>

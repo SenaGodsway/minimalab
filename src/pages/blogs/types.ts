@@ -1,7 +1,8 @@
 export interface Blog {
   id: string;
-  content: string;
-  createdAt: string;
-  image_url: string;
+  title?: string; // <-- Add this line if your blogs have a title
+  content: string; // ✅ markdown is just a string
+  createdAt?: string;
+  image_url?: string;
   tags?: string[];
 }
