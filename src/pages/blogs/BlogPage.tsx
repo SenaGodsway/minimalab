@@ -5,6 +5,9 @@ import Footer from '../../components/footer';
 import { BlogService } from '../../expose_db';
 import { Blog } from './types';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import 'highlight.js/styles/github-dark.css';
 
 const BlogPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -12,11 +15,16 @@ const BlogPage = () => {
 
   useEffect(() => {
     if (id) {
-      BlogService.getBlogById(id).then(setBlog);
+      console.log("Fetching blog with id:", id);
+      BlogService.getBlogById(id).then((data) => {
+        console.log("Fetched blog:", data);
+        setBlog(data);
+      });
     }
   }, [id]);
 
   if (!blog) {
+
     return (
       <>
         <AppHeader />
@@ -31,6 +39,7 @@ const BlogPage = () => {
       </>
     );
   }
+
 
   return (
     <>
@@ -50,8 +59,13 @@ const BlogPage = () => {
               No Image
             </div>
           )}
-          <div className="prose prose-lg max-w-none">
-            <ReactMarkdown>{blog.content}</ReactMarkdown>
+          <div className="prose prose-lg max-w-none prose-pre:bg-transparent prose-pre:text-black">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight]}
+            >
+              {blog.content}
+            </ReactMarkdown>
           </div>
         </article>
       </main>

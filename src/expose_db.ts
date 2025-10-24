@@ -39,23 +39,39 @@ console.log("Blogs Collection:", blogsCollection);
 export const BlogService = {
   async getBlogs(): Promise<Blog[]> {
     const snapshot = await getDocs(blogsCollection);
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as Blog[];
+    return snapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        // Convert Firestore Timestamp to string
+        createdAt: data.createdAt?.toDate().toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+      } as Blog;
+    });
   },
 
   // Fix: Accept id parameter and use it in doc()
   async getBlogById(id: string): Promise<Blog | undefined> {
     const docRef = doc(db, "blogs", id);
     const docSnap = await getDoc(docRef);
+    console.log("Doc Snap:", docSnap);
     if (!docSnap.exists()) return undefined;
-
+    console.log("Doc Snap exists:", docSnap.exists());
+    const data = docSnap.data();
+    console.log("Data:", data);
     return {
       id: docSnap.id,
-      ...docSnap.data(),
+      ...data,
+      // Convert Firestore Timestamp to string
+      createdAt: data.createdAt?.toDate().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
     } as Blog;
   },
 };
-
-
