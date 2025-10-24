@@ -1,5 +1,6 @@
+import { collection, getDocs, doc, getDoc, addDoc } from "firebase/firestore";
 import { db } from "./firebase";
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import { Blog } from "./pages/blogs/types";
 
 interface Quote {
   id?: string;
@@ -12,15 +13,10 @@ interface Quote {
 }
 
 const messageCollection = collection(db, "customer-quotes");
-console.log("messageCollection:", messageCollection);
 
 export const UserService = {
   async getQuoteMessages(): Promise<Quote[]> {
     const snapshot = await getDocs(messageCollection);
-    console.log(
-      "Fetched quotes:",
-      snapshot.docs.map((doc) => doc.data())
-    );
     return snapshot.docs.map((doc) => ({
       id: doc.id,
       email: doc.data().email,
@@ -30,14 +26,52 @@ export const UserService = {
       phone: doc.data().phone,
       service: doc.data().service || "",
     }));
-    console.log(
-      "Email TO:",
-      snapshot.docs.map((doc) => doc.data().email)
-    );
   },
 
   async addQuote(quote: Omit<Quote, "id">): Promise<string> {
     const docRef = await addDoc(messageCollection, quote);
     return docRef.id;
+  },
+};
+
+const blogsCollection = collection(db, "blogs");
+console.log("Blogs Collection:", blogsCollection);
+export const BlogService = {
+  async getBlogs(): Promise<Blog[]> {
+    const snapshot = await getDocs(blogsCollection);
+    return snapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        // Convert Firestore Timestamp to string
+        createdAt: data.createdAt?.toDate().toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+      } as Blog;
+    });
+  },
+
+  // Fix: Accept id parameter and use it in doc()
+  async getBlogById(id: string): Promise<Blog | undefined> {
+    const docRef = doc(db, "blogs", id);
+    const docSnap = await getDoc(docRef);
+    console.log("Doc Snap:", docSnap);
+    if (!docSnap.exists()) return undefined;
+    console.log("Doc Snap exists:", docSnap.exists());
+    const data = docSnap.data();
+    console.log("Data:", data);
+    return {
+      id: docSnap.id,
+      ...data,
+      // Convert Firestore Timestamp to string
+      createdAt: data.createdAt?.toDate().toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }),
+    } as Blog;
   },
 };
