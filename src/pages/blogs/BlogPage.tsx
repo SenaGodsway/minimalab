@@ -51,6 +51,7 @@ const BlogPage = () => {
             <h1 className="text-4xl font-extrabold tracking-tight text-gray-900 md:text-5xl">
               {blog.title || "Blog Post"}
             </h1>
+            <h2 className="mb-2 text-gray-500">Author: {blog.author}</h2>
           </header>
           {blog.image_url ? (
             <img src={blog.image_url} alt="Blog" className="mb-12 h-auto w-full rounded-lg object-cover shadow-lg" style={{maxHeight: '500px'}}/>

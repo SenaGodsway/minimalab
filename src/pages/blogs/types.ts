@@ -5,4 +5,5 @@ export interface Blog {
   createdAt?: string;
   image_url?: string;
   tags?: string[];
+  author?: string;
 }
