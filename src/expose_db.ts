@@ -2,6 +2,23 @@ import { collection, getDocs, doc, getDoc, addDoc } from "firebase/firestore";
 import { db } from "./firebase";
 import { Blog } from "./pages/blogs/types";
 
+function formatFirestoreDate(value: unknown): string | undefined {
+  // Firestore Timestamp has a toDate() method. Some data may already be a string.
+  if (value && typeof value === "object" && "toDate" in value) {
+    const maybeTs = value as { toDate: () => Date };
+    const d = maybeTs.toDate();
+    if (d instanceof Date && !Number.isNaN(d.getTime())) {
+      return d.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+    }
+  }
+  if (typeof value === "string") return value;
+  return undefined;
+}
+
 interface Quote {
   id?: string;
   email: string;
@@ -41,15 +58,16 @@ export const BlogService = {
     const snapshot = await getDocs(blogsCollection);
     return snapshot.docs.map((doc) => {
       const data = doc.data();
+      // Never let the document body override the Firestore document id.
+      // Some docs may contain an `id` field used as a slug, which would break routing.
+      const { id: _ignoredId, createdAt, ...rest } = (data ?? {}) as Record<
+        string,
+        unknown
+      >;
       return {
+        ...(rest as Omit<Blog, "id" | "createdAt">),
         id: doc.id,
-        ...data,
-        // Convert Firestore Timestamp to string
-        createdAt: data.createdAt?.toDate().toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "long",
-          day: "numeric",
-        }),
+        createdAt: formatFirestoreDate(createdAt),
       } as Blog;
     });
   },
@@ -63,15 +81,14 @@ export const BlogService = {
     console.log("Doc Snap exists:", docSnap.exists());
     const data = docSnap.data();
     console.log("Data:", data);
+    const { id: _ignoredId, createdAt, ...rest } = (data ?? {}) as Record<
+      string,
+      unknown
+    >;
     return {
       id: docSnap.id,
-      ...data,
-      // Convert Firestore Timestamp to string
-      createdAt: data.createdAt?.toDate().toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }),
+      ...(rest as Omit<Blog, "id" | "createdAt">),
+      createdAt: formatFirestoreDate(createdAt),
     } as Blog;
   },
 };

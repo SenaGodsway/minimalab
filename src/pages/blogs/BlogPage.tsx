@@ -15,8 +15,11 @@ const BlogPage = () => {
 
   useEffect(() => {
     if (id) {
-      console.log("Fetching blog with id:", id);
-      BlogService.getBlogById(id).then((data) => {
+      // Backwards compatibility: if an older link appended a suffix (e.g. "--------remove"),
+      // strip it so we still fetch by the Firestore document id.
+      const normalizedId = id.split("--------remove")[0];
+      console.log("Fetching blog with id:", normalizedId);
+      BlogService.getBlogById(normalizedId).then((data) => {
         console.log("Fetched blog:", data);
         setBlog(data);
       });
