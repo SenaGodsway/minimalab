@@ -15,6 +15,9 @@ const BlogPage = () => {
 
   useEffect(() => {
     if (id) {
+      // Ensure the reader starts at the top when opening a blog post.
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
       // Backwards compatibility: if an older link appended a suffix (e.g. "--------remove"),
       // strip it so we still fetch by the Firestore document id.
       const normalizedId = id.split("--------remove")[0];
