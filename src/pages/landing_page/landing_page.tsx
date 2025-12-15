@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
 import LogoCarousel from "../logo_carousel"
 // import RoundButton from "../../components/button"
 import Works from "./works_section"
@@ -9,8 +11,22 @@ import AllServices from "../services_page/all_services"
 import Header from "../../components/header"
 import Testimonials from "./testimonials"
 import Pipeline from "./pipeline"
+import BlogCard from "../blogs/BlogCard"
+import { BlogService } from "../../expose_db"
+import type { Blog } from "../blogs/types"
 
 const LandingPage = () => {
+  const [topBlogs, setTopBlogs] = useState<Blog[]>([])
+
+  useEffect(() => {
+    BlogService.getBlogs()
+      .then((data) => setTopBlogs(data.slice(0, 3)))
+      .catch((err) => {
+        console.error("Failed to fetch blogs for landing page:", err)
+        setTopBlogs([])
+      })
+  }, [])
+
   return (
     <div className="relative box-border">
     <Header/>
@@ -66,6 +82,28 @@ const LandingPage = () => {
           <h1 className='text-[30px] font-semibold text-neutral-900 md:text-[48px]'>Selected Works</h1>
         </div>
         <Works/>
+    </div>
+    <div className="mx-auto w-11/12 py-12 md:w-9/12 md:py-14">
+      <div className="mb-8 flex items-center justify-between">
+        <h2 className="text-2xl font-bold">Latest Blogs</h2>
+        <Link
+          to="/blogs"
+          className="inline-flex items-center rounded-full border border-slate-200 px-3 py-1 text-sm font-medium text-neutral-700 hover:bg-slate-50"
+        >
+          View all
+        </Link>
+      </div>
+
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {topBlogs.map((blog) => (
+          <BlogCard key={blog.id} blog={blog} variant="compact" />
+        ))}
+        {topBlogs.length === 0 ? (
+          <div className="rounded border border-slate-200 p-4 text-sm text-neutral-600 sm:col-span-2 lg:col-span-3">
+            No blog posts yet.
+          </div>
+        ) : null}
+      </div>
     </div>
     <div className="container mx-auto mt-12">
       <Testimonials/>
