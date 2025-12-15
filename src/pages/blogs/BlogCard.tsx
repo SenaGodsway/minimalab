@@ -3,39 +3,73 @@ import { Blog } from "./types";
 
 interface BlogCardProps {
   blog: Blog;
+  variant?: "default" | "compact";
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ blog }) => {
+const BlogCard: React.FC<BlogCardProps> = ({ blog, variant = "default" }) => {
   // Get a short snippet (first 100 chars)
+  const previewText = blog.short_description ?? blog.content;
   const snippet =
-    blog.content.slice(0, 100) +
-    (blog.content.length > 100 ? "..." : "");
-  return (
-    <Link
-      to={`/blogs/${blog.id}`}
-      className="group flex flex-row items-center gap-12 rounded border-2 border-slate-400 p-2 transition-colors duration-200 hover:border-black"
-    >
-      <div className="overflow-hidden rounded-lg flex-shrink-0">
+    previewText.slice(0, 100) + (previewText.length > 100 ? "..." : "");
+
+  if (variant === "compact") {
+    return (
+      <Link
+        to={`/blogs/${blog.id}`}
+        className="group overflow-hidden rounded-lg border-2 border-slate-200 bg-white px-6 py-6 text-left transition-colors duration-200 hover:border-black"
+      >
         {blog.image_url ? (
           <img
             src={blog.image_url}
             alt="Blog"
-            className="h-28 w-36 object-cover rounded-lg transition-transform duration-300 group-hover:scale-105"
+            className="h-32 w-full rounded-md object-cover"
           />
         ) : (
-          <div className="h-28 w-36 bg-slate-200 flex items-center justify-center text-gray-400 rounded-lg">
+          <div className="flex h-32 w-full items-center justify-center rounded-md bg-slate-100 text-sm text-gray-400">
+            No Image
+          </div>
+        )}
+
+        <h3 className="mt-4 text-lg font-semibold text-neutral-900 group-hover:text-black">
+          {blog.title || "Blog Post"}
+        </h3>
+        <p className="mt-1 text-xs text-neutral-500">
+          {blog.createdAt || "Unknown date"}
+        </p>
+
+        <p className="mt-3 overflow-hidden text-sm leading-6 text-neutral-600">
+          {snippet}
+        </p>
+      </Link>
+    );
+  }
+
+  return (
+    <Link
+      to={`/blogs/${blog.id}`}
+      className="group flex flex-col items-start gap-4 rounded border-2 border-slate-400 p-3 transition-colors duration-200 hover:border-black sm:flex-row sm:items-center sm:gap-8 sm:p-4"
+    >
+      <div className="w-full flex-shrink-0 overflow-hidden rounded-lg sm:w-auto">
+        {blog.image_url ? (
+          <img
+            src={blog.image_url}
+            alt="Blog"
+            className="h-44 w-full rounded-lg object-cover transition-transform duration-300 group-hover:scale-105 sm:h-28 sm:w-36"
+          />
+        ) : (
+          <div className="flex h-44 w-full items-center justify-center rounded-lg bg-slate-200 text-gray-400 sm:h-28 sm:w-36">
             No Image
           </div>
         )}
       </div>
-      <div className="">
+      <div className="w-full min-w-0">
         {/* Fix: Use blog.title if available, fallback to "Blog Post" */}
-        <h3 className="mt-2 text-xl font-semibold text-gray-800 group-hover:text-black">
+        <h3 className="text-xl font-semibold text-gray-800 group-hover:text-black">
           {blog.title || "Blog Post"}
         </h3>
         {/* Fix: Format createdAt or show fallback */}
         <p className="text-sm text-gray-500">{blog.createdAt || "Unknown date"}</p>
-        <div className="prose prose-sm mt-2 text-gray-700">
+        <div className="prose prose-sm mt-2 break-words text-gray-700">
           {/* <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight]}
