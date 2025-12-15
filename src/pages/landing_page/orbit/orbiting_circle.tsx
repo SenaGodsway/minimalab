@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 // Import actual images from the project assets
 import image1 from "../../../assets/images/1.jpg";
 import image2 from "../../../assets/images/4.jpg";
-import image4 from "../../../assets/images/brands/PostgresSQL.png";
+import image4 from "../../../assets/images/brands/flutter-brandlogo.net.png";
 import profileImage2 from "../../../assets/images/brands/python.png";
 import profileImage3 from "../../../assets/images/3.jpg";
 import profileImage4 from "../../../assets/images/brands/firebase.png";
@@ -84,13 +84,9 @@ export default function OrbitingCircle() {
     outermost: baseRadius * 0.8, // 80% of container radius
   };
 
-  // Calculate responsive item sizes (increased by 30%)
-  const itemSizes = {
-    // small: Math.max(containerSize.width * 0.06, 24), // Min 24px, 6% of container
-    // large: Math.max(containerSize.width * 0.08, 32),
-    small: Math.max(containerSize.width * 0.078, 31), // Min 31px, 7.8% of container (30% increase)
-    large: Math.max(containerSize.width * 0.104, 42), // Min 42px, 10.4% of container (30% increase)
-  };
+  // Use one consistent size for all orbit images
+  // (and add 4px padding around the image inside the frame)
+  const itemSize = Math.max(containerSize.width * 0.104, 42);
 
   // Innermost orbit items (closest to center)
   const innermostOrbitItems: OrbitItem[] = [
@@ -105,7 +101,7 @@ export default function OrbitingCircle() {
       src: image4,
       alt : "image1",
     },
-   
+
 
   ];
 
@@ -131,7 +127,7 @@ export default function OrbitingCircle() {
         src: profileImage5,
         alt: "Profile 4",
       },
-     
+
 
   ];
 
@@ -215,7 +211,7 @@ export default function OrbitingCircle() {
       style={{
         minHeight: "200px",
         aspectRatio: "1",
-        padding: `${itemSizes.large}px`,
+        padding: `${itemSize}px`,
       }}
     >
       {/* Add CSS for animations */}
@@ -325,7 +321,7 @@ export default function OrbitingCircle() {
       <div className="absolute inset-0 flex items-center justify-center">
         {/* Innermost orbit ring */}
         <div
-          className="absolute rounded-full border border-gray-400/40"
+          className="absolute rounded-full border border-slate-200"
           style={{
             width: radii.innermost * 2,
             height: radii.innermost * 2,
@@ -333,7 +329,7 @@ export default function OrbitingCircle() {
         ></div>
         {/* Inner orbit ring */}
         <div
-          className="absolute rounded-full border border-gray-400/30"
+          className="absolute rounded-full border border-slate-200"
           style={{
             width: radii.inner * 2,
             height: radii.inner * 2,
@@ -341,7 +337,7 @@ export default function OrbitingCircle() {
         ></div>
         {/* Outer orbit ring */}
         <div
-          className="absolute rounded-full border border-gray-400/25"
+          className="absolute rounded-full border border-slate-200"
           style={{
             width: radii.outer * 2,
             height: radii.outer * 2,
@@ -349,7 +345,7 @@ export default function OrbitingCircle() {
         ></div>
         {/* Outermost orbit ring */}
         <div
-          className="absolute rounded-full border border-gray-400/20"
+          className="absolute rounded-full border border-slate-200"
           style={{
             width: radii.outermost * 2,
             height: radii.outermost * 2,
@@ -388,25 +384,27 @@ export default function OrbitingCircle() {
             >
               {item.type === "profile" ? (
                 <div
-                  className="overflow-hidden rounded-full border-2 border-white/20 shadow-lg"
+                  className="rounded-full border-2 border-white/20 p-1 shadow-lg"
                   style={{
-                    width: itemSizes.small,
-                    height: itemSizes.small,
+                    width: itemSize,
+                    height: itemSize,
                   }}
                 >
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="h-full w-full object-cover"
-                  />
+                  <div className="h-full w-full overflow-hidden rounded-full">
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
                 </div>
               ) : (
                 <div
                   className="flex items-center justify-center rounded-xl border border-white/10 bg-black/40 shadow-lg backdrop-blur-sm"
                   style={{
-                    width: itemSizes.small,
-                    height: itemSizes.small,
-                    fontSize: `${itemSizes.small * 0.5}px`,
+                    width: itemSize,
+                    height: itemSize,
+                    fontSize: `${itemSize * 0.5}px`,
                   }}
                 >
                   {item.content}
@@ -431,25 +429,27 @@ export default function OrbitingCircle() {
             >
               {item.type === "profile" ? (
                 <div
-                  className="overflow-hidden rounded-full border-2 border-white/20 shadow-lg"
+                  className="rounded-full border-2 border-white/20 p-1 shadow-lg"
                   style={{
-                    width: itemSizes.large,
-                    height: itemSizes.large,
+                    width: itemSize,
+                    height: itemSize,
                   }}
                 >
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="h-full w-full object-cover"
-                  />
+                  <div className="h-full w-full overflow-hidden rounded-full">
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
                 </div>
               ) : (
                 <div
                   className="flex items-center justify-center rounded-2xl border border-white/10 bg-black/40 shadow-lg backdrop-blur-sm"
                   style={{
-                    width: itemSizes.large,
-                    height: itemSizes.large,
-                    fontSize: `${itemSizes.large * 0.5}px`,
+                    width: itemSize,
+                    height: itemSize,
+                    fontSize: `${itemSize * 0.5}px`,
                   }}
                 >
                   {item.content}
@@ -474,25 +474,27 @@ export default function OrbitingCircle() {
             >
               {item.type === "profile" ? (
                 <div
-                  className="overflow-hidden rounded-full border-2 border-white/20 shadow-lg"
+                  className="rounded-full border-2 border-white/20 p-1 shadow-lg"
                   style={{
-                    width: itemSizes.large,
-                    height: itemSizes.large,
+                    width: itemSize,
+                    height: itemSize,
                   }}
                 >
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="h-full w-full object-cover"
-                  />
+                  <div className="h-full w-full overflow-hidden rounded-full">
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
                 </div>
               ) : (
                 <div
                   className="flex items-center justify-center rounded-2xl border border-white/10 bg-black/40 shadow-lg backdrop-blur-sm"
                   style={{
-                    width: itemSizes.large,
-                    height: itemSizes.large,
-                    fontSize: `${itemSizes.large * 0.5}px`,
+                    width: itemSize,
+                    height: itemSize,
+                    fontSize: `${itemSize * 0.5}px`,
                   }}
                 >
                   {item.content}
@@ -517,25 +519,27 @@ export default function OrbitingCircle() {
             >
               {item.type === "profile" ? (
                 <div
-                  className="overflow-hidden rounded-full border-2 border-white/20 shadow-lg"
+                  className="rounded-full border-2 border-white/20 p-1 shadow-lg"
                   style={{
-                    width: itemSizes.large,
-                    height: itemSizes.large,
+                    width: itemSize,
+                    height: itemSize,
                   }}
                 >
-                  <img
-                    src={item.src}
-                    alt={item.alt}
-                    className="h-full w-full object-cover"
-                  />
+                  <div className="h-full w-full overflow-hidden rounded-full">
+                    <img
+                      src={item.src}
+                      alt={item.alt}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
                 </div>
               ) : (
                 <div
                   className="flex items-center justify-center rounded-2xl border border-white/10 bg-black/40 shadow-lg backdrop-blur-sm"
                   style={{
-                    width: itemSizes.large,
-                    height: itemSizes.large,
-                    fontSize: `${itemSizes.large * 0.5}px`,
+                    width: itemSize,
+                    height: itemSize,
+                    fontSize: `${itemSize * 0.5}px`,
                   }}
                 >
                   {item.content}
