@@ -12,7 +12,7 @@ const SelectService = ({ onServiceSelect, selectedService }: SelectServiceProps)
       <p className='mb-6 text-gray-600 text-sm'>Select a service to get started</p>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
         {Object.values(Services).map((service) => {
-          const IconComponent = service.icon;
+          const icons = Array.isArray(service.icon) ? service.icon : [service.icon];
           const isSelected = selectedService === service.id;
 
           return (
@@ -26,10 +26,15 @@ const SelectService = ({ onServiceSelect, selectedService }: SelectServiceProps)
               style={{ minHeight: '120px', minWidth: '140px' }}
             >
               <div className="flex items-center mb-1">
-                <IconComponent
-                  size={22}
-                  className={isSelected ? 'text-gray-700' : 'text-gray-500'}
-                />
+                <div className="flex items-center gap-2">
+                  {icons.map((IconComponent, idx) => (
+                    <IconComponent
+                      key={idx}
+                      size={22}
+                      className={isSelected ? "text-gray-700" : "text-gray-500"}
+                    />
+                  ))}
+                </div>
               </div>
               <p className='font-bold text-sm'>{service.title}</p>
               <div className='flex-1'>

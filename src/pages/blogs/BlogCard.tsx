@@ -8,7 +8,8 @@ interface BlogCardProps {
 
 const BlogCard: React.FC<BlogCardProps> = ({ blog, variant = "default" }) => {
   // Get a short snippet (first 100 chars)
-  const previewText = blog.short_description ?? blog.content;
+  // Be defensive: Firestore docs may be missing fields even if TS types say otherwise.
+  const previewText = String(blog.short_description ?? blog.content ?? "");
   const snippet =
     previewText.slice(0, 100) + (previewText.length > 100 ? "..." : "");
 
