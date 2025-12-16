@@ -11,22 +11,39 @@ import 'highlight.js/styles/github-dark.css';
 
 const BlogPage = () => {
   const { id } = useParams<{ id: string }>();
-  const [blog, setBlog] = useState<Blog | undefined>(undefined);
+  const [blog, setBlog] = useState<Blog | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (id) {
+      setLoading(true);
       // Backwards compatibility: if an older link appended a suffix (e.g. "--------remove"),
       // strip it so we still fetch by the Firestore document id.
       const normalizedId = id.split("--------remove")[0];
       console.log("Fetching blog with id:", normalizedId);
       BlogService.getBlogById(normalizedId).then((data) => {
         console.log("Fetched blog:", data);
-        setBlog(data);
+        setBlog(data || null);
+        setLoading(false);
       });
+    } else {
+      setLoading(false);
     }
   }, [id]);
 
-  if (!blog) {
+  if (loading) {
+    return (
+      <>
+        <AppHeader />
+        <div className="flex min-h-screen flex-col items-center justify-center text-center">
+          <h1 className="text-4xl font-bold">Loading Post...</h1>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (!blog && !loading) {
 
     return (
       <>
