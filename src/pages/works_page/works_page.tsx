@@ -12,13 +12,11 @@ export default function Works() {
        <header className="space-y-4 text-center">
           <h1 className="text-5xl font-bold">Our Works</h1>
           <p className="mx-auto w-11/12 md:max-w-2xl text-xl">
-            Stunning footage. Longer clips. Jaw-dropping moves.
-            We've got a new model. And you've got the power to do all kinds of wild new things.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim odio natus id mollitia tempore fugit praesentium ut corrupti ipsa molestias!
+            Explore our diverse portfolio of projects that showcase our expertise and commitment to excellence. From innovative web applications to engaging mobile experiences, our works reflect our dedication to delivering high-quality solutions tailored to meet our clients' unique needs.
           </p>
         </header>
        </div>
-       <div className="mx-auto my-12 w-[90%]">
+       <div className="mx-auto my-14 w-[90%]">
       
         <WorkSection/>
        </div>
