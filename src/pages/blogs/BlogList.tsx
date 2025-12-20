@@ -7,7 +7,7 @@ import { BlogService } from "../../expose_db";
 const BlogList = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 3;
+  const postsPerPage = 10;
 
   useEffect(() => {
     BlogService.getBlogs().then((data) => {
