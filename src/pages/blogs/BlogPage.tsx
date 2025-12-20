@@ -34,9 +34,9 @@ const BlogPage = () => {
     // Backwards compatibility: if an older link appended a suffix (e.g. "--------remove"),
     // strip it so we still fetch by the Firestore document id.
     const normalizedId = id.split("--------remove")[0];
-    console.log("Fetching blog with identifier:", normalizedId);
+    console.log("Fetching blog with id:", normalizedId);
 
-    BlogService.getBlogByIdentifier(normalizedId)
+    BlogService.getBlogById(normalizedId)
       .then((data) => {
         if (cancelled) return;
         console.log("Fetched blog:", data);
