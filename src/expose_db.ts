@@ -1,4 +1,13 @@
-import { collection, getDocs, doc, getDoc, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  addDoc,
+  query,
+  where,
+  limit,
+} from "firebase/firestore";
 import { db } from "./firebase";
 import { Blog } from "./pages/blogs/types";
 
@@ -53,43 +62,57 @@ export const UserService = {
 
 const blogsCollection = collection(db, "blogs");
 console.log("Blogs Collection:", blogsCollection);
+
+function toBlog(docId: string, data: Record<string, unknown>): Blog {
+  // Never let the document body override the Firestore document id.
+  // Some docs may contain an `id` field used as a slug, which would break routing.
+  const {
+    id: legacyId,
+    slug,
+    createdAt,
+    ...rest
+  } = (data ?? {}) as Record<string, unknown>;
+
+  const content = typeof rest.content === "string" ? rest.content : "";
+  const title = typeof rest.title === "string" ? rest.title : undefined;
+  const image_url =
+    typeof rest.image_url === "string" ? rest.image_url : undefined;
+  const author = typeof rest.author === "string" ? rest.author : undefined;
+  const short_description =
+    typeof rest.short_description === "string"
+      ? rest.short_description
+      : undefined;
+  const tags = Array.isArray(rest.tags)
+    ? (rest.tags.filter((t) => typeof t === "string") as string[])
+    : undefined;
+
+  // Prefer explicit `slug` field, otherwise keep legacy `id` field as slug.
+  const resolvedSlug =
+    typeof slug === "string"
+      ? slug
+      : typeof legacyId === "string"
+      ? legacyId
+      : undefined;
+
+  return {
+    id: docId,
+    slug: resolvedSlug,
+    createdAt: formatFirestoreDate(createdAt),
+    content,
+    title,
+    image_url,
+    author,
+    short_description,
+    tags,
+  };
+}
+
 export const BlogService = {
   async getBlogs(): Promise<Blog[]> {
     const snapshot = await getDocs(blogsCollection);
     return snapshot.docs.map((doc) => {
-      const data = doc.data();
-      // Never let the document body override the Firestore document id.
-      // Some docs may contain an `id` field used as a slug, which would break routing.
-      const {
-        id: _ignoredId,
-        createdAt,
-        ...rest
-      } = (data ?? {}) as Record<string, unknown>;
-      void _ignoredId;
-
-      const content = typeof rest.content === "string" ? rest.content : "";
-      const title = typeof rest.title === "string" ? rest.title : undefined;
-      const image_url =
-        typeof rest.image_url === "string" ? rest.image_url : undefined;
-      const author = typeof rest.author === "string" ? rest.author : undefined;
-      const short_description =
-        typeof rest.short_description === "string"
-          ? rest.short_description
-          : undefined;
-      const tags = Array.isArray(rest.tags)
-        ? (rest.tags.filter((t) => typeof t === "string") as string[])
-        : undefined;
-
-      return {
-        id: doc.id,
-        createdAt: formatFirestoreDate(createdAt),
-        content,
-        title,
-        image_url,
-        author,
-        short_description,
-        tags,
-      };
+      const data = (doc.data() ?? {}) as Record<string, unknown>;
+      return toBlog(doc.id, data);
     });
   },
 
@@ -98,38 +121,40 @@ export const BlogService = {
     const docRef = doc(db, "blogs", id);
     const docSnap = await getDoc(docRef);
     if (!docSnap.exists()) return undefined;
-    console.log("Doc Snap exists:", docSnap.exists());
-    const data = docSnap.data();
-    console.log("Data:", data);
-    const {
-      id: _ignoredId,
-      createdAt,
-      ...rest
-    } = (data ?? {}) as Record<string, unknown>;
-    void _ignoredId;
+    const data = (docSnap.data() ?? {}) as Record<string, unknown>;
+    return toBlog(docSnap.id, data);
+  },
 
-    const content = typeof rest.content === "string" ? rest.content : "";
-    const title = typeof rest.title === "string" ? rest.title : undefined;
-    const image_url =
-      typeof rest.image_url === "string" ? rest.image_url : undefined;
-    const author = typeof rest.author === "string" ? rest.author : undefined;
-    const short_description =
-      typeof rest.short_description === "string"
-        ? rest.short_description
-        : undefined;
-    const tags = Array.isArray(rest.tags)
-      ? (rest.tags.filter((t) => typeof t === "string") as string[])
-      : undefined;
+  async getBlogBySlug(slug: string): Promise<Blog | undefined> {
+    // Support both legacy `id` field and explicit `slug` field.
+    const byLegacyIdQ = query(
+      blogsCollection,
+      where("id", "==", slug),
+      limit(1)
+    );
+    const byLegacyIdSnap = await getDocs(byLegacyIdQ);
+    if (!byLegacyIdSnap.empty) {
+      const d = byLegacyIdSnap.docs[0];
+      return toBlog(d.id, (d.data() ?? {}) as Record<string, unknown>);
+    }
 
-    return {
-      id: docSnap.id,
-      createdAt: formatFirestoreDate(createdAt),
-      content,
-      title,
-      image_url,
-      author,
-      short_description,
-      tags,
-    };
+    const bySlugQ = query(blogsCollection, where("slug", "==", slug), limit(1));
+    const bySlugSnap = await getDocs(bySlugQ);
+    if (!bySlugSnap.empty) {
+      const d = bySlugSnap.docs[0];
+      return toBlog(d.id, (d.data() ?? {}) as Record<string, unknown>);
+    }
+
+    return undefined;
+  },
+
+  /**
+   * Resolve a blog by either Firestore document id (preferred) or by slug.
+   * This makes direct `/blogs/{id}` loads work even if `{id}` is actually a slug.
+   */
+  async getBlogByIdentifier(identifier: string): Promise<Blog | undefined> {
+    const byDocId = await this.getBlogById(identifier);
+    if (byDocId) return byDocId;
+    return await this.getBlogBySlug(identifier);
   },
 };
