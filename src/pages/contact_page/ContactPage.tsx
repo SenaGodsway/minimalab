@@ -41,7 +41,6 @@ export default function NewContact() {
 
     try {
       setIsSubmitting(true)
-      console.log('Submitting form:', { ...formData, selectedService })
       // Fixed: Create properly formatted data for addQuote
       const quoteData = {
         email: formData.email!,
@@ -53,30 +52,15 @@ export default function NewContact() {
       }
       await UserService.addQuote(quoteData)
       setShowSuccess(true)
-      console.log('Form submitted successfully')
     } catch (error) {
-      console.error('Submission failed:', error)
+      let er: string = (error as Error).message
+      er = ''
+      console.error('Submission failed:', er)
     } finally {
       setIsSubmitting(false)
     }
   }
 
-
-  // const handleFormSubmit = async () => {
-  //   if (!selectedService || !formData.email) {
-  //     console.error('Required fields missing')
-  //     return
-  //   }
-
-  //   try {
-  //     console.log('Submitting form:', { ...formData, selectedService })
-  //     await UserService.addQuote({ ...formData, service: selectedService })
-  //     setShowSuccess(true)
-  //     console.log('Form submitted successfully')
-  //   } catch (error) {
-  //     console.error('Submission failed:', error)
-  //   }
-  // }
 
   const closeSuccessModal = () => {
     setShowSuccess(false)
