@@ -96,14 +96,7 @@ export const BlogService = {
   // Fix: Accept id parameter and use it in doc()
   async getBlogById(id: string): Promise<Blog | undefined> {
     const docRef = doc(db, "blogs", id);
-    console.log("DB:", db);
-    console.log("Blogs Collection:", blogsCollection);
-    console.log("Doc Ref:", docRef);
-    console.log("Doc Ref:", docRef.path);
-    console.log("Doc Ref:", docRef.id);
-    
     const docSnap = await getDoc(docRef);
-    console.log("Doc Snap:", docSnap);
     if (!docSnap.exists()) return undefined;
     console.log("Doc Snap exists:", docSnap.exists());
     const data = docSnap.data();
