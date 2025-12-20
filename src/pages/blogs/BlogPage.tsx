@@ -12,22 +12,79 @@ import 'highlight.js/styles/github-dark.css';
 const BlogPage = () => {
   const { id } = useParams<{ id: string }>();
   const [blog, setBlog] = useState<Blog | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (id) {
-      // Ensure the reader starts at the top when opening a blog post.
-      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    if (!id) {
+      setIsLoading(false);
+      setBlog(undefined);
+      setError(null);
+      return;
+    }
 
-      // Backwards compatibility: if an older link appended a suffix (e.g. "--------remove"),
-      // strip it so we still fetch by the Firestore document id.
-      const normalizedId = id.split("--------remove")[0];
-      console.log("Fetching blog with id:", normalizedId);
-      BlogService.getBlogById(normalizedId).then((data) => {
+    let cancelled = false;
+    setIsLoading(true);
+    setBlog(undefined);
+    setError(null);
+
+    // Ensure the reader starts at the top when opening a blog post.
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+    // Backwards compatibility: if an older link appended a suffix (e.g. "--------remove"),
+    // strip it so we still fetch by the Firestore document id.
+    const normalizedId = id.split("--------remove")[0];
+    console.log("Fetching blog with id:", normalizedId);
+
+    BlogService.getBlogById(normalizedId)
+      .then((data) => {
+        if (cancelled) return;
         console.log("Fetched blog:", data);
         setBlog(data);
+      })
+      .catch((e) => {
+        if (cancelled) return;
+        console.error("Failed to fetch blog:", e);
+        setError("We couldn't load this blog post right now. Please try again.");
+      })
+      .finally(() => {
+        if (cancelled) return;
+        setIsLoading(false);
       });
-    }
+
+    return () => {
+      cancelled = true;
+    };
   }, [id]);
+
+  if (isLoading) {
+    return (
+      <>
+        <AppHeader />
+        <div className="flex min-h-screen flex-col items-center justify-center text-center">
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-300 border-t-black" />
+          <p className="mt-6 text-lg text-gray-600">Loading blog post…</p>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <AppHeader />
+        <div className="flex min-h-screen flex-col items-center justify-center text-center">
+          <h1 className="text-3xl font-bold">Something went wrong</h1>
+          <p className="mt-4 max-w-xl text-lg text-gray-600">{error}</p>
+          <Link to="/blogs" className="mt-6 rounded-md bg-black px-4 py-2 font-semibold text-white">
+            Back to Blogs
+          </Link>
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   if (!blog) {
 
