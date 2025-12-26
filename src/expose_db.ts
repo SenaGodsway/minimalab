@@ -61,7 +61,6 @@ export const UserService = {
 };
 
 const blogsCollection = collection(db, "blogs");
-console.log("Blogs Collection:", blogsCollection);
 
 function toBlog(docId: string, data: Record<string, unknown>): Blog {
   // Never let the document body override the Firestore document id.
@@ -118,18 +117,13 @@ export const BlogService = {
 
   // Fix: Accept id parameter and use it in doc()
   async getBlogById(id: string): Promise<Blog | undefined> {
-    console.log("GET BY ID START: ", id);
     if (!id || typeof id !== "string") {
-      console.log("getBlogById: No id or id is not a string");
-      console.log("GBI ID: ", id);
       return undefined;
     }
 
-    console.log("QUERYINGGBI Collection: ", blogsCollection);
     try {
       // Query for blogs where the "id" field matches the provided id and take the first
       const q = query(blogsCollection, where("id", "==", id), limit(1));
-      console.log("GBI Query: ", q);
       const snapshot = await getDocs(q);
       if (snapshot.empty) {
         console.warn(`getBlogById: No document found with ID field: ${id}`);
@@ -152,53 +146,11 @@ export const BlogService = {
    */
   async getBlogByIdentifier(identifier: string): Promise<Blog | undefined> {
     const cleanId = identifier;
-    console.log(`getBlogByIdentifier: Attempting to resolve "${cleanId}"`);
 
     // 1. Try by Document ID
     const byDocId = await this.getBlogById(cleanId);
     if (byDocId) {
-      console.log(`getBlogByIdentifier: Resolved by Document ID`);
-      console.log("BY DOC ID: ", byDocId);
       return byDocId;
-    }
-
-
-
-    // 3. Last resort fallback: Fetch all blogs and search manually.
-    try {
-      console.log(
-        `getBlogByIdentifier: Direct lookups failed. Trying list fallback...`
-      );
-      const allBlogs = await this.getBlogs();
-      console.log(
-        `getBlogByIdentifier: List fallback fetched ${allBlogs.length} blogs.`
-      );
-
-      console.log("ALL BLOGS: ", allBlogs);
-
-      // Log the IDs we found to see if there's a mismatch
-      if (allBlogs.length > 0) {
-        console.log(
-          "Available IDs:",
-          allBlogs.map((b) => b.id)
-        );
-      }
-
-      console.log("CLEAN ID: ", cleanId);
-      const found = allBlogs.find(
-        (b) => b.id === cleanId
-      );
-      if (found) {
-        console.log(`getBlogByIdentifier: Resolved via list fallback!`, found);
-        console.log("FOUND: ", found);
-        return found;
-      }
-      if (!found) {
-        console.log("NOT FOUND: ", found);
-        return undefined;
-      }
-    } catch (e) {
-      console.log("LIST FALLBACK ERROR: ", e);
     }
 
     console.error(
