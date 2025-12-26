@@ -118,12 +118,14 @@ export const BlogService = {
 
   // Fix: Accept id parameter and use it in doc()
   async getBlogById(id: string): Promise<Blog | undefined> {
+    console.log("GET BY ID START: ", id);
     if (!id || typeof id !== "string") {
       console.log("getBlogById: No id or id is not a string");
       console.log("GBI ID: ", id);
       return undefined;
     }
 
+    console.log("QUERYINGGBI Collection: ", blogsCollection);
     try {
       // Query for blogs where the "id" field matches the provided id and take the first
       const q = query(blogsCollection, where("id", "==", id), limit(1));
@@ -142,66 +144,25 @@ export const BlogService = {
     }
   },
 
-  async getBlogBySlug(slug: string): Promise<Blog | undefined> {
-    if (!slug || typeof slug !== "string") return undefined;
-    try {
-      // Support both legacy `id` field and explicit `slug` field.
-      const byLegacyIdQ = query(
-        blogsCollection,
-        where("id", "==", slug),
-        limit(1)
-      );
-      const byLegacyIdSnap = await getDocs(byLegacyIdQ);
-      if (!byLegacyIdSnap.empty) {
-        const d = byLegacyIdSnap.docs[0];
-        return toBlog(d.id, (d.data() ?? {}) as Record<string, unknown>);
-      }
 
-      const bySlugQ = query(
-        blogsCollection,
-        where("slug", "==", slug),
-        limit(1)
-      );
-      const bySlugSnap = await getDocs(bySlugQ);
-      if (!bySlugSnap.empty) {
-        const d = bySlugSnap.docs[0];
-        return toBlog(d.id, (d.data() ?? {}) as Record<string, unknown>);
-      }
-
-      console.warn(
-        `getBlogBySlug: No document found with slug/legacy ID: ${slug}`
-      );
-      return undefined;
-    } catch (error) {
-      console.error(
-        `getBlogBySlug: Error fetching blog by slug (${slug}):`,
-        error
-      );
-      return undefined;
-    }
-  },
 
   /**
    * Resolve a blog by either Firestore document id (preferred) or by slug.
    * This makes direct `/blogs/{id}` loads work even if `{id}` is actually a slug.
    */
   async getBlogByIdentifier(identifier: string): Promise<Blog | undefined> {
-    const cleanId = (identifier || "").trim();
+    const cleanId = identifier;
     console.log(`getBlogByIdentifier: Attempting to resolve "${cleanId}"`);
 
     // 1. Try by Document ID
     const byDocId = await this.getBlogById(cleanId);
     if (byDocId) {
       console.log(`getBlogByIdentifier: Resolved by Document ID`);
+      console.log("BY DOC ID: ", byDocId);
       return byDocId;
     }
 
-    // 2. Try by Slug/Legacy ID
-    const bySlug = await this.getBlogBySlug(cleanId);
-    if (bySlug) {
-      console.log(`getBlogByIdentifier: Resolved by Slug`);
-      return bySlug;
-    }
+
 
     // 3. Last resort fallback: Fetch all blogs and search manually.
     try {
@@ -213,6 +174,8 @@ export const BlogService = {
         `getBlogByIdentifier: List fallback fetched ${allBlogs.length} blogs.`
       );
 
+      console.log("ALL BLOGS: ", allBlogs);
+
       // Log the IDs we found to see if there's a mismatch
       if (allBlogs.length > 0) {
         console.log(
@@ -221,15 +184,21 @@ export const BlogService = {
         );
       }
 
+      console.log("CLEAN ID: ", cleanId);
       const found = allBlogs.find(
-        (b) => b.id === cleanId || b.slug === cleanId
+        (b) => b.id === cleanId
       );
       if (found) {
         console.log(`getBlogByIdentifier: Resolved via list fallback!`, found);
+        console.log("FOUND: ", found);
         return found;
       }
+      if (!found) {
+        console.log("NOT FOUND: ", found);
+        return undefined;
+      }
     } catch (e) {
-      console.error(`getBlogByIdentifier: List fallback failed:`, e);
+      console.log("LIST FALLBACK ERROR: ", e);
     }
 
     console.error(
