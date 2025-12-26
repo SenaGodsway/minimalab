@@ -120,16 +120,17 @@ export const BlogService = {
   async getBlogById(id: string): Promise<Blog | undefined> {
     if (!id || typeof id !== "string") return undefined;
     try {
-      const docRef = doc(db, "blogs", id);
+      // Use the collection reference instead of a path string
+      const docRef = doc(blogsCollection, id);
       const docSnap = await getDoc(docRef);
       if (!docSnap.exists()) {
-        console.warn(`No blog document found with ID: ${id}`);
+        console.warn(`getBlogById: No document found with ID: ${id}`);
         return undefined;
       }
       const data = (docSnap.data() ?? {}) as Record<string, unknown>;
       return toBlog(docSnap.id, data);
     } catch (error) {
-      console.error(`Error fetching blog by ID (${id}):`, error);
+      console.error(`getBlogById: Error fetching blog by ID (${id}):`, error);
       return undefined;
     }
   },
@@ -160,10 +161,15 @@ export const BlogService = {
         return toBlog(d.id, (d.data() ?? {}) as Record<string, unknown>);
       }
 
-      console.warn(`No blog document found with slug/legacy ID: ${slug}`);
+      console.warn(
+        `getBlogBySlug: No document found with slug/legacy ID: ${slug}`
+      );
       return undefined;
     } catch (error) {
-      console.error(`Error fetching blog by slug (${slug}):`, error);
+      console.error(
+        `getBlogBySlug: Error fetching blog by slug (${slug}):`,
+        error
+      );
       return undefined;
     }
   },
@@ -173,8 +179,44 @@ export const BlogService = {
    * This makes direct `/blogs/{id}` loads work even if `{id}` is actually a slug.
    */
   async getBlogByIdentifier(identifier: string): Promise<Blog | undefined> {
+    console.log(`getBlogByIdentifier: Attempting to resolve "${identifier}"`);
+
+    // 1. Try by Document ID
     const byDocId = await this.getBlogById(identifier);
-    if (byDocId) return byDocId;
-    return await this.getBlogBySlug(identifier);
+    if (byDocId) {
+      console.log(`getBlogByIdentifier: Resolved by Document ID`);
+      return byDocId;
+    }
+
+    // 2. Try by Slug/Legacy ID
+    const bySlug = await this.getBlogBySlug(identifier);
+    if (bySlug) {
+      console.log(`getBlogByIdentifier: Resolved by Slug`);
+      return bySlug;
+    }
+
+    // 3. Last resort fallback: Fetch all blogs and search manually.
+    // This is useful if there are issues with direct getDoc/query in production
+    // but getDocs (list) works, which seems to be the case here.
+    try {
+      console.log(
+        `getBlogByIdentifier: Direct lookups failed. Trying list fallback...`
+      );
+      const allBlogs = await this.getBlogs();
+      const found = allBlogs.find(
+        (b) => b.id === identifier || b.slug === identifier
+      );
+      if (found) {
+        console.log(`getBlogByIdentifier: Resolved via list fallback!`, found);
+        return found;
+      }
+    } catch (e) {
+      console.error(`getBlogByIdentifier: List fallback failed:`, e);
+    }
+
+    console.error(
+      `getBlogByIdentifier: Failed to resolve blog for "${identifier}"`
+    );
+    return undefined;
   },
 };
