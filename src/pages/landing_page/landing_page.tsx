@@ -10,7 +10,6 @@ import GetQuotes from "../../components/reuseable/get_quotes"
 import AllServices from "../services_page/all_services"
 import Header from "../../components/header"
 import Testimonials from "./testimonials"
-import Pipeline from "./pipeline"
 import BlogCard from "../blogs/BlogCard"
 import { BlogService } from "../../expose_db"
 import type { Blog } from "../blogs/types"
@@ -49,33 +48,6 @@ const LandingPage = () => {
       <AllServices/>
       </div>
 
-
-      <div className="mx-auto mt-48 w-11/12 md:w-10/12" >
-    <div className="flex flex-col items-end gap-[24px] pl-3 md:max-h-screen md:flex-row md:pl-12">
-      <div className="flex w-full flex-col justify-center gap-10 pr-0 md:w-1/2 md:pr-8">
-      <h1 className="text-left text-[30px] font-semibold md:text-[40px]">Project Pipeline</h1>
-
-       <div className="">
-       <p className="text-[16px] leading-[28px] text-neutral-600">
-          Transform ideas into reality with seamless, scalable solutions. Our tools streamline development, reduce friction, and accelerate delivery—so you can focus on what matters most: building the future.
-        </p>
-       </div>
-       <div>
-        <Pipeline/>
-       </div>
-      </div>
-
-      <div className="relative w-full overflow-hidden rounded-2xl sm:h-[40vh] md:h-full md:w-1/2">
-        <video
-        className="!h-full w-full"
-        autoPlay
-        loop
-         src="https://cdn.dribbble.com/userupload/18414846/file/original-819b877a4c2923c0ace851053359c1b3.mp4"/>
-
-
-      </div>
-    </div>
-         </div>
 
     <div className="mt-24 p-6 md:p-16">
       <div className='py-8 text-center'>
