@@ -186,11 +186,16 @@ export const BlogService = {
 
       console.log("CLEAN ID: ", cleanId);
       const found = allBlogs.find(
-        (b) => b.id === cleanId || b.slug === cleanId
+        (b) => b.id === cleanId
       );
       if (found) {
         console.log(`getBlogByIdentifier: Resolved via list fallback!`, found);
+        console.log("FOUND: ", found);
         return found;
+      }
+      if (!found) {
+        console.log("NOT FOUND: ", found);
+        return undefined;
       }
     } catch (e) {
       console.log("LIST FALLBACK ERROR: ", e);
