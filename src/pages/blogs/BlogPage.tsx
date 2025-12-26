@@ -35,12 +35,10 @@ const BlogPage = () => {
     // strip it so we still fetch by the Firestore document id.
     const rawId = (id || "").trim();
     const normalizedId = rawId;
-    console.log("Fetching blog with identifier:", normalizedId);
 
     BlogService.getBlogByIdentifier(normalizedId)
       .then((data) => {
         if (cancelled) return;
-        console.log("Fetched blog:", data);
         setBlog(data);
       })
       .catch((e) => {
