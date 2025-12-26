@@ -11,7 +11,6 @@ const BlogList = () => {
 
   useEffect(() => {
     BlogService.getBlogs().then((data) => {
-      console.log("Fetched blogs:", data);
       setBlogs(data);
     });
   }, []);
