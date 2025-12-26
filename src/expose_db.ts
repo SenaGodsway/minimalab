@@ -179,32 +179,43 @@ export const BlogService = {
    * This makes direct `/blogs/{id}` loads work even if `{id}` is actually a slug.
    */
   async getBlogByIdentifier(identifier: string): Promise<Blog | undefined> {
-    console.log(`getBlogByIdentifier: Attempting to resolve "${identifier}"`);
+    const cleanId = (identifier || "").trim();
+    console.log(`getBlogByIdentifier: Attempting to resolve "${cleanId}"`);
 
     // 1. Try by Document ID
-    const byDocId = await this.getBlogById(identifier);
+    const byDocId = await this.getBlogById(cleanId);
     if (byDocId) {
       console.log(`getBlogByIdentifier: Resolved by Document ID`);
       return byDocId;
     }
 
     // 2. Try by Slug/Legacy ID
-    const bySlug = await this.getBlogBySlug(identifier);
+    const bySlug = await this.getBlogBySlug(cleanId);
     if (bySlug) {
       console.log(`getBlogByIdentifier: Resolved by Slug`);
       return bySlug;
     }
 
     // 3. Last resort fallback: Fetch all blogs and search manually.
-    // This is useful if there are issues with direct getDoc/query in production
-    // but getDocs (list) works, which seems to be the case here.
     try {
       console.log(
         `getBlogByIdentifier: Direct lookups failed. Trying list fallback...`
       );
       const allBlogs = await this.getBlogs();
+      console.log(
+        `getBlogByIdentifier: List fallback fetched ${allBlogs.length} blogs.`
+      );
+
+      // Log the IDs we found to see if there's a mismatch
+      if (allBlogs.length > 0) {
+        console.log(
+          "Available IDs:",
+          allBlogs.map((b) => b.id)
+        );
+      }
+
       const found = allBlogs.find(
-        (b) => b.id === identifier || b.slug === identifier
+        (b) => b.id === cleanId || b.slug === cleanId
       );
       if (found) {
         console.log(`getBlogByIdentifier: Resolved via list fallback!`, found);
@@ -215,7 +226,7 @@ export const BlogService = {
     }
 
     console.error(
-      `getBlogByIdentifier: Failed to resolve blog for "${identifier}"`
+      `getBlogByIdentifier: Failed to resolve blog for "${cleanId}"`
     );
     return undefined;
   },
