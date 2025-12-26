@@ -1,8 +1,8 @@
 import {
   collection,
   getDocs,
-  doc,
-  getDoc,
+  // doc,
+  // getDoc,
   addDoc,
   query,
   where,
@@ -118,19 +118,26 @@ export const BlogService = {
 
   // Fix: Accept id parameter and use it in doc()
   async getBlogById(id: string): Promise<Blog | undefined> {
-    if (!id || typeof id !== "string") return undefined;
+    if (!id || typeof id !== "string") {
+      console.log("getBlogById: No id or id is not a string");
+      console.log("GBI ID: ", id);
+      return undefined;
+    }
+
     try {
-      // Use the collection reference instead of a path string
-      const docRef = doc(blogsCollection, id);
-      const docSnap = await getDoc(docRef);
-      if (!docSnap.exists()) {
-        console.warn(`getBlogById: No document found with ID: ${id}`);
+      // Query for blogs where the "id" field matches the provided id and take the first
+      const q = query(blogsCollection, where("id", "==", id), limit(1));
+      console.log("GBI Query: ", q);
+      const snapshot = await getDocs(q);
+      if (snapshot.empty) {
+        console.warn(`getBlogById: No document found with ID field: ${id}`);
         return undefined;
       }
-      const data = (docSnap.data() ?? {}) as Record<string, unknown>;
-      return toBlog(docSnap.id, data);
+      const firstDoc = snapshot.docs[0];
+      const data = (firstDoc.data() ?? {}) as Record<string, unknown>;
+      return toBlog(firstDoc.id, data);
     } catch (error) {
-      console.error(`getBlogById: Error fetching blog by ID (${id}):`, error);
+      console.error(`getBlogById: Error fetching blog by ID field (${id}):`, error);
       return undefined;
     }
   },
