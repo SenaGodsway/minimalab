@@ -118,34 +118,54 @@ export const BlogService = {
 
   // Fix: Accept id parameter and use it in doc()
   async getBlogById(id: string): Promise<Blog | undefined> {
-    const docRef = doc(db, "blogs", id);
-    const docSnap = await getDoc(docRef);
-    if (!docSnap.exists()) return undefined;
-    const data = (docSnap.data() ?? {}) as Record<string, unknown>;
-    return toBlog(docSnap.id, data);
+    if (!id || typeof id !== "string") return undefined;
+    try {
+      const docRef = doc(db, "blogs", id);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        console.warn(`No blog document found with ID: ${id}`);
+        return undefined;
+      }
+      const data = (docSnap.data() ?? {}) as Record<string, unknown>;
+      return toBlog(docSnap.id, data);
+    } catch (error) {
+      console.error(`Error fetching blog by ID (${id}):`, error);
+      return undefined;
+    }
   },
 
   async getBlogBySlug(slug: string): Promise<Blog | undefined> {
-    // Support both legacy `id` field and explicit `slug` field.
-    const byLegacyIdQ = query(
-      blogsCollection,
-      where("id", "==", slug),
-      limit(1)
-    );
-    const byLegacyIdSnap = await getDocs(byLegacyIdQ);
-    if (!byLegacyIdSnap.empty) {
-      const d = byLegacyIdSnap.docs[0];
-      return toBlog(d.id, (d.data() ?? {}) as Record<string, unknown>);
-    }
+    if (!slug || typeof slug !== "string") return undefined;
+    try {
+      // Support both legacy `id` field and explicit `slug` field.
+      const byLegacyIdQ = query(
+        blogsCollection,
+        where("id", "==", slug),
+        limit(1)
+      );
+      const byLegacyIdSnap = await getDocs(byLegacyIdQ);
+      if (!byLegacyIdSnap.empty) {
+        const d = byLegacyIdSnap.docs[0];
+        return toBlog(d.id, (d.data() ?? {}) as Record<string, unknown>);
+      }
 
-    const bySlugQ = query(blogsCollection, where("slug", "==", slug), limit(1));
-    const bySlugSnap = await getDocs(bySlugQ);
-    if (!bySlugSnap.empty) {
-      const d = bySlugSnap.docs[0];
-      return toBlog(d.id, (d.data() ?? {}) as Record<string, unknown>);
-    }
+      const bySlugQ = query(
+        blogsCollection,
+        where("slug", "==", slug),
+        limit(1)
+      );
+      const bySlugSnap = await getDocs(bySlugQ);
+      if (!bySlugSnap.empty) {
+        const d = bySlugSnap.docs[0];
+        return toBlog(d.id, (d.data() ?? {}) as Record<string, unknown>);
+      }
 
-    return undefined;
+      console.warn(`No blog document found with slug/legacy ID: ${slug}`);
+      return undefined;
+    } catch (error) {
+      console.error(`Error fetching blog by slug (${slug}):`, error);
+      return undefined;
+    }
   },
 
   /**
