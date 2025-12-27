@@ -10,8 +10,7 @@ const Blogs =()=>{
          <div className="mx-auto mb-10 mt-32 w-full px-4 text-center md:w-7/12">
           <h1 className="mb-4 text-4xl font-bold">Our Blogs</h1>
           <p className="mb-6 text-lg text-gray-600">
-            We&apos;re always looking for talented individuals to join our team.
-            If you're passionate about what you do and want to make an impact, we want to hear from you!
+            Stay updated with the latest insights, trends, and stories from our team. Explore our collection of blogs covering a wide range of topics designed to inform, inspire, and engage our readers.
           </p>
         </div>
 
