@@ -11,39 +11,81 @@ import 'highlight.js/styles/github-dark.css';
 
 const BlogPage = () => {
   const { id } = useParams<{ id: string }>();
-  const [blog, setBlog] = useState<Blog | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [blog, setBlog] = useState<Blog | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (id) {
-      setLoading(true);
-      // Backwards compatibility: if an older link appended a suffix (e.g. "--------remove"),
-      // strip it so we still fetch by the Firestore document id.
-      const normalizedId = id.split("--------remove")[0];
-      console.log("Fetching blog with id:", normalizedId);
-      BlogService.getBlogById(normalizedId).then((data) => {
-        console.log("Fetched blog:", data);
-        setBlog(data || null);
-        setLoading(false);
-      });
-    } else {
-      setLoading(false);
+    if (!id) {
+      setIsLoading(false);
+      setBlog(undefined);
+      setError(null);
+      return;
     }
+
+    let cancelled = false;
+    setIsLoading(true);
+    setBlog(undefined);
+    setError(null);
+
+    // Ensure the reader starts at the top when opening a blog post.
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+    // Backwards compatibility: if an older link appended a suffix (e.g. "--------remove"),
+    // strip it so we still fetch by the Firestore document id.
+    const rawId = (id || "").trim();
+    const normalizedId = rawId;
+
+    BlogService.getBlogByIdentifier(normalizedId)
+      .then((data) => {
+        if (cancelled) return;
+        setBlog(data);
+      })
+      .catch((e) => {
+        if (cancelled) return;
+        console.error("Failed to fetch blog:", e);
+        setError("We couldn't load this blog post right now. Please try again.");
+      })
+      .finally(() => {
+        if (cancelled) return;
+        setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [id]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <>
         <AppHeader />
         <div className="flex min-h-screen flex-col items-center justify-center text-center">
-          <h1 className="text-4xl font-bold">Loading Post...</h1>
+          <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-300 border-t-black" />
+          <p className="mt-6 text-lg text-gray-600">Loading blog post…</p>
         </div>
         <Footer />
       </>
     );
   }
 
-  if (!blog && !loading) {
+  if (error) {
+    return (
+      <>
+        <AppHeader />
+        <div className="flex min-h-screen flex-col items-center justify-center text-center">
+          <h1 className="text-3xl font-bold">Something went wrong</h1>
+          <p className="mt-4 max-w-xl text-lg text-gray-600">{error}</p>
+          <Link to="/blogs" className="mt-6 rounded-md bg-black px-4 py-2 font-semibold text-white">
+            Back to Blogs
+          </Link>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (!blog) {
 
     return (
       <>

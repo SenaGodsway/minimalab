@@ -1,4 +1,13 @@
-import { collection, getDocs, doc, getDoc, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  // doc,
+  // getDoc,
+  addDoc,
+  query,
+  where,
+  limit,
+} from "firebase/firestore";
 import { db } from "./firebase";
 import { Blog } from "./pages/blogs/types";
 
@@ -52,43 +61,101 @@ export const UserService = {
 };
 
 const blogsCollection = collection(db, "blogs");
-console.log("Blogs Collection:", blogsCollection);
+
+function toBlog(docId: string, data: Record<string, unknown>): Blog {
+  // Never let the document body override the Firestore document id.
+  // Some docs may contain an `id` field used as a slug, which would break routing.
+  const {
+    id: legacyId,
+    slug,
+    createdAt,
+    ...rest
+  } = (data ?? {}) as Record<string, unknown>;
+
+  const content = typeof rest.content === "string" ? rest.content : "";
+  const title = typeof rest.title === "string" ? rest.title : undefined;
+  const image_url =
+    typeof rest.image_url === "string" ? rest.image_url : undefined;
+  const author = typeof rest.author === "string" ? rest.author : undefined;
+  const short_description =
+    typeof rest.short_description === "string"
+      ? rest.short_description
+      : undefined;
+  const tags = Array.isArray(rest.tags)
+    ? (rest.tags.filter((t) => typeof t === "string") as string[])
+    : undefined;
+
+  // Prefer explicit `slug` field, otherwise keep legacy `id` field as slug.
+  const resolvedSlug =
+    typeof slug === "string"
+      ? slug
+      : typeof legacyId === "string"
+      ? legacyId
+      : undefined;
+
+  return {
+    id: docId,
+    slug: resolvedSlug,
+    createdAt: formatFirestoreDate(createdAt),
+    content,
+    title,
+    image_url,
+    author,
+    short_description,
+    tags,
+  };
+}
+
 export const BlogService = {
   async getBlogs(): Promise<Blog[]> {
     const snapshot = await getDocs(blogsCollection);
     return snapshot.docs.map((doc) => {
-      const data = doc.data();
-      // Never let the document body override the Firestore document id.
-      // Some docs may contain an `id` field used as a slug, which would break routing.
-      const { id: _ignoredId, createdAt, ...rest } = (data ?? {}) as Record<
-        string,
-        unknown
-      >;
-      return {
-        ...(rest as Omit<Blog, "id" | "createdAt">),
-        id: doc.id,
-        createdAt: formatFirestoreDate(createdAt),
-      } as Blog;
+      const data = (doc.data() ?? {}) as Record<string, unknown>;
+      return toBlog(doc.id, data);
     });
   },
 
   // Fix: Accept id parameter and use it in doc()
   async getBlogById(id: string): Promise<Blog | undefined> {
-    const docRef = doc(db, "blogs", id);
-    const docSnap = await getDoc(docRef);
-    console.log("Doc Snap:", docSnap);
-    if (!docSnap.exists()) return undefined;
-    console.log("Doc Snap exists:", docSnap.exists());
-    const data = docSnap.data();
-    console.log("Data:", data);
-    const { id: _ignoredId, createdAt, ...rest } = (data ?? {}) as Record<
-      string,
-      unknown
-    >;
-    return {
-      id: docSnap.id,
-      ...(rest as Omit<Blog, "id" | "createdAt">),
-      createdAt: formatFirestoreDate(createdAt),
-    } as Blog;
+    if (!id || typeof id !== "string") {
+      return undefined;
+    }
+
+    try {
+      // Query for blogs where the "id" field matches the provided id and take the first
+      const q = query(blogsCollection, where("id", "==", id), limit(1));
+      const snapshot = await getDocs(q);
+      if (snapshot.empty) {
+        console.warn(`getBlogById: No document found with ID field: ${id}`);
+        return undefined;
+      }
+      const firstDoc = snapshot.docs[0];
+      const data = (firstDoc.data() ?? {}) as Record<string, unknown>;
+      return toBlog(firstDoc.id, data);
+    } catch (error) {
+      console.error(`getBlogById: Error fetching blog by ID field (${id}):`, error);
+      return undefined;
+    }
+  },
+
+
+
+  /**
+   * Resolve a blog by either Firestore document id (preferred) or by slug.
+   * This makes direct `/blogs/{id}` loads work even if `{id}` is actually a slug.
+   */
+  async getBlogByIdentifier(identifier: string): Promise<Blog | undefined> {
+    const cleanId = identifier;
+
+    // 1. Try by Document ID
+    const byDocId = await this.getBlogById(cleanId);
+    if (byDocId) {
+      return byDocId;
+    }
+
+    console.error(
+      `getBlogByIdentifier: Failed to resolve blog for "${cleanId}"`
+    );
+    return undefined;
   },
 };

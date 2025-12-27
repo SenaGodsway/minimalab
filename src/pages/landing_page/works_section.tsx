@@ -1,11 +1,21 @@
 import { X } from 'lucide-react'
 import ImageComponent from '../../components/ImageCompnent'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState } from 'react'
-import { projects, Project } from '../works_page/projects'
+import { useState, useEffect } from 'react'
+import { getProjects, Project } from '../../utils/content'
 
 const Works: React.FC = () => {
+  const [projects, setProjects] = useState<Project[]>([])
   const [selectedFeature, setSelectedFeature] = useState<Project | null>(null)
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const data = await getProjects()
+      // Only show projects that have at least one image
+      setProjects(data.filter(p => p.images && p.images.length > 0))
+    }
+    fetchProjects()
+  }, [])
 
   return (
     <div className="mx-auto w-full md:w-10/12">
@@ -17,11 +27,11 @@ const Works: React.FC = () => {
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
-                <ImageComponent 
-                  src={project.imageSrc}
-                  alt={project.title}
+                <ImageComponent
+                  src={project.images[0] || ''}
+                  alt={project.name}
                   isGray={false}
-                  className=' h-[250px] w-full md:h-[350px] rounded'
+                  className='h-[250px] w-full md:h-[400px] rounded object-contain bg-gray-50 border border-slate-200'
                 />
               </motion.div>
             </div>
@@ -44,14 +54,46 @@ const Works: React.FC = () => {
               >
                 <X className="h-6 w-6" />
               </button>
-              <ImageComponent 
-                src={selectedFeature.imageSrc}
-                alt={selectedFeature.title}
+              <ImageComponent
+                src={selectedFeature.images[0] || ''}
+                alt={selectedFeature.name}
                 isGray={false}
-                className="h-64 mt-4 w-full rounded-2xl object-cover"
+                className="h-64 mt-4 w-full rounded-2xl object-contain bg-gray-50"
               />
-              <h2 className="text-4xl font-bold">{selectedFeature.title}</h2>
-              <p className="text-xl text-black/90">{selectedFeature.content}</p>
+              <h2 className="text-4xl font-bold">{selectedFeature.name}</h2>
+              <p className="text-xl text-black/90">{selectedFeature.description}</p>
+
+              {selectedFeature.links && selectedFeature.links.length > 0 && (
+                <div className="flex flex-wrap gap-4 py-4">
+                  {selectedFeature.links.map((link, index) => (
+                    link.url && (
+                      <a
+                        key={index}
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-full bg-black px-6 py-2 text-white transition-colors hover:bg-gray-800"
+                      >
+                        {link.label || 'Visit Website'}
+                      </a>
+                    )
+                  ))}
+                </div>
+              )}
+
+              {selectedFeature.images.length > 1 && (
+                <div className="grid grid-cols-1 gap-6 pt-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {selectedFeature.images.slice(1).map((image, index) => (
+                    <ImageComponent
+                      key={index}
+                      src={image}
+                      alt={`${selectedFeature.name} preview ${index + 2}`}
+                      isGray={false}
+                      className="h-64 w-full rounded-2xl object-contain bg-gray-50 border border-slate-200"
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </motion.div>
         )}
