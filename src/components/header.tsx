@@ -20,10 +20,7 @@ export default function AppHeader() {
   }, [])
 
   const navItems = [
-    {
-      name: 'About',
-      value: 'about'
-    },
+    
     {
       name: 'Services',
       value: 'services'
@@ -32,14 +29,15 @@ export default function AppHeader() {
       name: 'Works',
       value: 'works'
     },
-    {
-      name:'Careers',
-      value:'careers'
-    },
+    
     {
       name:'Blogs',
       value:'blogs'
-    }
+    },
+    {
+      name: 'About',
+      value: 'about'
+    },
   ]
 
   return (

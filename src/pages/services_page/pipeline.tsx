@@ -55,7 +55,7 @@ const Pipeline: React.FC = () => {
   const selectedProcess = processes.find(p => p.id === selectedProcessId);
 
   return (
-    <div className="flex flex-col gap-6 md:gap-8 md:flex-row">
+    <div className="flex flex-col gap-6 md:gap-8 md:flex-row w-full">
       {/* Left side: Process list */}
       <div className="flex w-full flex-col gap-3 md:w-1/2">
         {processes.map((process) => {
