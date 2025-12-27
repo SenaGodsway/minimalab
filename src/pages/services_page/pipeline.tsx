@@ -27,7 +27,7 @@ const Pipeline: React.FC = () => {
       {processes.map((process) => {
         const IconComponent = process.icon;
         return (
-          <div 
+          <div
             key={process.id}
             onMouseEnter={() => setHoveredProcess(process.id)}
             onMouseLeave={() => setHoveredProcess(null)}
@@ -41,11 +41,11 @@ const Pipeline: React.FC = () => {
               <IconComponent size={24} />
             </motion.span>
             <h3>{process.title}</h3>
-            
+
             {hoveredProcess === process.id && (
               <motion.p
                 initial={{ opacity: 0, y: 0 }}
-                animate={{ opacity: 1, y: 0 }} 
+                animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 0 }}
                 className="absolute left-0 top-0 z-10 h-full w-full rounded bg-gray-800 p-4 text-white shadow-lg"
               >
