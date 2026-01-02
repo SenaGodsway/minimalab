@@ -1,0 +1,84 @@
+import express from "express";
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import type { Blog } from "./types.js";
+import { getBlogByIdentifier } from "./get_server_blog.js";
+
+const app = express();
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// 1. READ THE TEMPLATE ONCE (Cache it in memory)
+const indexPath = path.resolve(__dirname, "../dist/index.html");
+const baseHtml = fs.readFileSync(indexPath, "utf8");
+
+// 2. SERVE STATIC ASSETS FIRST
+// This ensures /assets/main.js is sent normally without hitting your logic below
+app.use(express.static(path.resolve(__dirname, "../dist"), { index: false }));
+
+app.get("/blogs/:id", async (req, res) => {
+  try {
+    // 3. LOGIC CHECK: Only inject for page requests, ignore files with extensions
+    if (req.path.includes(".")) return res.sendFile(indexPath);
+
+    const postId = req.params.id;
+
+    const getBlog: Blog | undefined = await getBlogByIdentifier(postId);
+
+    // If blog can't be resolved, send base HTML and let React Router handle it.
+    if (!getBlog) return res.send(baseHtml);
+
+    // 4. USE THE CACHED BASE HTML
+    const html = baseHtml
+      .replace(/__TITLE__/g, getBlog.title || "")
+      .replace(/__OG_TITLE__/g, getBlog.title || "")
+      .replace(/__OG_DESCRIPTION__/g, getBlog.short_description || "")
+      .replace(/__OG_IMAGE__/g, getBlog.image_url || "");
+
+    res.send(html);
+  } catch (err) {
+    console.error("Blog meta injection failed:", err);
+    // Fallback to original HTML (React will handle error states on client)
+    res.send(baseHtml);
+  }
+});
+
+// If we don't recognize the URL, send index.html and let React Router handle it.
+// Note: Some Express/router versions don't accept the string route "*", so we use middleware.
+app.use((req, res, next) => {
+  if (req.method !== "GET") return next();
+
+  // If it looks like a real file request and static middleware didn't serve it, 404 it.
+  // (We only want SPA fallback for "clean" URLs without extensions.)
+  if (req.path.includes(".")) {
+    const html = baseHtml.replace(/__TITLE__/g, "Sailnex");
+    // Remove all lines with the replacement tag programmatically
+    const cleanHtml = html
+      .split("\n")
+      .filter(
+        (line) =>
+          !line.includes("__OG_TITLE__") &&
+          !line.includes("__OG_DESCRIPTION__") &&
+          !line.includes("__OG_IMAGE__")
+      )
+      .join("\n");
+    return res.send(cleanHtml);
+  }
+
+  const html = baseHtml.replace(/__TITLE__/g, "Sailnex");
+  // Remove all lines with the replacement tag programmatically
+  const cleanHtml = html
+    .split("\n")
+    .filter(
+      (line) =>
+        !line.includes("__OG_TITLE__") &&
+        !line.includes("__OG_DESCRIPTION__") &&
+        !line.includes("__OG_IMAGE__")
+    )
+    .join("\n");
+  return res.send(cleanHtml);
+});
+
+app.listen(process.env.PORT || 4001, () =>
+  console.log("Server running on http://localhost:4001")
+);
