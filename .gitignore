@@ -8,6 +8,7 @@ yarn-error.log*
 
 # Dependency directories
 dist/
+server-dist/
 build/
 .cache/
 
