@@ -85,7 +85,7 @@ app.use((req, res, next) => {
     .join("\n");
   return res.send(cleanHtml);
 });
-
-app.listen(process.env.PORT || 4001, () =>
-  console.log("Server running on http://localhost:4001")
+const port = process.env.PORT || 4001;
+app.listen(port, () =>
+  console.log(`Server running on port [${port}]`)
 );
