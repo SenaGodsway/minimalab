@@ -13,8 +13,8 @@ build/
 .cache/
 
 # Local environment files
-# .env
-# .env.*.local
+.env
+.env.*.local
 
 # Editor settings
 .vscode/

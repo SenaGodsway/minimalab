@@ -1,3 +1,4 @@
+import dotenv from "dotenv";
 import express from "express";
 import fs from "node:fs";
 import path from "node:path";
@@ -5,8 +6,14 @@ import { fileURLToPath } from "node:url";
 import type { Blog } from "./types.js";
 import { getBlogByIdentifier } from "./get_server_blog.js";
 
-const app = express();
+// Load environment variables for the server.
+// - First try the current working directory (default dotenv behavior)
+// - Then fall back to the repo root relative to this compiled file (works when starting from `server-dist/`)
+dotenv.config();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
+
+const app = express();
 
 // 1. READ THE TEMPLATE ONCE (Cache it in memory)
 const indexPath = path.resolve(__dirname, "../dist/index.html");
