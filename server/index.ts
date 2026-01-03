@@ -85,7 +85,9 @@ app.use((req, res, next) => {
     .join("\n");
   return res.send(cleanHtml);
 });
-const port = process.env.PORT || 4001;
+const port =
+// process.env.PORT ||
+4001;
 app.listen(port, () =>
   console.log(`Server running on port [${port}]`)
 );
