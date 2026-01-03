@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom'
 const Footer = () => {
   return (
     <div className='flex flex-col items-center justify-center px-2 pt-16 md:px-24'>
+          <div className='flex flex-col md:flex-row md:gap-6 justify-center items-center gap-2'>
+         <Link to='/careers' className=''>Careers</Link>
+        </div>
       <div className='mb-6 flex items-center justify-center gap-6'>
         {/*<Link to="/" className='text-3xl'><FaFacebook/></Link>*/}
         <Link to="/" className='text-3xl'><FaLinkedin/></Link>
@@ -13,10 +16,7 @@ const Footer = () => {
       </div>
 
       <div className='mb-14 flex flex-col gap-4 p-6 text-center text-[18px]'>
-      <div className='flex flex-col md:flex-row md:gap-6 justify-center items-center gap-2'>
-         <Link to='/careers' className=''>Careers</Link>
-         <p>cscodelabs@gmail.com</p>
-        </div>
+
         <p>All rights reserved. Sailnex &copy; {new Date().getFullYear()}</p>
       </div>
     </div>
