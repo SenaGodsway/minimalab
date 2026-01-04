@@ -13,3 +13,11 @@ export interface Blog {
   author?: string;
   short_description?: string;
 }
+
+export interface PostCreateAccount {
+  id?: string;
+  username: string;
+  password: string;
+  role: string;
+  name: string;
+}
