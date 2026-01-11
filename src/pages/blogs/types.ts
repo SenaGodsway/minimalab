@@ -5,13 +5,16 @@ export interface Blog {
    * Note: this is different from the Firestore document id (`id` above).
    */
   slug?: string;
-  title?: string; // <-- Add this line if your blogs have a title
-  content: string; // ✅ markdown is just a string
+  title?: string; 
+  content: string;
   createdAt?: string;
+  createdAtTimestamp?: number; // Timestamp in milliseconds for sorting
   image_url?: string;
   tags?: string[];
   author?: string;
   short_description?: string;
+  view_count?: number;
+  clap_count?: number;
 }
 
 export interface PostCreateAccount {
