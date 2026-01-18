@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   addDoc,
@@ -18,7 +18,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import "highlight.js/styles/github-dark.css";
-import type { PostCreateAccount } from "../blogs/types";
+import type { PostCreateAccount, Blog } from "../blogs/types";
+import { BlogService } from "../../expose_db";
 
 type FieldErrors = Partial<
   Record<
@@ -69,8 +70,63 @@ export default function CreateBlogPage() {
   const [errors, setErrors] = useState<FieldErrors>({});
   const [isSaving, setIsSaving] = useState(false);
   const [createdId, setCreatedId] = useState<string | null>(null);
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [isLoadingBlogs, setIsLoadingBlogs] = useState(false);
+  const [selectedBlogId, setSelectedBlogId] = useState<string | null>(null);
 
   const tags = useMemo(() => parseTags(tagsInput), [tagsInput]);
+
+  // Fetch blogs when authenticated
+  useEffect(() => {
+    if (account) {
+      setIsLoadingBlogs(true);
+      BlogService.getBlogs()
+        .then((fetchedBlogs) => {
+          // Sort blogs by createdAtTimestamp (newest first)
+          const sorted = [...fetchedBlogs].sort((a, b) => {
+            if (a.createdAtTimestamp && b.createdAtTimestamp) {
+              return b.createdAtTimestamp - a.createdAtTimestamp;
+            }
+            if (a.createdAtTimestamp && !b.createdAtTimestamp) return -1;
+            if (!a.createdAtTimestamp && b.createdAtTimestamp) return 1;
+            return 0;
+          });
+          setBlogs(sorted);
+        })
+        .catch((err) => {
+          console.error("Failed to fetch blogs:", err);
+        })
+        .finally(() => {
+          setIsLoadingBlogs(false);
+        });
+    }
+  }, [account]);
+
+  // Handler to populate form with selected blog data
+  const handleBlogSelect = (blog: Blog) => {
+    setSelectedBlogId(blog.id);
+    setTitle(blog.title || "");
+    setAuthor(blog.author || "");
+    setShortDescription(blog.short_description || "");
+    setImageUrl(blog.image_url || "");
+    setTagsInput(blog.tags ? blog.tags.join(", ") : "");
+    setContent(blog.content || "");
+    setErrors({});
+    setCreatedId(null);
+  };
+
+  // Handler to clear the form
+  const handleClearForm = () => {
+    setSelectedBlogId(null);
+    setTitle("");
+    setAuthor("");
+    setShortDescription("");
+    setImageUrl("");
+    setTagsInput("");
+    setContent("");
+    setErrors({});
+    setCreatedId(null);
+  };
 
   const validate = (): FieldErrors => {
     const next: FieldErrors = {};
@@ -178,6 +234,24 @@ export default function CreateBlogPage() {
       setTagsInput("");
       setContent("");
       setErrors({});
+      setSelectedBlogId(null);
+
+      // Refresh the blog list
+      BlogService.getBlogs()
+        .then((fetchedBlogs) => {
+          const sorted = [...fetchedBlogs].sort((a, b) => {
+            if (a.createdAtTimestamp && b.createdAtTimestamp) {
+              return b.createdAtTimestamp - a.createdAtTimestamp;
+            }
+            if (a.createdAtTimestamp && !b.createdAtTimestamp) return -1;
+            if (!a.createdAtTimestamp && b.createdAtTimestamp) return 1;
+            return 0;
+          });
+          setBlogs(sorted);
+        })
+        .catch((err) => {
+          console.error("Failed to refresh blogs:", err);
+        });
     } catch (err) {
       console.error("CreateBlogPage: failed to save blog", err);
       setErrors({
@@ -191,7 +265,7 @@ export default function CreateBlogPage() {
   return (
     <>
       <AppHeader />
-      <main className="mx-auto w-11/12 max-w-3xl py-12 pt-32 md:w-10/12">
+      <main className="mx-auto w-11/12 py-12 pt-32 md:w-10/12">
         <div className="mb-8 flex items-start justify-between gap-4">
           <div>
             <h1 className="text-3xl font-bold text-neutral-900">Create Blog</h1>
@@ -200,8 +274,6 @@ export default function CreateBlogPage() {
             .
             </p>
           </div>
-
-
         </div>
 
         {!account ? (
@@ -260,6 +332,85 @@ export default function CreateBlogPage() {
         ) : null}
 
         {account ? (
+        <div className="flex flex-col gap-6 lg:flex-row">
+          {/* Sidebar with blog list */}
+          <aside className="w-full lg:w-80 lg:flex-shrink-0">
+            <div className="rounded-lg border-2 border-slate-200 bg-white p-4">
+              <h2 className="mb-4 text-lg font-semibold text-neutral-900">Your Blogs</h2>
+              {isLoadingBlogs ? (
+                <div className="py-8 text-center text-sm text-neutral-500">Loading blogs...</div>
+              ) : blogs.length === 0 ? (
+                <div className="py-8 text-center text-sm text-neutral-500">No blogs found</div>
+              ) : (
+                <div className="max-h-[calc(100vh-16rem)] overflow-y-auto">
+                  <ul className="space-y-2">
+                    {blogs.map((blog) => (
+                      <li key={blog.id}>
+                        <button
+                          type="button"
+                          onClick={() => handleBlogSelect(blog)}
+                          className={[
+                            "w-full rounded-md border px-3 py-2 text-left transition-colors",
+                            selectedBlogId === blog.id
+                              ? "border-black bg-neutral-100"
+                              : "border-slate-200 bg-white hover:bg-slate-50",
+                          ].join(" ")}
+                        >
+                          <div className="flex gap-3">
+                            {/* Image preview */}
+                            <div className="flex-shrink-0">
+                              {blog.image_url ? (
+                                <img
+                                  src={blog.image_url}
+                                  alt={blog.title || "Blog preview"}
+                                  className="h-16 w-16 rounded-md object-cover"
+                                  onError={(e) => {
+                                    // Hide image on error
+                                    (e.target as HTMLImageElement).style.display = "none";
+                                  }}
+                                />
+                              ) : (
+                                <div className="flex h-16 w-16 items-center justify-center rounded-md bg-slate-100 text-xs text-neutral-400">
+                                  No image
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Text content */}
+                            <div className="min-w-0 flex-1">
+                              <div className="truncate font-semibold text-sm text-neutral-900">
+                                {blog.title || "Untitled"}
+                              </div>
+                              {blog.short_description && (
+                                <div className="mt-1 line-clamp-2 text-xs text-neutral-600">
+                                  {blog.short_description}
+                                </div>
+                              )}
+                              {blog.createdAt && (
+                                <div className="mt-1 text-xs text-neutral-500">
+                                  {(() => {
+                                    try {
+                                      const date = new Date(blog.createdAt);
+                                      return isNaN(date.getTime()) ? blog.createdAt : date.toLocaleDateString();
+                                    } catch {
+                                      return blog.createdAt;
+                                    }
+                                  })()}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </aside>
+
+          {/* Main editor form */}
+          <div className="flex-1">
         <form onSubmit={onSubmit} className="rounded-lg border-2 border-slate-200 bg-white p-5">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -268,17 +419,29 @@ export default function CreateBlogPage() {
               </p>
               <p className="text-xs text-neutral-600">You can now create a blog post.</p>
             </div>
-            <button
-              type="button"
-              className="rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-neutral-900 hover:bg-slate-50"
-              onClick={() => {
-                setAccount(null);
-                setAuthError(null);
-                setLoginPassword("");
-              }}
-            >
-              Sign out
-            </button>
+            <div className="flex gap-2">
+              {selectedBlogId && (
+                <button
+                  type="button"
+                  className="rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-neutral-900 hover:bg-slate-50"
+                  onClick={handleClearForm}
+                >
+                  Clear
+                </button>
+              )}
+              <button
+                type="button"
+                className="rounded-md border border-slate-200 bg-white px-3 py-1.5 text-sm font-semibold text-neutral-900 hover:bg-slate-50"
+                onClick={() => {
+                  setAccount(null);
+                  setAuthError(null);
+                  setLoginPassword("");
+                  handleClearForm();
+                }}
+              >
+                Sign out
+              </button>
+            </div>
           </div>
 
           {errors.form ? (
@@ -444,6 +607,8 @@ export default function CreateBlogPage() {
             </div>
           </div>
         </form>
+          </div>
+        </div>
         ) : null}
       </main>
       <Footer />
