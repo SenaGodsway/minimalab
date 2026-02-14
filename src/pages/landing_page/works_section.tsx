@@ -18,10 +18,10 @@ const Works: React.FC = () => {
   }, [])
 
   return (
-    <div className="mx-auto w-full md:w-10/12">
+    <div className="w-full">
       <div className='grid grid-cols-1 gap-16 md:grid-cols-2'>
         {projects.map((project) => (
-          <section key={project.id} className='container'>
+          <section key={project.id}>
             <div className="cursor-pointer" onClick={() => setSelectedFeature(project)}>
               <motion.div
                 whileHover={{ scale: 1.05 }}
@@ -31,7 +31,7 @@ const Works: React.FC = () => {
                   src={project.images[0] || ''}
                   alt={project.name}
                   isGray={false}
-                  className='h-[250px] w-full md:h-[400px] rounded object-contain bg-gray-50 border border-slate-200'
+                  className='h-[250px] w-full md:h-[400px] rounded-2xl object-contain bg-gray-50 border-2 border-slate-200 hover:border-slate-800 transition-all duration-300'
                 />
               </motion.div>
             </div>

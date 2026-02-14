@@ -1,116 +1,175 @@
 import { useState } from 'react'
-import { Sparkles, Clapperboard, Footprints, X } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Building2, Landmark, Plus, X, ArrowRight, Users } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
-import ImageComponent from '../../components/ImageCompnent'
+import PageContainer from '../../components/PageContainer'
 
-
-interface Feature {
+interface AccordionItem {
   id: number
   title: string
-  description: string
   icon: React.ReactNode
-  imageSrc: string
-  content: string
+  intro: string
+  paragraph: string
+  bullets: string[]
+  ctaText: string
 }
 
-const features: Feature[] = [
+const accordionItems: AccordionItem[] = [
   {
     id: 1,
-    title: "Solution Driven Development (SDD)",
-    description: "We don’t just build software—we solve your toughest business challenges with Solution-Driven Development (SDD), our proven approach that delivers faster, smarter, and more impactful results than traditional development methods.",
-    icon: <Sparkles className="h-6 w-6" />,
-    imageSrc:"https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?_gl=1*4d1jm6*_ga*MjExMzExOTg4MC4xNzQ0NjM5ODgz*_ga_8JE65Q40S6*czE3NTE1ODU2NjckbzQkZzEkdDE3NTE1ODY4NTAkajIxJGwwJGgw",
-    content: "Unreal Pikaffects take your creativity to the next level. With our advanced AI-powered effects, you can transform any scene into a mind-bending spectacle. Whether you want to make objects explode into a shower of particles, melt like ice cream on a hot day, or inflate like a balloon, the possibilities are endless. These effects aren't just visually stunning – they're also incredibly easy to use, allowing you to bring your wildest ideas to life with just a few clicks."
+    title: "For Founders & Startups",
+    icon: <Building2 className="h-5 w-5 shrink-0" />,
+    intro: "Scale your team without the overhead.",
+    paragraph: "We outsource vetted software talent to help you ship faster. Get engineers on demand, have custom software built, and focus on your product while we handle the technical execution.",
+    bullets: [
+      "Access vetted software engineers to scale your team without full-time hires.",
+      "Have custom software built for your product—we handle design, development, and delivery.",
+      "Focus on your vision while we take care of execution and technical complexity.",
+      "Partner with a team that ships fast and scales with you.",
+    ],
+    ctaText: "Explore talent & development options",
   },
   {
     id: 2,
-    title: "Scalable & Future-Proof Softwares",
-    description: "We build AI systems designed to evolve with your business - not just solve today's problems, but adapt to tomorrow's challenges. Our solutions feature: Modular design, Cloud-native foundation, continues learning and vendor-agnostic frameworks ",
-    icon: <Clapperboard className="h-6 w-6" />,
-    imageSrc: "https://images.pexels.com/photos/6476270/pexels-photo-6476270.jpeg?_gl=1*5gpwjm*_ga*MjExMzExOTg4MC4xNzQ0NjM5ODgz*_ga_8JE65Q40S6*czE3NTE1ODU2NjckbzQkZzEkdDE3NTE1ODY2NDQkajI5JGwwJGgw",
-    content: "• Modular design for seamless upgrades as needs change. •Cloud-native foundations that scale on demand. Continuous learning capabilities to stay relevant. Vendor-agnostic frameworks preventing lock-in.No costly rip-and-replace projects - just AI infrastructure that grows alongside your ambitions while maintaining peak performance.Key Differentiators:Proactive compatibility planning for emerging techBuilt-in adaptation layers for unknown future requirements Cost-optimized scaling that matches your growth curve Because your AI shouldn't become technical debt - it should be your competitive edge for years to come."
+    title: "For Corporates",
+    icon: <Building2 className="h-5 w-5 shrink-0" />,
+    intro: "Extend your capacity, deliver on time.",
+    paragraph: "We outsource talent to organizations and build software that fits your workflows. Scale your engineering capacity, commission custom solutions, and reduce hiring friction.",
+    bullets: [
+      "Extend your team with vetted software engineers on demand.",
+      "Commission custom software solutions built for your organization.",
+      "Reduce hiring friction and accelerate delivery on critical projects.",
+      "Scale capacity up or down as your projects evolve.",
+    ],
+    ctaText: "Learn about talent & software solutions",
   },
   {
     id: 3,
-    title: "Hyper-Custom AI, Fast ROI",
-    description: "Tailored AI solutions built at startup speed. We design bespoke models trained on your data—delivering rapid prototypes in weeks, not years, so you see real value faster. No off-the-shelf compromises, just agile AI that works.",
-    icon: <Footprints className="h-6 w-6" />,
-    imageSrc: "https://images.unsplash.com/photo-1687125114671-d45714b4631d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    content: "Bring your characters to life with New Moves, a revolutionary feature that adds realistic and dynamic motion to your scenes. Whether you need a character to sprint through a bustling city, pull off impressive skateboard tricks, or soar through the sky, our advanced motion library has you covered. These aren't just pre-set animations – they're intelligent, context-aware movements that adapt to your scene. The result? Characters that move with unprecedented realism, adding a new level of immersion to your videos. From subtle gestures to acrobatic feats, New Moves ensures that every action in your scene is fluid, natural, and captivating."
+    title: "For Engineers & Talent Acquisition Specialists",
+    icon: <Users className="h-5 w-5 shrink-0" />,
+    intro: "We help software engineers get jobs.",
+    paragraph: "Engineers: find opportunities matched to your skills. Talent acquisition specialists: access a pipeline of vetted software talent to fill roles faster.",
+    bullets: [
+      "Engineers: Get matched with roles at startups and organizations that fit your skills and goals.",
+      "Engineers: Connect with opportunities that understand your career trajectory.",
+      "Talent specialists: Access a pipeline of pre-screened software engineers to fill roles faster.",
+      "Talent specialists: Partner for outsourcing and project-based engagements.",
+    ],
+    ctaText: "Get started",
+  },
+  {
+    id: 4,
+    title: "For Governments & Economic Development Agencies",
+    icon: <Landmark className="h-5 w-5 shrink-0" />,
+    intro: "Strengthen your tech ecosystem.",
+    paragraph: "We help software engineers get jobs and support organizations with talent. Partner with us to connect local talent to opportunities, place engineers at companies, and build software capacity in your region.",
+    bullets: [
+      "Connect local software engineers with job opportunities at organizations worldwide.",
+      "Support programs that place technical talent and build digital capacity in your region.",
+      "Create pathways from training to employment for engineers.",
+      "Strengthen your ecosystem through talent placement and software development initiatives.",
+    ],
+    ctaText: "Discuss partnership options",
   },
 ]
 
 export default function Introducing() {
-  const [selectedFeature, setSelectedFeature] = useState<Feature | null>(null)
+  const [expandedId, setExpandedId] = useState<number | null>(null)
+
+  const toggleItem = (id: number) => {
+    setExpandedId(expandedId === id ? null : id)
+  }
 
   return (
-    <div className="relative min-h-screen p-8 text-gray-900 md:w-full">
-      <div className="mx-auto max-w-4xl space-y-12 md:max-w-4xl lg:w-9/12">
-        <div className='mt-12 p-1'></div>
-        <header className="space-y-8 text-center">
-          <h1 className="text-5xl font-bold">Our Capabilities</h1>
-          <p className="mx-auto text-xl">
-          Take a look at a selection of our projects, where creativity meets innovation. Each piece showcases our commitment to delivering exceptional results and pushing the limits of what's possible.
-          </p>
-        </header>
-      <div className='mt-12 p-1'></div>
-        {features.map((feature, index) => (
-          <section key={feature.id} className={`flex flex-col ${index % 2 === 1 ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8`}>
-            <div className="my-12 mb-12 aspect-[16/9] flex-1 cursor-pointer" onClick={() => setSelectedFeature(feature)}>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300 }}
-                className="mx-auto h-full w-11/12"
+    <div className="relative bg-white py-8 md:py-12 lg:py-16 mt-16">
+      <PageContainer>
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+          {/* Left column - heading */}
+          <div className="lg:col-span-5">
+            <p className="mb-4 text-sm font-medium uppercase tracking-[0.2em] text-black">
+              Join the Movement
+            </p>
+            <h2 className="text-3xl font-bold leading-tight text-black md:text-4xl lg:text-5xl">
+              Discover How We Can Support You
+            </h2>
+          </div>
 
-              >
-                <ImageComponent
-                src={feature.imageSrc}
-                alt={feature.title}
-                isGray={false}
-                className='mx-auto h-full w-full rounded-xl'
-                />
-              </motion.div>
-            </div>
-            <div className="flex-1 space-y-4">
-              <div className="flex items-center gap-2">
-                {feature.icon}
-                <h2 className="text-2xl font-semibold">{feature.title}</h2>
-              </div>
-              <p className='text-black'>{feature.description}</p>
-            </div>
-          </section>
-        ))}
-      </div>
+          {/* Right column - accordion */}
+          <div className="lg:col-span-7">
+            <div className="divide-y divide-gray-200 border-t border-gray-200">
+              {accordionItems.map((item) => {
+                const isExpanded = expandedId === item.id
+                return (
+                  <div
+                    key={item.id}
+                    className="border-b border-gray-200 transition-colors"
+                  >
+                    <button
+                      onClick={() => toggleItem(item.id)}
+                      className="flex w-full items-center gap-4 py-6 text-left transition-colors hover:bg-gray-50/50"
+                    >
+                      <span className="shrink-0 text-black [&>svg]:h-5 [&>svg]:w-5">
+                        {item.icon}
+                      </span>
+                      <span className="flex-1 text-base font-semibold text-black md:text-lg">
+                        {item.title}
+                      </span>
+                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gray-300 bg-white">
+                        {isExpanded ? (
+                          <X className="h-4 w-4 text-black" />
+                        ) : (
+                          <Plus className="h-4 w-4 text-black" />
+                        )}
+                      </span>
+                    </button>
 
-
-      <AnimatePresence>
-        {selectedFeature && (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.8 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            className="fixed inset-0 z-50 overflow-y-auto bg-[#ffffff]"
-          >
-            <div className="mx-auto max-w-4xl space-y-8 p-4">
-              <button
-                onClick={() => setSelectedFeature(null)}
-                className="absolute right-4 top-4 rounded-full p-2 text-black transition-colors hover:bg-black hover:text-white"
-              >
-                <X className="h-4 w-4" />
-              </button>
-                <ImageComponent
-                 src={selectedFeature.imageSrc}
-                 alt={selectedFeature.title}
-                isGray={false}
-                 className="h-64 w-full rounded-2xl object-cover"
-                />
-              <h2 className="text-4xl font-bold">{selectedFeature.title}</h2>
-              <p className="text-xl">{selectedFeature.content}</p>
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.25, ease: 'easeInOut' }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pb-6 pl-12 pr-4">
+                            <p className="mb-2 font-semibold text-black">
+                              {item.intro}
+                            </p>
+                            <p className="mb-6 text-black/90">
+                              {item.paragraph}
+                            </p>
+                            <ul className="mb-6 space-y-3">
+                              {item.bullets.map((bullet, idx) => (
+                                <li
+                                  key={idx}
+                                  className="flex gap-3 text-black/90"
+                                >
+                                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-black" />
+                                  <span>{bullet}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <Link
+                              to="/get-quote"
+                              className="inline-flex items-center gap-2 rounded-lg bg-black px-5 py-3 font-medium text-white transition-colors hover:bg-gray-800"
+                            >
+                              {item.ctaText}
+                              <span className="inline-flex h-6 w-6 items-center justify-center rounded bg-white/20">
+                                <ArrowRight className="h-3.5 w-3.5" />
+                              </span>
+                            </Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                )
+              })}
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      </PageContainer>
     </div>
   )
 }

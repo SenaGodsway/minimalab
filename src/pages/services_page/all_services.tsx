@@ -3,7 +3,7 @@ import { services, type Service } from './services';
 const AllServices: React.FC = () => {
 
   return (
-   <div className='mx-auto w-11/12 md:w-7/12 lg:w-8/12'>
+   <div className='w-full'>
     <div className='grid grid-cols-1 gap-6 md:grid-cols-3'>
       {Object.values(services).map((service: Service) => {
         const icons = Array.isArray(service.icon) ? service.icon : [service.icon];
