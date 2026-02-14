@@ -53,7 +53,7 @@ export default function AppHeader() {
         }
         transition-all duration-300 ease-in-out py-1 md:p-0
       `}>
-        <div className="mx-auto box-border w-full md:px-12 px-6 py-3 sm:py-2 md:py-3 lg:pr-8">
+        <div className="mx-auto box-border w-full max-w-7xl px-6 py-3 sm:py-2 md:px-12 md:py-3 lg:pr-8">
           <div className="flex items-center justify-between">
             <Link to='/' className="items-center flex gap-2">
               <img src={Logo} alt="Logo" className=' w-12 h-12' />

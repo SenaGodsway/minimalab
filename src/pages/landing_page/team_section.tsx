@@ -40,8 +40,8 @@ const teamMembers: TeamMember[] = [
 
 const TeamSection: React.FC = () => {
   return (
-    <section className="py-12 w-11/12 md-w-11/12 lg-w-8/12 mx-auto">
-      <div className="mx-auto px-4 container">
+    <section className="w-full py-12">
+      <div className="w-full">
         <h2 className="mb-8 font-semibold text-[30px] text-center md:text-[48px]">Team</h2>
         <p className="text-center mb-12">Our team of talented developers</p>
         <div className="gap-8 grid grid-cols-1 md:grid-cols-3 mx-auto max-w-4xl">

@@ -5,6 +5,7 @@ import FAQSection from "../landing_page/faq";
 import aboutImg from "../../assets/images/freepik__candid-image-photography-natural-textures-highly-r__22368.jpeg";
 import GetQuotes from "../../components/reuseable/get_quotes";
 import Footer from "../../components/footer";
+import PageContainer from "../../components/PageContainer";
 
 
 const AboutUs: React.FC = () => {
@@ -12,7 +13,7 @@ const AboutUs: React.FC = () => {
   return (
     <>
       <Header />
-      <div className="mx-auto w-11/12 px-4 py-12 sm:px-6 lg:px-8">
+      <PageContainer className="py-12">
         <section className="mb-16">
           <h1 className="mb-16 text-center text-4xl font-bold">About Our Company</h1>
           <div className="flex flex-col items-center gap-12 md:flex-row">
@@ -36,15 +37,15 @@ const AboutUs: React.FC = () => {
             </div>
           </div>
         </section>
-      </div>
+      </PageContainer>
 
-      <div className="mx-auto mt-24 w-11/12">
+      <PageContainer className="mt-24">
         <TeamSection />
-      </div>
+      </PageContainer>
 
-      <div className="mx-auto mt-48 w-11/12">
+      <PageContainer className="mt-48">
         <FAQSection />
-      </div>
+      </PageContainer>
       <Footer/>
       <GetQuotes/>
     </>

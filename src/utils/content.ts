@@ -1,3 +1,9 @@
+import scoutWeaveImg from "../assets/images/work-cover.png";
+import codeAndCocktailsImg from "../assets/images/work-cover-2.png";
+import baddieSocietyImg from "../assets/images/work-cover-4.png";
+import accraImg from "../assets/images/work-cover-3.png";
+
+
 export interface Project {
   id: number;
   name: string;
@@ -17,6 +23,7 @@ export const getProjects = async () => {
         "ScoutWeave is a modern ATS that helps HR teams and recruiters attract, manage, and hire the best talent faster. It streamlines hiring with smart job campaigns, AI-powered resume parsing, and intelligent candidate matching—plus collaboration workflows and analytics to support better, faster decisions.",
       links: [{ label: "Website", url: "https://www.scoutweave.com" }],
       images: [
+        scoutWeaveImg,
         "https://raw.githubusercontent.com/Sailnex/public-assets/refs/heads/main/sailnex/scoutweave1.png",
         "https://raw.githubusercontent.com/Sailnex/public-assets/refs/heads/main/sailnex/scoutweave2.png",
         "https://raw.githubusercontent.com/Sailnex/public-assets/refs/heads/main/sailnex/scoutweave3.png",
@@ -34,6 +41,7 @@ export const getProjects = async () => {
         { label: "Code & Cocktails", url: "https://codeandcocktails.live" },
       ],
       images: [
+        codeAndCocktailsImg,
         "https://raw.githubusercontent.com/Sailnex/public-assets/refs/heads/main/sailnex/cc7.png",
         "https://raw.githubusercontent.com/Sailnex/public-assets/refs/heads/main/sailnex/cc1.png",
         "https://raw.githubusercontent.com/Sailnex/public-assets/refs/heads/main/sailnex/cc2.png",
@@ -59,6 +67,7 @@ export const getProjects = async () => {
         },
       ],
       images: [
+        accraImg,
         "https://raw.githubusercontent.com/Sailnex/public-assets/refs/heads/main/sailnex/accraaa1.png",
         "https://raw.githubusercontent.com/Sailnex/public-assets/refs/heads/main/sailnex/accraaa2.png",
         "https://raw.githubusercontent.com/Sailnex/public-assets/refs/heads/main/sailnex/accraaa3.png",
@@ -75,6 +84,7 @@ export const getProjects = async () => {
         "BaddieSociety is the ultimate m-commerce app for women who love fashion and want to slay the game. With BaddieSociety you can shop the latest trends and styles from top brands and designers, get inspired by curated collections, lookbooks and influencers and shop the looks you love with just a few taps, enjoy exclusive deals, discounts, and rewards you won’t find anywhere else, and join a community of fierce and fabulous women who support each other and share their passion for fashion.",
       links: [],
       images: [
+        baddieSocietyImg,
         "https://raw.githubusercontent.com/Sailnex/public-assets/refs/heads/main/sailnex/baddieso1.png",
         "https://raw.githubusercontent.com/Sailnex/public-assets/refs/heads/main/sailnex/baddieso2.png",
         "https://raw.githubusercontent.com/Sailnex/public-assets/refs/heads/main/sailnex/baddieso3.png",

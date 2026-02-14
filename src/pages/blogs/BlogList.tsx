@@ -3,6 +3,7 @@ import BlogCard from "./BlogCard";
 import { Blog } from "./types";
 import { ChevronLeft, ChevronRight, SquarePen } from "lucide-react";
 import { BlogService } from "../../expose_db";
+import PageContainer from "../../components/PageContainer";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -45,7 +46,7 @@ const BlogList = () => {
   };
 
   return (
-    <div className="mx-auto w-11/12 py-12 md:w-10/12 lg:w-7/12">
+    <PageContainer className="py-12">
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-bold flex items-center gap-2">Latest Blogs
           <button
@@ -70,7 +71,7 @@ const BlogList = () => {
           <BlogCard key={blog.id} blog={blog} />
         ))}
       </div>
-    </div>
+    </PageContainer>
   );
 };
 

@@ -46,7 +46,7 @@ const FAQSection: React.FC = () => {
   }
 
   return (
-    <div className="w-full md:w-11/12 mx-auto">
+    <div className="w-full">
       <h1 className="mb-8 font-semibold text-[30px] text-center md:text-[40px]">Frequently Asked Questions</h1>
       <div className="space-y-4">
         {faqs.map((faq, index) => (

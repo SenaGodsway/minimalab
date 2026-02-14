@@ -9,6 +9,7 @@ import HeroSection from "./hero_section"
 import GetQuotes from "../../components/reuseable/get_quotes"
 import AllServices from "../services_page/all_services"
 import Header from "../../components/header"
+import PageContainer from "../../components/PageContainer"
 import Testimonials from "./testimonials"
 import BlogCard from "../blogs/BlogCard"
 import { BlogService } from "../../expose_db"
@@ -29,35 +30,35 @@ const LandingPage = () => {
   return (
     <div className="relative box-border">
     <Header/>
-    <div className="w-full ">
+    <div className="w-full">
     <HeroSection/>
     </div>
 
 <div className="w-full h-0 md:h-32"></div>
 
-    <div className="mx-auto mt-32 bg-white w-full md:max-w-4xl md:w-full md:mt-32">
-        <LogoCarousel/>
-    </div>
-
   <Introducing/>
+  
+  <PageContainer className="mt-32 md:mt-32">
+        <LogoCarousel/>
+    </PageContainer>
 
-      <div className="mt-12">
+      <PageContainer className="mt-12">
         <div className="py-6 text-center">
           <h1 className="text-center text-[30px] font-semibold md:text-[48px]">Our Services</h1>
         </div>
       <AllServices/>
-      </div>
+      </PageContainer>
 
 
-    <div className="mt-24 p-6 md:p-16">
+    <PageContainer className="mt-24">
       <div className='py-8 text-center'>
           <h1 className='text-[30px] font-semibold text-neutral-900 md:text-[48px]'>Selected Works</h1>
         </div>
         <Works/>
-    </div>
-    <div className="mx-auto w-11/12 py-12 md:w-9/12 md:py-14">
+    </PageContainer>
+    <PageContainer className="py-12 md:py-14 my-12">
       <div className="mb-8 flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Latest Blogs</h2>
+        <h2 className="text-[30px] font-semibold md:text-[48px]">Latest Blogs</h2>
         <Link
           to="/blogs"
           className="inline-flex items-center rounded-full border border-slate-200 px-3 py-1 text-sm font-medium text-neutral-700 hover:bg-slate-50"
@@ -76,10 +77,10 @@ const LandingPage = () => {
           </div>
         ) : null}
       </div>
-    </div>
-    <div className="container mx-auto mt-12">
+    </PageContainer>
+    <PageContainer className="mt-12">
       <Testimonials/>
-    </div>
+    </PageContainer>
     <div className="mt-18">
     <Footer/>
     </div>

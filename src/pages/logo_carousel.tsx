@@ -69,8 +69,7 @@ export default function LogoCarousel() {
 
   return (
     <div className="w-full overflow-hidden box-border">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* <h2 className="mb-8 text-center text-2xl font-semibold text-gray-800">Our Partners</h2> */}
+      <div className="w-full">
         <div className="relative">
           <div
             ref={scrollContainerRef}

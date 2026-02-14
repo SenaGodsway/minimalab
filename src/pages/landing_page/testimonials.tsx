@@ -1,4 +1,3 @@
-import CircleComponent from "../../components/reuseable/gradient_cirle"
 import CustomerImage from "../../assets/images/customer.jpg"
 import SenaImage from "../../assets/images/sena.jpeg"
 const Testimonials = () => {
@@ -17,8 +16,8 @@ const Testimonials = () => {
         },
     ]
   return (
-       <div className="mx-auto py-12 md:py-14 w-full md:w-9/12">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+       <div className="w-full py-12 md:py-14">
+      <div className="w-full">
         <div className="text-center">
           <h2 className="font-semibold text-[30px] text-neutral-900 md:text-[48px]">Testimonials</h2>
         </div>
@@ -28,8 +27,8 @@ const Testimonials = () => {
             <div
             key={message.id}
             className="bg-white px-6 py-6 border-2 rounded-lg overflow-hidden text-left">
-            <CircleComponent path={message.authorImage}/>
-
+            {/* <CircleComponent children={}/> */}
+            <img src={message.authorImage} alt={message.author} className="w-8 h-8 object-cover rounded-full border-2 border-gray-300 mb-4" />
               <p className="text-[16px] text-neutral-600">
                 {message.message}
               </p>
