@@ -74,7 +74,7 @@ const accordionItems: AccordionItem[] = [
 ]
 
 export default function Introducing() {
-  const [expandedId, setExpandedId] = useState<number | null>(null)
+  const [expandedId, setExpandedId] = useState<number | null>(1)
 
   const toggleItem = (id: number) => {
     setExpandedId(expandedId === id ? null : id)

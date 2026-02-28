@@ -37,10 +37,8 @@ const LandingPage = () => {
 <div className="w-full h-0 md:h-32"></div>
 
   <Introducing/>
-  
-  <PageContainer className="mt-32 md:mt-32">
-        <LogoCarousel/>
-    </PageContainer>
+
+
 
       <PageContainer className="mt-12">
         <div className="py-6 text-center">
@@ -48,6 +46,10 @@ const LandingPage = () => {
         </div>
       <AllServices/>
       </PageContainer>
+
+      <PageContainer className="mt-32 md:mt-32">
+        <LogoCarousel/>
+    </PageContainer>
 
 
     <PageContainer className="mt-24">
